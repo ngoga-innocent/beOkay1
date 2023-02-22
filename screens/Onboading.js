@@ -34,10 +34,10 @@ const Onboading = ({ navigation }) => {
                 </View>
                 <View>
                     {currentindex == slide.length - 1 ?
-                        <TouchableOpacity style={styles.Touchable} onPress={() => navigation.replace('Login')}>
+                        <TouchableOpacity style={styles.Touchable} onPress={() => navigation.replace('Auth')}>
                             <Text style={styles.btntxt}>Get started</Text>
                         </TouchableOpacity> :
-                        <TouchableOpacity style={[styles.btn]} onPress={() => navigation.replace('Login')}>
+                        <TouchableOpacity style={[styles.btn]} onPress={() => navigation.replace('Auth')}>
                             <Text style={{ color: '#BCBCBC' }}>skip and get started</Text>
                         </TouchableOpacity>}
 

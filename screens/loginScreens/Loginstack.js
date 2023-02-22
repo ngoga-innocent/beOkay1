@@ -8,17 +8,17 @@ import Userverification from './Userverification';
 import Forgotpassword from './Forgotpassword';
 import { NavigationContainer } from '@react-navigation/native';
 const LoginStack = () => {
-  const stack = createStackNavigator()
+  const stact = createStackNavigator()
   return (
 
-    <stack.Navigator>
-      <stack.Screen name='Login' component={Login} />
-      <stack.Screen name='Signup' component={Signup} />
-      <stack.Screen name='Signup1' component={Signup1} />
-      <stack.Screen name='Userverification' component={Userverification} />
-      <stack.Screen name='Forgotpassword' component={Forgotpassword} />
+    <stact.Navigator>
+      <stact.Screen name='Login' component={Login} />
+      <stact.Screen name='Signup' component={Signup} />
+      <stact.Screen name='Signup1' component={Signup1} />
+      <stact.Screen name='Userverification' component={Userverification} />
+      <stact.Screen name='Forgotpassword' component={Forgotpassword} />
 
-    </stack.Navigator>
+    </stact.Navigator>
 
   )
 }

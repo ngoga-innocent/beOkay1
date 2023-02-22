@@ -23,7 +23,8 @@ import {
 } from '@react-navigation/native';
 import Homescreen from './screens/Homescreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Loginstack } from './screens/loginScreens';
+import Loginstack from './screens/loginScreens/Loginstack';
+import Home from './Home';
 
 
 
@@ -47,20 +48,9 @@ export default function App() {
     isAppFirstLaunched != null && (
       <NavigationContainer >
 
-        <stack.Navigator screenOptions={
-          {
-            headerShown: false
-          }
-        } >
-          {isAppFirstLaunched && (< stack.Screen name='Onboadingscreen'
-            component={
-              OnboadingScreen
-            }
-          />)}
+        <Home />
 
 
-        </stack.Navigator>
-        <Loginstack />
 
       </NavigationContainer>
     )
