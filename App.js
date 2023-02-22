@@ -1,12 +1,70 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StatusBar
+} from 'expo-status-bar';
+import {
+  React,
+  useState,
+  useEffect
+} from 'react'
+import {
+  StyleSheet,
+  View,
+  Text,
+  SafeAreaView
+} from 'react-native';
+import {
+  OnboadingScreen
+} from './screens/';
+import {
+  createStackNavigator
+} from '@react-navigation/stack';
+import {
+  NavigationContainer
+} from '@react-navigation/native';
+import Homescreen from './screens/Homescreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Loginstack } from './screens/loginScreens';
+
+
+
 
 export default function App() {
+  const [isAppFirstLaunched, setisAppFirstLaunched] = useState(null);
+  useEffect(() => {
+    const LoadData = async () => {
+      const appData = await AsyncStorage.getItem('isAppFirstLaunched');
+      if (appData == null) {
+        setisAppFirstLaunched(true)
+      } else {
+        setisAppFirstLaunched(false)
+      }
+    }
+    LoadData();
+
+  }, [])
+  const stack = createStackNavigator()
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    isAppFirstLaunched != null && (
+      <NavigationContainer >
+
+        <stack.Navigator screenOptions={
+          {
+            headerShown: false
+          }
+        } >
+          {isAppFirstLaunched && (< stack.Screen name='Onboadingscreen'
+            component={
+              OnboadingScreen
+            }
+          />)}
+
+
+        </stack.Navigator>
+        <Loginstack />
+
+      </NavigationContainer>
+    )
+
   );
 }
 
@@ -17,4 +75,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
