@@ -90,7 +90,7 @@ const Signup = ({ navigation }) => {
             <Text style={styles.Signup}>SIGNUP</Text>
             <View style={styles.haveacc}>
               <Text style={styles.login}>Already have an account? </Text>
-              <TouchableOpacity ><Text style={styles.loginbtn}>LOGIN</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Login')} ><Text style={styles.loginbtn}>LOGIN</Text></TouchableOpacity>
 
             </View>
           </View>

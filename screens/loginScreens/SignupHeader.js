@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { COLORS } from '../../components/Colors'
-const SignupHeader = ({ title, title1, paragraph, }) => {
+const SignupHeader = ({ title, title1, paragraph, style, style1, style2 }) => {
     return (
         <View>
-            <Text style={styles.header}>{title} </Text>
-            <Text style={styles.header1}>{title1}</Text>
-            <Text style={styles.paragraph}>{paragraph}</Text>
+            <Text style={[styles.header, style]}>{title} </Text>
+            <Text style={[styles.header1, style]}>{title1}</Text>
+            <Text style={[styles.paragraph, style2]}>{paragraph}</Text>
 
         </View>
     )

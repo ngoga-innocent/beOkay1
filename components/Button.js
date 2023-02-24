@@ -5,12 +5,12 @@ import { useWindowDimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 
-const Button = ({ color, style, icon, text, textcolor, ...rest }) => {
+const Button = ({ color, style, icon, text, style1, size, textcolor, ...rest }) => {
     const width = useWindowDimensions()
     return (
         <TouchableOpacity style={[styles.Buttonstyle, style]} {...rest}>
-            <Icon name={icon} size={27} minimumFontScale={19} color={color} />
-            <Text style={styles.text}>{text}</Text>
+            <Icon name={icon} size={size} minimumFontScale={19} color={color} />
+            <Text style={[styles.text, style1]}>{text}</Text>
         </TouchableOpacity>
     )
 }

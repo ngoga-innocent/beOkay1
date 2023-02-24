@@ -16,12 +16,12 @@ const Signup1 = ({ navigation }) => {
         paragraph='Lorem ipsum dolor amet consecteur.Gravida sit fermentum ac'
       />
       <Text style={styles.Signup}>Signup</Text>
-      <Button icon='logo-google' text=' with Google' style={styles.button} color='red' />
-      <Button icon='logo-apple' text=' with Apple' style={styles.button} />
-      <Button icon='mail' text=' with Email' style={styles.button} onPress={() => navigation.navigate('Signup')} />
+      <Button icon='logo-google' size={27} text=' with Google' style={styles.button} color='red' />
+      <Button icon='logo-apple' size={27} text=' with Apple' style={styles.button} />
+      <Button icon='mail' size={27} text='with Email' style={styles.button} onPress={() => navigation.navigate('Signup')} />
       <View style={styles.haveacc}>
         <Text style={styles.login}>Already have an account? </Text>
-        <TouchableOpacity ><Text style={styles.loginbtn}>LOGIN</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')} ><Text style={styles.loginbtn}>LOGIN</Text></TouchableOpacity>
 
       </View>
       <View style={[styles.usembl, styles.lgn]}>
