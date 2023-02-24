@@ -3,15 +3,19 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Button from '../../components/Button';
 import { COLORS } from '../../components/Colors';
+import SignupHeader from './SignupHeader';
 
 
 const Signup1 = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Welcome </Text>
-      <Text style={styles.header1}>On Be Okay</Text>
-      <Text style={styles.paragraph}>Lorem ipsum dolor amet consecteur.Gravida sit fermentum ac</Text>
-      <Text style={styles.Signup}>SIGNUP</Text>
+
+      <SignupHeader
+        title='Welcome'
+        title1='On Be Okay'
+        paragraph='Lorem ipsum dolor amet consecteur.Gravida sit fermentum ac'
+      />
+      <Text style={styles.Signup}>Signup</Text>
       <Button icon='logo-google' text=' with Google' style={styles.button} color='red' />
       <Button icon='logo-apple' text=' with Apple' style={styles.button} />
       <Button icon='mail' text=' with Email' style={styles.button} onPress={() => navigation.navigate('Signup')} />

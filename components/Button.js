@@ -1,11 +1,11 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { COLORS } from './Colors';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 
-const Button = ({ color, style, icon, text, ...rest }) => {
+const Button = ({ color, style, icon, text, textcolor, ...rest }) => {
     const width = useWindowDimensions()
     return (
         <TouchableOpacity style={[styles.Buttonstyle, style]} {...rest}>
