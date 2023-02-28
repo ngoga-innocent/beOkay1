@@ -7,6 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import Homescreen from './screens/Homescreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginStack from './screens/loginScreens/Loginstack';
+import ConsultationStack from './screens/ConsultationScreens/ConsultationStack';
+import MyDrawer from './components/Drawer';
 
 
 
@@ -35,6 +37,9 @@ export default function Home() {
 
         <stack.Screen name='Homescreen' component={Homescreen} />
         <stack.Screen name='Auth' component={LoginStack} />
+        <stack.Screen name='Consultation' component={ConsultationStack} />
+        <stack.Screen name='Tabs' component={MyDrawer} />
+
 
       </stack.Navigator>
 

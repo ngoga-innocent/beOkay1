@@ -6,7 +6,7 @@ import Signup from './Signup';
 import Signup1 from './Signup1';
 import Userverification from './Userverification';
 import Forgotpassword from './Forgotpassword';
-import { NavigationContainer } from '@react-navigation/native';
+
 const LoginStack = () => {
   const stack = createStackNavigator()
   return (

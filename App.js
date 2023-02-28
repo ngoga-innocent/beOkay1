@@ -1,6 +1,4 @@
-import {
-  StatusBar
-} from 'expo-status-bar';
+import 'react-native-gesture-handler';
 import {
   React,
   useState,
@@ -8,23 +6,18 @@ import {
 } from 'react'
 import {
   StyleSheet,
-  View,
-  Text,
-  SafeAreaView
 } from 'react-native';
-import {
-  OnboadingScreen
-} from './screens/';
 import {
   createStackNavigator
 } from '@react-navigation/stack';
 import {
   NavigationContainer
 } from '@react-navigation/native';
-import Homescreen from './screens/Homescreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Loginstack from './screens/loginScreens/Loginstack';
 import Home from './Home';
+import MyDrawer from './components/Drawer';
+import MyTabs from './components/BottomTabs'
+
 
 
 
@@ -43,15 +36,13 @@ export default function App() {
     LoadData();
 
   }, [])
-  const stack = createStackNavigator()
+
+  const [authtoken, setAuthToken] = useState('sdf')
   return (
     isAppFirstLaunched != null && (
       <NavigationContainer >
-
-        <Home />
-
-
-
+        {authtoken ?
+          <MyDrawer /> : <Home />}
       </NavigationContainer>
     )
 

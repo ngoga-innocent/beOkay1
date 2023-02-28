@@ -10,7 +10,7 @@ const Input = ({ placeholder, onChangeText, style, onPress, style1, name, name2,
         <View style={styles.container}>
             <View style={[styles.inputcontainer, style]}>
                 <Icon name={name} style={styles.icon} size={20} color={COLORS.text} />
-                <TextInput style={[styles.input, style]}
+                <TextInput style={[styles.input, style1]}
                     placeholder={placeholder} onChangeText={onChangeText} value={value}
                     secureTextEntry={secureTextEntry}
                     keyboardType={keyboardType}
