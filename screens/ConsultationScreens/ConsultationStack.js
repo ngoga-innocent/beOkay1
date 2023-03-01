@@ -3,6 +3,8 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import UserLanding from './UserLanding'
 import Consultation from './Consultation'
+import Describedisease from './Describedisease'
+import Description from './Description'
 
 
 const ConsultationStack = () => {
@@ -12,7 +14,8 @@ const ConsultationStack = () => {
             headerShown: false
         }}>
             <stack.Screen name='Landing' component={UserLanding} />
-            <stack.Screen name='consultaion' component={Consultation} />
+            <stack.Screen name='Describe' component={Describedisease} />
+            <stack.Screen name='Description' component={Description} />
 
         </stack.Navigator >
     )

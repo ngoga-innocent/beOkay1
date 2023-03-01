@@ -37,7 +37,7 @@ export default function App() {
 
   }, [])
 
-  const [authtoken, setAuthToken] = useState('sdf')
+  const [authtoken, setAuthToken] = useState('asdf')
   return (
     isAppFirstLaunched != null && (
       <NavigationContainer >

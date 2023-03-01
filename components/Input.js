@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
-const Input = ({ placeholder, onChangeText, style, onPress, style1, name, name2, value, secureTextEntry, keyboardType, ...rest }) => {
+const Input = ({ placeholder, onChangeText, multiline, style, onPress, style1, name, name2, value, secureTextEntry, keyboardType, ...rest }) => {
     return (
         <View style={styles.container}>
             <View style={[styles.inputcontainer, style]}>
@@ -14,6 +14,7 @@ const Input = ({ placeholder, onChangeText, style, onPress, style1, name, name2,
                     placeholder={placeholder} onChangeText={onChangeText} value={value}
                     secureTextEntry={secureTextEntry}
                     keyboardType={keyboardType}
+                    multiline={multiline}
 
                 />
                 <TouchableOpacity onPress={onPress}>

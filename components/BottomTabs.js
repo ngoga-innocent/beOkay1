@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Login from '../screens/loginScreens/Login';
 import ConsultationStack from '../screens/ConsultationScreens/ConsultationStack';
+import Consultation from '../screens/ConsultationScreens/Consultation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { COLORS } from './Colors';
@@ -20,7 +21,7 @@ function MyTabs() {
                         iconName = focused
                             ? 'home'
                             : 'home';
-                    } else if (route.name === 'Settings') {
+                    } else if (route.name === 'consultation') {
                         iconName = focused ? 'stethoscope' : 'stethoscope';
                     }
                     else if (route.name === 'user') {
@@ -38,7 +39,7 @@ function MyTabs() {
             })}
         >
             <Tab.Screen name="Home" component={ConsultationStack} options={{ headerShown: false }} />
-            <Tab.Screen name="Settings" component={ConsultationStack} options={{ headerShown: false }} />
+            <Tab.Screen name="consultation" component={Consultation} options={{ headerShown: false }} />
             <Tab.Screen name="user" component={ConsultationStack} options={{ headerShown: false }} />
             <Tab.Screen name="emergency" component={ConsultationStack} options={{ headerShown: false }} />
 
