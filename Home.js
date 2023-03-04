@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginStack from './screens/loginScreens/Loginstack';
 import ConsultationStack from './screens/ConsultationScreens/ConsultationStack';
 import MyDrawer from './components/Drawer';
+import AIstack from './screens/ConsultationScreens/AIScreen/AIstack';
 
 
 
@@ -39,6 +40,7 @@ export default function Home() {
         <stack.Screen name='Auth' component={LoginStack} />
         <stack.Screen name='Consultation' component={ConsultationStack} />
         <stack.Screen name='Tabs' component={MyDrawer} />
+        <stack.Screen name='Aistack' component={AIstack} />
 
 
       </stack.Navigator>

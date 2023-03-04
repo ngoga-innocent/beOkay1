@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import React from 'react'
 import { COLORS } from './Colors'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -10,7 +10,7 @@ import Signup from '../screens/loginScreens/Signup'
 const Header = () => {
     const navigation = useNavigation()
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor={COLORS.primary} />
             <View style={styles.header}>
                 <View style={{ alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: COLORS.green, marginLeft: 4, height: 50, width: 50, borderRadius: 50 }}>
@@ -33,22 +33,24 @@ const Header = () => {
                 </View>
             </View>
 
-        </View>
+        </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({
     container: {
         width: '100%',
         backgroundColor: '#8BB85C',
-        height: 65,
+        height: 100,
         elevation: 100,
+        justifyContent: 'center'
+
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         height: 50,
-        marginTop: 6
+
     }
 })
 

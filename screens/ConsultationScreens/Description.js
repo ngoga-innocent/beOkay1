@@ -7,12 +7,10 @@ import KeyboardWrapper from '../../components/keyboardWrapper'
 import Button from '../../components/Button'
 
 const Description = ({ navigation, route }) => {
-    const [clicked, setClicked] = useState()
+    const [value, setValue] = useState('')
 
-    const selectedfn = (item) => {
-
-
-
+    const ChangeDesc = (value) => {
+        setValue(value)
 
     }
 
@@ -24,21 +22,22 @@ const Description = ({ navigation, route }) => {
                     <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Consult with Be Okay</Text>
                     <Text style={{ maxWidth: 180, color: '#BDBDBD', fontSize: 15 }}>We take care of your health as is variable to you!</Text>
                 </View>
-                <View style={{ marginHorizontal: 8, marginTop: 48, height: 98, alignItems: 'center' }}>
+                <View style={{ marginHorizontal: 8, marginTop: 48, height: 98, alignItems: 'center', backgroundColor: COLORS.white }}>
                     <Text>Adress your Consultation</Text>
                     <Text style={styles.text}>{route.params.part}</Text>
                 </View>
-                <View>
+                <View style={{ marginHorizontal: 30 }}>
                     <Text>Please select</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
                         <Image source={require('../../assets/lungs.png')} />
+                        <Text style={{ marginLeft: 10 }}>Lungs</Text>
                     </TouchableOpacity>
                     <View>
-                        <Text>Describe Illiness</Text>
-                        <TextInput multiline={true} numberOfLines={10}
-                            style={styles.input} />
+                        <Text style={{ marginBottom: 5 }}>Describe Illiness</Text>
+                        <TextInput multiline={true} numberOfLines={7}
+                            style={styles.input} onChangeText={(value) => ChangeDesc(value)} value={value} />
                     </View>
-                    <Button text='Next' style={{ backgroundColor: COLORS.primary, height: 50 }} />
+                    <Button text='Next' onPress={() => navigation.navigate('Method', { desc: value })} style={{ backgroundColor: COLORS.primary, height: 50, marginTop: 10, marginBottom: 10, width: '100%' }} />
                 </View>
             </View>
         </KeyboardWrapper>
@@ -60,8 +59,11 @@ const styles = StyleSheet.create({
     input: {
         borderColor: COLORS.primary,
         borderWidth: 1,
-        marginHorizontal: 10,
+
         borderRadius: 20,
+        backgroundColor: COLORS.paragraph,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
 
     },
     text1: {
