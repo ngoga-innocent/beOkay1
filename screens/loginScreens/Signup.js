@@ -64,12 +64,12 @@ const Signup = ({ navigation }) => {
 
   }
   const call_api = () => {
-    // if (Signupbtn()) {
-    //   navigation.navigate('Userverification')
-    // }
-    // else {
-    //   alert('there is errors in your inputs')
-    // }
+    if (Signupbtn()) {
+      navigation.navigate('Userverification')
+    }
+    else {
+      alert('there is errors in your inputs')
+    }
     navigation.navigate('Userverification', {
       email: Email,
       number: number,

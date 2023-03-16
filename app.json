@@ -1,16 +1,13 @@
 {
   "expo": {
-    "name": "BeOkay",
+    "name": "Be Okay",
     "slug": "BeOkay",
+    "description": "Be okay App",
+    "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/Splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
-    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },

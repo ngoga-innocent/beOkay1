@@ -34,13 +34,14 @@ export default function Home() {
     isAppFirstLaunched != null && (
 
       <stack.Navigator screenOptions={{ headerShown: false }}>
+        <stack.Screen name='Homescreen' component={Homescreen} />
         {isAppFirstLaunched && (<stack.Screen name='Onboadingscreen' component={OnboadingScreen} />)}
 
-        <stack.Screen name='Homescreen' component={Homescreen} />
+
         <stack.Screen name='Auth' component={LoginStack} />
         <stack.Screen name='Consultation' component={ConsultationStack} />
         <stack.Screen name='Tabs' component={MyDrawer} />
-        <stack.Screen name='Aistack' component={AIstack} />
+
 
 
       </stack.Navigator>

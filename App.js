@@ -29,15 +29,17 @@ export default function App() {
       const appData = await AsyncStorage.getItem('isAppFirstLaunched');
       if (appData == null) {
         setisAppFirstLaunched(true)
+        setAuthToken('')
       } else {
         setisAppFirstLaunched(false)
+        setAuthToken('asdf')
       }
     }
     LoadData();
 
   }, [])
 
-  const [authtoken, setAuthToken] = useState('asd')
+  const [authtoken, setAuthToken] = useState('')
   return (
     isAppFirstLaunched != null && (
       <NavigationContainer >
