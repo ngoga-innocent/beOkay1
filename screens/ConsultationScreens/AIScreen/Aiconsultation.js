@@ -9,9 +9,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Button from '../../../components/Button'
 
 
-const Aiconsultation = () => {
+const Aiconsultation = ({ navigation }) => {
     const [value, setValue] = useState(0)
     const [range, setRange] = useState('32%')
+    const [range1, setRange1] = useState('3%')
+    const [range2, setRange2] = useState('3%')
     const [accept, setAccept] = useState(false)
     const item = [
         { label: 'Yes', value: 0 },
@@ -100,9 +102,9 @@ const Aiconsultation = () => {
                                 maximumTrackTintColor={COLORS.primary}
                                 thumbTintColor={COLORS.primary}
                                 value={.03}
-                                onValueChange={value => setRange(parseInt(value * 100 + '%'))}
+                                onValueChange={value => setRange1(parseInt(value * 100 + '%'))}
                             />
-                            <TouchableOpacity style={{ backgroundColor: COLORS.paragraph, padding: 12, borderRadius: 8, marginLeft: 15 }}><Text>{range} days</Text></TouchableOpacity>
+                            <TouchableOpacity style={{ backgroundColor: COLORS.paragraph, padding: 12, borderRadius: 8, marginLeft: 15 }}><Text>{range1} days</Text></TouchableOpacity>
                         </View>
                     </View>
                     <View>
@@ -128,9 +130,9 @@ const Aiconsultation = () => {
                                 maximumTrackTintColor={COLORS.primary}
                                 thumbTintColor={COLORS.primary}
                                 value={.03}
-                                onValueChange={value => setRange(parseInt(value * 100 + '%'))}
+                                onValueChange={value => setRange2(parseInt(value * 100 + '%'))}
                             />
-                            <TouchableOpacity style={{ backgroundColor: COLORS.paragraph, padding: 12, borderRadius: 8, marginRight: 15 }}><Text>{range} days</Text></TouchableOpacity>
+                            <TouchableOpacity style={{ backgroundColor: COLORS.paragraph, padding: 12, borderRadius: 8, marginRight: 15 }}><Text>{range2} days</Text></TouchableOpacity>
                         </View>
                     </View>
                     <TouchableOpacity onPress={(accept) => Agree(accept)} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -144,7 +146,7 @@ const Aiconsultation = () => {
 
                         <Text>I agree that all information are trustWorthy</Text>
                     </TouchableOpacity>
-                    {accept ? <Button text='Submit' style={{ backgroundColor: COLORS.primary, height: 45, width: '100%', marginBottom: 30 }} /> :
+                    {accept ? <Button text='Submit' style={{ backgroundColor: COLORS.primary, height: 45, width: '100%', marginBottom: 30 }} onPress={() => navigation.navigate('AiResult')} /> :
                         <Button text='Submit' style={{ backgroundColor: COLORS.paragraph, height: 45, width: '100%', marginBottom: 30 }} />}
 
                 </View>

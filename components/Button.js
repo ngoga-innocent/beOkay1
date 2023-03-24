@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     text: {
-        marginLeft: 22,
+        marginLeft: 8,
         fontSize: 19,
 
 

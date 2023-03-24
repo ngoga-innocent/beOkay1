@@ -6,6 +6,11 @@ import Consultation from './Consultation'
 import Describedisease from './Describedisease'
 import Description from './Description'
 import Method from './Method'
+import Results from './AIScreen/Results'
+import Payment from '../../components/Payment'
+import Momo from '../Payments/Momo'
+import Card from '../Payments/Card'
+import Paypal from '../Payments/Paypal'
 import { COLORS } from '../../components/Colors'
 import Aiconsultation from './AIScreen/Aiconsultation'
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -39,6 +44,30 @@ const ConsultationStack = ({ navigation }) => {
                 }
 
             }} />
+            <stack.Screen name='AiResult' component={Results} options={{
+                headerTitle: 'Consultation Results',
+                headerLeft: () => (<View>
+                    <TouchableOpacity onPress={() => navigation.navigate('Aiconsultation')}><Icon name='arrowleft' size={30} color={COLORS.white} /></TouchableOpacity>
+                </View>),
+                headerStyle: {
+                    height: 80,
+                    backgroundColor: COLORS.primary,
+                    elevation: 30,
+                    shadowColor: '#000',
+                },
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+
+                    color: COLORS.white,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }
+
+            }} />
+            <stack.Screen name='payment' component={Payment} options={{ headerShown: false }} />
+            <stack.Screen name='momo' component={Momo} options={{ headerShown: false }} />
+            <stack.Screen name='card' component={Card} options={{ headerShown: false }} />
+            <stack.Screen name='paypal' component={Paypal} options={{ headerShown: false }} />
 
         </stack.Navigator >
     )

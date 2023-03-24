@@ -14,6 +14,16 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('')
   const [checkmail, setCheckMail] = useState(false)
   const [secureTextEntry, setSecureText] = useState(true)
+  const [accept, setAccept] = useState(false)
+
+  const Accepted = () => {
+    if (accept) {
+      setAccept(false)
+    }
+    else {
+      setAccept(true)
+    }
+  }
 
   const Email = (text) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -81,7 +91,8 @@ const Login = ({ navigation }) => {
           <Icon name='ios-finger-print' size={70} style={{ alignSelf: 'center', color: COLORS.paragraph }} />
         </TouchableOpacity>
         <View style={{ marginBottom: 40, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-          <TouchableOpacity style={styles.checkbox}></TouchableOpacity>
+          {accept ? <TouchableOpacity> <Icon name='checkbox' size={20} color={COLORS.primary} /></TouchableOpacity> : <TouchableOpacity style={styles.checkbox}></TouchableOpacity>}
+
           <Text>Terms of service privacy policy</Text>
         </View>
       </View>

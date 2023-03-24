@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     btn: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 20,
+        marginVertical: 40,
         marginBottom: 50
 
 
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     },
     Touchable: {
         backgroundColor: '#93BD68',
-        marginBottom: 20,
+        marginBottom: 40,
         padding: 10,
         marginHorizontal: 10,
         borderRadius: 30,
@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
     },
     btntxt: {
         color: '#FFF',
+        marginVertical: 5
 
     },
     indicator: {

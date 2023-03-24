@@ -6,6 +6,7 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import KeyboardWrapper from '../../components/keyboardWrapper'
 import Icon from 'react-native-vector-icons/Ionicons'
+import Material from 'react-native-vector-icons/MaterialCommunityIcons'
 import useNavigation from '@react-navigation/native'
 
 
@@ -17,6 +18,16 @@ const Signup = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [checkmail, setCheckMail] = useState(false);
   const [secureText, setSecureText] = useState(true)
+  const [usembl, setUsembl] = useState(false)
+
+  const Mbl = () => {
+    if (usembl) {
+      setUsembl(false)
+    }
+    else {
+      setUsembl(true)
+    }
+  }
   const FullName = (e) => {
     setFullName(e)
   }
@@ -37,7 +48,12 @@ const Signup = ({ navigation }) => {
 
   }
   const secureTextfun = () => {
-    setSecureText(false)
+    if (secureText) {
+      setSecureText(false)
+    }
+    else {
+      setSecureText(true)
+    }
   }
   const Signupbtn = () => {
 
@@ -125,7 +141,7 @@ const Signup = ({ navigation }) => {
 
           <Button text='Signup' textcolor={COLORS.white} style={styles.Button} onPress={call_api} />
           <View style={styles.usembl}>
-            <TouchableOpacity><Icon name='toggle-sharp' color={COLORS.primary} size={40} marginLeft={10} /></TouchableOpacity>
+            <TouchableOpacity onPress={(usembl) => Mbl(usembl)}>{usembl ? <Material name='toggle-switch' color={COLORS.primary} size={40} marginLeft={10} /> : <Material name='toggle-switch-off' color={COLORS.primary} size={40} marginLeft={10} />}</TouchableOpacity>
             <Text style={styles.usembl1}> Use Mobile security to Login</Text>
           </View>
         </View>
@@ -158,17 +174,18 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 3
+    marginVertical: 20
   },
   text: {
     color: COLORS.text
   },
   login: {
-    color: '#E4E4E4',
+    color: COLORS.text,
 
   },
   loginbtn: {
     color: COLORS.primary,
+    fontSize: 20
 
   },
   haveacc: {

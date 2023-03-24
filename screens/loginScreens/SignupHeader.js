@@ -3,7 +3,7 @@ import React from 'react'
 import { COLORS } from '../../components/Colors'
 const SignupHeader = ({ title, title1, paragraph, style, style1, style2 }) => {
     return (
-        <View>
+        <View style={{ marginTop: '25%' }}>
             <Text style={[styles.header, style]}>{title} </Text>
             <Text style={[styles.header1, style]}>{title1}</Text>
             <Text style={[styles.paragraph, style2]}>{paragraph}</Text>
