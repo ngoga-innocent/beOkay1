@@ -33,7 +33,7 @@ const Payment = () => {
       number: "+250782214360",
     },
     {
-      image: require("../assets/AirtelLogo.png"),
+      image: require("../assets/Airtel.png"),
       agency: "Airtel",
       number: "+250737865431",
     },
@@ -93,6 +93,7 @@ const Payment = () => {
         )}
         horizontal
       />
+      
       <View style={{}}>
         <Text style={{ fontWeight: "100", fontSize: 15 }}>Saved Number</Text>
         <FlatList
@@ -155,6 +156,7 @@ const Payment = () => {
         <Text style={{ fontWeight: "bold", fontSize: 19 }}>20,000 Rwf</Text>
       </View>
       <TouchableOpacity
+      onPress={()=>navigation.navigate('Results')}
         style={{
           marginVertical: 30,
           backgroundColor: "#93BD67",

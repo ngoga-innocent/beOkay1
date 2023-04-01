@@ -8,6 +8,7 @@ import Description from './Description'
 import Method from './Method'
 import Results from './AIScreen/Results'
 import Payment from '../../components/Payment'
+import ConsultationResults from './ConsultionResults'
 import Momo from '../Payments/Momo'
 import Card from '../Payments/Card'
 import Paypal from '../Payments/Paypal'
@@ -48,6 +49,26 @@ const ConsultationStack = ({ navigation }) => {
                 headerTitle: 'Consultation Results',
                 headerLeft: () => (<View>
                     <TouchableOpacity onPress={() => navigation.navigate('Aiconsultation')}><Icon name='arrowleft' size={30} color={COLORS.white} /></TouchableOpacity>
+                </View>),
+                headerStyle: {
+                    height: 80,
+                    backgroundColor: COLORS.primary,
+                    elevation: 30,
+                    shadowColor: '#000',
+                },
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+
+                    color: COLORS.white,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }
+
+            }} />
+             <stack.Screen name='Results' component={ConsultationResults} options={{
+                headerTitle: 'Consultation Results',
+                headerLeft: () => (<View>
+                    <TouchableOpacity onPress={() => navigation.navigate('payment')}><Icon name='arrowleft' size={30} color={COLORS.white} /></TouchableOpacity>
                 </View>),
                 headerStyle: {
                     height: 80,
