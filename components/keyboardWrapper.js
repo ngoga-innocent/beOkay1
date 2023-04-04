@@ -4,8 +4,8 @@ import { COLORS } from './Colors'
 
 const KeyboardWrapper = ({ children }) => {
     return (
-        <KeyboardAvoidingView style={styles.container}>
-            <ScrollView>
+        <KeyboardAvoidingView style={styles.container} behavior='padding'>
+            <ScrollView style={{flex:1}}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     {children}
                 </TouchableWithoutFeedback>

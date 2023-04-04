@@ -11,9 +11,9 @@ import Button from '../../../components/Button'
 
 const Aiconsultation = ({ navigation }) => {
     const [value, setValue] = useState(0)
-    const [range, setRange] = useState('32%')
-    const [range1, setRange1] = useState('3%')
-    const [range2, setRange2] = useState('3%')
+    const [range, setRange] = useState('32')
+    const [range1, setRange1] = useState('3')
+    const [range2, setRange2] = useState('3')
     const [accept, setAccept] = useState(false)
     const item = [
         { label: 'Yes', value: 0 },
@@ -30,7 +30,7 @@ const Aiconsultation = ({ navigation }) => {
     }
     return (
         <KeyboardWrapper>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false} style={{marginHorizontal:5}}>
                 <View style={{ backgroundColor: COLORS.green, height: 161, margin: 8, padding: 4 }}>
                     <Text style={{ fontSize: 17, fontWeight: 'bold', maxWidth: '47%', marginVertical: 17 }}>Your Going to take consultation with AI</Text>
                     <View style={{ height: 70, backgroundColor: '#21C074', borderWidth: 1, borderRadius: 12, justifyContent: 'center' }}>
@@ -55,6 +55,7 @@ const Aiconsultation = ({ navigation }) => {
                         <Text>Describe your Illness</Text>
                         <TextInput multiline numberOfLines={6} style={{
                             backgroundColor: COLORS.paragraph, border: 1, borderRadius: 12,
+                            height:100,
                             textAlignVertical: 'top',
 
                         }} />

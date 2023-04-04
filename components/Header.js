@@ -17,7 +17,7 @@ const Header = () => {
                     <Image source={require('../assets/Ellipse15.png')} style={{ width: 50, height: 50, alignSelf: 'center' }} />
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Image source={require('../assets/foreground.png')} style={{ width: 50, height: 50 }} />
+                    <Image source={require('../assets/logo2.png')} style={{ width: 50, height: 50 }} />
                     <Text style={{ color: COLORS.white, fontSize: 17, fontWeight: 'bold' }}>Be Okay</Text>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         backgroundColor: '#8BB85C',
-        height: 100,
+        height: 130,
         elevation: 100,
         justifyContent: 'center'
 

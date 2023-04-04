@@ -12,7 +12,7 @@ const ConsultationResults= ()=>{
     })
     return (
         <ScrollView style={{flex:1,marginLeft:20}} showsVerticalScrollIndicator={false}>
-            <Text style={{fontSize:20,backgroundColor:COLORS.green,padding:5,marginTop:7,fontWeight:'bold'}}>Dr. Emile Results</Text>
+            <Text style={{fontSize:20,backgroundColor:COLORS.green,padding:10,marginLeft:7,marginRight:7,borderRadius:10,marginTop:7,fontWeight:'bold'}}>Dr. Emile Results</Text>
             <View style={{backgroundColor:COLORS.white,paddingHorizontal:10,marginTop:35}}>
                 <Text style={{fontWeight:'400',fontSize:16,fontFamily:'Inter'}}>Illnes Details</Text>
                 <View style={{marginHorizontal:20,marginTop:25}}>

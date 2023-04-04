@@ -31,7 +31,7 @@ const ConsultationStack = ({ navigation }) => {
                     <TouchableOpacity onPress={() => navigation.navigate('Method')}><Icon name='arrowleft' size={30} color={COLORS.white} /></TouchableOpacity>
                 </View>),
                 headerStyle: {
-                    height: 80,
+                    height: 120,
                     backgroundColor: COLORS.primary,
                     elevation: 30,
                     shadowColor: '#000',
@@ -51,7 +51,7 @@ const ConsultationStack = ({ navigation }) => {
                     <TouchableOpacity onPress={() => navigation.navigate('Aiconsultation')}><Icon name='arrowleft' size={30} color={COLORS.white} /></TouchableOpacity>
                 </View>),
                 headerStyle: {
-                    height: 80,
+                    height: 120,
                     backgroundColor: COLORS.primary,
                     elevation: 30,
                     shadowColor: '#000',
@@ -71,7 +71,7 @@ const ConsultationStack = ({ navigation }) => {
                     <TouchableOpacity onPress={() => navigation.navigate('payment')}><Icon name='arrowleft' size={30} color={COLORS.white} /></TouchableOpacity>
                 </View>),
                 headerStyle: {
-                    height: 80,
+                    height: 120,
                     backgroundColor: COLORS.primary,
                     elevation: 30,
                     shadowColor: '#000',

@@ -81,13 +81,19 @@ const styles = StyleSheet.create({
 
     },
     list: {
-        marginTop: 7
+        marginTop: 7,
+        overflow:'hidden',
+        
+       
+        
+    
     },
     text: {
         backgroundColor: COLORS.white,
         marginLeft: 10,
         padding: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        fontFamily:'Inter'
     },
     head: {
         width: '15%',
