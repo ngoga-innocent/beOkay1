@@ -6,7 +6,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { COLORS } from './Colors';
 import { NavigationContainer } from '@react-navigation/native';
-
+import UserLanding from '../screens/ConsultationScreens/UserLanding';
+import User from '../screens/OtherScreen/User';
+import Emergency from '../screens/OtherScreen/Emergency';
 const Tab = createBottomTabNavigator()
 
 function MyTabs() {
@@ -38,10 +40,10 @@ function MyTabs() {
                 tabBarInactiveTintColor: 'gray',
             })}
         >
-            <Tab.Screen name="Home" component={ConsultationStack} options={{ headerShown: false }} />
-            <Tab.Screen name="consultation" component={Consultation} options={{ headerShown: false }} />
-            <Tab.Screen name="user" component={ConsultationStack} options={{ headerShown: false }} />
-            <Tab.Screen name="emergency" component={ConsultationStack} options={{ headerShown: false }} />
+            <Tab.Screen name="Home" component={UserLanding} options={{ headerShown: false }} />
+            <Tab.Screen name="consultation" component={ConsultationStack} options={{ headerShown: false }} />
+            <Tab.Screen name="user" component={User} options={{ headerShown: false }} />
+            <Tab.Screen name="emergency" component={Emergency} options={{ headerShown: false }} />
 
         </Tab.Navigator>
 

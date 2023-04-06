@@ -17,11 +17,12 @@ import Aiconsultation from './AIScreen/Aiconsultation'
 import Icon from 'react-native-vector-icons/AntDesign'
 
 
+
 const ConsultationStack = ({ navigation }) => {
     const stack = createStackNavigator()
     return (
-        <stack.Navigator initialRouteName='Landing'>
-            <stack.Screen name='Landing' component={UserLanding} options={{ headerShown: false }} />
+        <stack.Navigator initialRouteName='Consultation'>
+            <stack.Screen name='Consultation' component={Consultation} options={{ headerShown: false }} />
             <stack.Screen name='Describe' component={Describedisease} options={{ headerShown: false }} />
             <stack.Screen name='Description' component={Description} options={{ headerShown: false }} />
             <stack.Screen name='Method' component={Method} options={{ headerShown: false }} />

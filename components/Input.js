@@ -15,7 +15,8 @@ const Input = ({ placeholder, onChangeText, multiline, style, onPress, style1, n
                     secureTextEntry={secureTextEntry}
                     keyboardType={keyboardType}
                     multiline={multiline}
-
+                    {...rest}
+                    
                 />
                 <TouchableOpacity onPress={onPress}>
                     <Icon name={name2} style={style1} size={25} />
