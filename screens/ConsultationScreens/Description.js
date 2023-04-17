@@ -6,7 +6,8 @@ import {
   StyleSheet,
   Image,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  useWindowDimensions,
 } from "react-native";
 import { React, useState } from "react";
 import Header from "../../components/Header";
@@ -14,16 +15,22 @@ import { COLORS } from "../../components/Colors";
 import Input from "../../components/Input";
 import KeyboardWrapper from "../../components/keyboardWrapper";
 import Button from "../../components/Button";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const Description = ({ navigation, route }) => {
   const [value, setValue] = useState("");
-
+  const height = useHeaderHeight();
   const ChangeDesc = (value) => {
     setValue(value);
   };
 
   return (
     <KeyboardWrapper>
+      {/* <KeyboardAvoidingView
+        enabled
+        behavior="padding"
+        keyboardVerticalOffset={height}
+      > */}
       <View>
         <Header />
         <View style={{ marginLeft: 16, marginTop: 16 }}>
@@ -61,13 +68,21 @@ const Description = ({ navigation, route }) => {
           <View>
             <Text style={{ marginBottom: 5 }}>Describe Illiness</Text>
             <TextInput
-              
+              autoCorrect={false}
               multiline
-              numberOfLines={5}
-              style={{borderRadius:5,backgroundColor:COLORS.paragraph,height:150,marginLeft:4,textAlignVertical:'top',borderRadius:10}}
+              numberOfLines={7}
+              style={{
+                borderRadius: 5,
+                backgroundColor: COLORS.paragraph,
+                height: 200,
+                marginLeft: 4,
+                paddingLeft: 10,
+                paddingTop: 3,
+                textAlignVertical: "top",
+                borderRadius: 10,
+              }}
               onChangeText={(value) => ChangeDesc(value)}
               value={value}
-              
             />
           </View>
           <Button
