@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { React, useState, useEffect,useCallback,useContext } from "react";
+import { React, useState, useEffect, useCallback, useContext } from "react";
 import { StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -8,12 +8,12 @@ import Home from "./Home";
 import MyDrawer from "./components/Drawer";
 import MyTabs from "./components/BottomTabs";
 import { useFonts } from "expo-font";
-import AppLoading from 'expo-app-loading';
+import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
-import * as SplashScreen from 'expo-splash-screen'
+import * as SplashScreen from "expo-splash-screen";
 
-SplashScreen.preventAutoHideAsync()
-SplashScreen.hideAsync()
+SplashScreen.preventAutoHideAsync();
+SplashScreen.hideAsync();
 export default function App() {
   const [isAppFirstLaunched, setisAppFirstLaunched] = useState(null);
   useEffect(() => {
@@ -31,10 +31,10 @@ export default function App() {
   }, []);
 
   const [authtoken, setAuthToken] = useState("");
-  const [fontsLoaded] =useFonts({
-      Inter: require("./assets/Fonts/Inter.ttf"),
-    });
-  
+  const [fontsLoaded] = useFonts({
+    Inter: require("./assets/Fonts/Inter.ttf"),
+  });
+
   useEffect(() => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();

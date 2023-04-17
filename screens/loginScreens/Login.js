@@ -7,6 +7,8 @@ import KeyboardWrapper from "../../components/keyboardWrapper";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Icon from "react-native-vector-icons/Ionicons";
+import Spinner from "react-native-loading-spinner-overlay";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -14,6 +16,7 @@ const Login = ({ navigation }) => {
   const [checkmail, setCheckMail] = useState(false);
   const [secureTextEntry, setSecureText] = useState(true);
   const [accept, setAccept] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const Accepted = () => {
     if (accept) {
@@ -39,20 +42,44 @@ const Login = ({ navigation }) => {
     setSecureText(false);
   };
   const loginCheck = () => {
-    if (!checkmail) {
-      if (accept) {
-        navigation.navigate("Tabs");
-      } else {
-        alert("please accept the agreement");
-      }
+    if (accept) {
+      setIsLoading(true);
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      var raw = JSON.stringify({
+        username: email,
+        password: password,
+      });
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      fetch("https://beok.onrender.com/login/", requestOptions)
+        .then((response) => response.json())
+
+        .catch((error) => console.log("error", error))
+        .then((response) => {
+          const res = response;
+          if (res.access) {
+            setIsLoading(false);
+            AsyncStorage.setItem("token", res.access);
+            navigation.replace("Tabs");
+          } else {
+            setIsLoading(false);
+            alert(res.detail);
+          }
+        });
     } else {
-      alert("invalid credentials");
+      alert("please accept the agreement");
     }
   };
 
   return (
     <KeyboardWrapper>
       <View style={styles.container}>
+        <Spinner visible={isLoading} />
         <SignupHeader
           title="Welcome"
           style={{ color: COLORS.primary }}
@@ -105,23 +132,13 @@ const Login = ({ navigation }) => {
           or Login with Email
         </Text>
         <View>
-          {checkmail ? (
-            <Input
-              name="person"
-              placeholder="Email or Phone number"
-              onChangeText={(text) => Email(text)}
-              style={{ borderColor: "red" }}
-              style1={{ padding: 3 }}
-              value={email}
-            />
-          ) : (
-            <Input
-              name="person"
-              placeholder="Email or Phone number"
-              onChangeText={Email}
-              value={email}
-            />
-          )}
+          <Input
+            name="person"
+            placeholder="Email or Username"
+            onChangeText={Email}
+            value={email}
+          />
+
           <Input
             name="lock-closed"
             placeholder="password"
