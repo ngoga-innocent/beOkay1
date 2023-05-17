@@ -42,38 +42,38 @@ const Login = ({ navigation }) => {
     setSecureText(false);
   };
   const loginCheck = () => {
-    if (accept) {
-      setIsLoading(true);
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      var raw = JSON.stringify({
-        username: email,
-        password: password,
-      });
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-      fetch("https://beok.onrender.com/login/", requestOptions)
-        .then((response) => response.json())
+    // if (accept) {
+    //   setIsLoading(true);
+    //   var myHeaders = new Headers();
+    //   myHeaders.append("Content-Type", "application/json");
+    //   var raw = JSON.stringify({
+    //     username: email,
+    //     password: password,
+    //   });
+    //   var requestOptions = {
+    //     method: "POST"
+    //     headers: myHeaders,
+    //     body: raw,
+    //     redirect: "follow",
+    //   };
+    //   fetch("https://beok.onrender.com/login/", requestOptions)
+    //     .then((response) => response.json())
 
-        .catch((error) => console.log("error", error))
-        .then((response) => {
-          const res = response;
-          if (res.access) {
-            setIsLoading(false);
-            AsyncStorage.setItem("token", res.access);
-            navigation.replace("Tabs");
-          } else {
-            setIsLoading(false);
-            alert(res.detail);
-          }
-        });
-    } else {
-      alert("please accept the agreement");
-    }
+    //     .catch((error) => console.log("error", error))
+    //     .then((response) => {
+    //       const res = response;
+    //       if (res.access) {
+    //         setIsLoading(false);
+    //         AsyncStorage.setItem("token", res.access);
+    navigation.replace("Tabs");
+    // } else {
+    //   setIsLoading(false);
+    //   alert(res.detail);
+    // }
+    //     });
+    // } else {
+    //   alert("please accept the agreement");
+    // }
   };
 
   return (

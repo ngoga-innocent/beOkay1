@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   useWindowDimensions,
+  Platform,
 } from "react-native";
 import { React, useState } from "react";
 import Header from "../../components/Header";
@@ -16,6 +17,7 @@ import Input from "../../components/Input";
 import KeyboardWrapper from "../../components/keyboardWrapper";
 import Button from "../../components/Button";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Description = ({ navigation, route }) => {
   const [value, setValue] = useState("");
@@ -25,13 +27,13 @@ const Description = ({ navigation, route }) => {
   };
 
   return (
-    <KeyboardWrapper>
-      {/* <KeyboardAvoidingView
-        enabled
-        behavior="padding"
-        keyboardVerticalOffset={height}
-      > */}
-      <View>
+    // <KeyboardWrapper>
+    <KeyboardAvoidingView
+      enabled
+      behavior={Platform.OS == "ios" ? "position" : null}
+      // keyboardVerticalOffset={height}
+    >
+      <ScrollView>
         <Header />
         <View style={{ marginLeft: 16, marginTop: 16 }}>
           <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>
@@ -97,8 +99,8 @@ const Description = ({ navigation, route }) => {
             }}
           />
         </View>
-      </View>
-    </KeyboardWrapper>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({

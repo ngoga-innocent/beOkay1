@@ -10,6 +10,7 @@ import Material from "react-native-vector-icons/MaterialCommunityIcons";
 import useNavigation from "@react-navigation/native";
 import axios from "axios";
 import Spinner from "react-native-loading-spinner-overlay/lib";
+import url from "../../Url";
 
 const Signup = ({ route, navigation }) => {
   const [result, setResult] = useState([]);
@@ -24,7 +25,6 @@ const Signup = ({ route, navigation }) => {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const baseUrl = "https://beok.onrender.com/";
   const Mbl = () => {
     if (usembl) {
       setUsembl(false);
@@ -78,51 +78,56 @@ const Signup = ({ route, navigation }) => {
     }
   };
   const call_api = () => {
-    setIsLoading(true);
-    if (Signupbtn()) {
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
+    navigation.navigate("Userverification", {
+      email: Email,
+      number: number,
+    });
+    // setIsLoading(true);
+    // if (Signupbtn()) {
+    //   var myHeaders = new Headers();
+    //   myHeaders.append("Content-Type", "application/json");
 
-      var raw = JSON.stringify({
-        full_name: fullName,
-        email: Email,
-        phone_number: number,
-        password: password,
-        user_type: "patient",
-      });
+    //   var raw = JSON.stringify({
+    //     full_name: fullName,
+    //     username: username,
+    //     email: Email,
+    //     phone_number: number,
+    //     password: password,
+    //     user_type: "patient",
+    //   });
 
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
+    //   var requestOptions = {
+    //     method: "POST",
+    //     headers: myHeaders,
+    //     body: raw,
+    //     redirect: "follow",
+    //   };
 
-      fetch("https://beok.onrender.com/users/", requestOptions)
-        .then((response) => response.text())
-        .then((result) => {
-          console.log(result);
-          if (result.includes("message")) {
-            setIsLoading(false);
-            navigation.navigate("Userverification", {
-              email: Email,
-              number: number,
-            });
-          } else {
-            if (result.includes("email")) {
-              setIsLoading(false);
-              alert("user With this email already exists");
-            } else {
-              setIsLoading(false);
-              alert("User with this phone number already exists");
-            }
-          }
-        })
-        .catch((error) => console.log("error", error));
-    } else {
-      setIsLoading(false);
-      alert("there is errors in your inputs");
-    }
+    //   fetch(`${url}/users/`, requestOptions)
+    //     .then((response) => response.text())
+    //     .then((result) => {
+    //       console.log(result);
+    //       if (result.includes("message")) {
+    //         setIsLoading(false);
+    //         navigation.navigate("Userverification", {
+    //           email: Email,
+    //           number: number,
+    //         });
+    //       } else {
+    //         if (result.includes("email")) {
+    //           setIsLoading(false);
+    //           alert("user With this email already exists");
+    //         } else {
+    //           setIsLoading(false);
+    //           alert("User with this phone number already exists");
+    //         }
+    //       }
+    //     })
+    //     .catch((error) => console.log("error", error));
+    // } else {
+    //   setIsLoading(false);
+    //   alert("there is errors in your inputs");
+    // }
   };
   return (
     <KeyboardWrapper>

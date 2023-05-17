@@ -58,7 +58,11 @@ const Onboading = ({ navigation }) => {
               style={[styles.btn]}
               onPress={() => navigation.replace("Auth")}
             >
-              <Text style={{ color: "#BCBCBC" }}>skip and get started</Text>
+              <Text
+                style={{ color: "#BCBCBC", fontSize: 17, fontWeight: "800" }}
+              >
+                skip and get started
+              </Text>
             </TouchableOpacity>
           )}
         </View>

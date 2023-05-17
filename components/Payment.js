@@ -6,95 +6,46 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  useWindowDimensions,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import PaymentHeader from "./PaymentHeader";
 import PhoneInput from "react-native-phone-number-input";
 import Colors from "../components/Colors";
-
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 const Payment = () => {
-  const [phonenumber, setPhoneNumber] = useState("");
   const [activepy, setActivepy] = useState("momo");
   const navigation = useNavigation();
-  const Change = (item) => {
-    setActivepy(item.click);
-    console.log(activepy);
-  };
-  const SavedNumber = [
-    {
-      image: require("../assets/Mtn.png"),
-      agency: "MTN",
-      number: "+250782214360",
-    },
-    {
-      image: require("../assets/Mtn.png"),
-      agency: "MTN",
-      number: "+250782214360",
-    },
-    {
-      image: require("../assets/Airtel.png"),
-      agency: "Airtel",
-      number: "+250737865431",
-    },
-  ];
+  const layout = useWindowDimensions();
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "momo", title: "Mobile Money" },
+    { key: "card", title: " Card" },
+    { key: "paypal", title: "Paypal" },
+  ]);
 
-  const Type = [
-    {
-      title: "Mobile Money",
-      click: "momo",
-      screen: "momo",
-    },
-    {
-      title: "Debit/Credit card",
-      click: "card",
-      screen: "card",
-    },
-    {
-      title: "paypal",
-      click: "paypal",
-      screen: "paypal",
-    },
-  ];
-  return (
-    <SafeAreaView style={{ margin: 30 }}>
-      <FlatList
-        data={Type}
-        renderItem={({ item }) => (
-          <View style={{ flex: 1, paddingTop: 40 }}>
-            <TouchableOpacity
-              onPress={() => Change(item)}
-              style={{ padding: 7 }}
-            >
-              {item.active ? (
-                <Text
-                  style={{
-                    paddingBottom: 5,
-                    fontWeight: "500",
-                    lineHeight: 14,
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  {item.title}
-                </Text>
-              ) : (
-                <Text
-                  style={{
-                    paddingHorizontal: 15,
-                    fontWeight: "500",
-                    lineHeight: 14,
-                  }}
-                >
-                  {item.title}
-                </Text>
-              )}
-            </TouchableOpacity>
-          </View>
-        )}
-        horizontal
-      />
-      
-      <View style={{}}>
+  const Momo = () => {
+    const [phonenumber, setPhoneNumber] = useState("");
+    const SavedNumber = [
+      {
+        image: require("../assets/Mtn.png"),
+        agency: "MTN",
+        number: "+250782214360",
+      },
+      {
+        image: require("../assets/Mtn.png"),
+        agency: "MTN",
+        number: "+250782214360",
+      },
+      {
+        image: require("../assets/Airtel.png"),
+        agency: "Airtel",
+        number: "+250737865431",
+      },
+    ];
+    return (
+      <View style={{ marginLeft: 20, marginTop: 10 }}>
         <Text style={{ fontWeight: "100", fontSize: 15 }}>Saved Number</Text>
         <FlatList
           style={{ marginBottom: 25 }}
@@ -121,8 +72,7 @@ const Payment = () => {
             </TouchableOpacity>
           )}
         />
-      </View>
-      <View>
+
         <Text style={{ fontWeight: "200", marginBottom: 5 }}>
           New Payment Method
         </Text>
@@ -135,28 +85,81 @@ const Payment = () => {
             borderRadius: 7,
           }}
           textContainerStyle={{}}
-          onChangeFormattedText={() => setPhoneNumber(text)}
+          onChangeFormattedText={(text) => setPhoneNumber(text)}
         />
       </View>
-
+    );
+  };
+  const Card = () => {
+    return (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Text>Cards payment</Text>
+        <Text>card Payment</Text>
       </View>
+    );
+  };
+
+  const Paypal = () => {
+    return (
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <Text>Paypal Payment</Text>
+      </View>
+    );
+  };
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case "momo":
+        return <Momo />;
+      case "card":
+        return <Card />;
+      case "paypal":
+        return <Paypal />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <SafeAreaView style={{ marginTop: 30, height: "70%" }}>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        renderTabBar={(props) => (
+          <TabBar
+            labelStyle={{ color: "black", textTransform: "capitalize" }}
+            tabStyle={{
+              backgroundColor: "#f5fcf7",
+              height: layout.height / 13,
+              zIndex: 4,
+            }}
+            {...props}
+            indicatorStyle={{ color: "red" }}
+            activeColor="purple"
+          />
+        )}
+      />
       <View
-        style={{ border: 1, width: "80%", height: 2, borderColor: "black" }}
+        style={{
+          width: "90%",
+          height: 1,
+          backgroundColor: "black",
+          alignSelf: "center",
+        }}
       />
       <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
           marginTop: 20,
+          marginHorizontal: 40,
         }}
       >
         <Text style={{ fontSize: 19 }}>Price</Text>
         <Text style={{ fontWeight: "bold", fontSize: 19 }}>20,000 Rwf</Text>
       </View>
       <TouchableOpacity
-      onPress={()=>navigation.navigate('Results')}
+        onPress={() => navigation.navigate("Results")}
         style={{
           marginVertical: 30,
           backgroundColor: "#93BD67",
@@ -164,6 +167,7 @@ const Payment = () => {
           height: 40,
           justifyContent: "center",
           alignItems: "center",
+          marginHorizontal: 20,
         }}
       >
         <Text style={{ color: "white", fontWeight: "600", fontSize: 17 }}>
