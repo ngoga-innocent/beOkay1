@@ -18,13 +18,11 @@ import KeyboardWrapper from "../../components/keyboardWrapper";
 import Button from "../../components/Button";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { ScrollView } from "react-native-gesture-handler";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Description = ({ navigation, route }) => {
   const [value, setValue] = useState("");
   const height = useHeaderHeight();
-  const ChangeDesc = (value) => {
-    setValue(value);
-  };
 
   return (
     // <KeyboardWrapper>
@@ -35,69 +33,112 @@ const Description = ({ navigation, route }) => {
     >
       <ScrollView>
         <Header />
-        <View style={{ marginLeft: 16, marginTop: 16 }}>
-          <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>
-            Consult with Be Okay
-          </Text>
-          <Text style={{ maxWidth: 180, color: "#BDBDBD", fontSize: 15 }}>
-            We take care of your health as is variable to you!
-          </Text>
-        </View>
-        <View
-          style={{
-            marginHorizontal: 8,
-            marginTop: 48,
-            height: 98,
-            alignItems: "center",
-            backgroundColor: COLORS.white,
-          }}
-        >
-          <Text>Adress your Consultation</Text>
-          <Text style={styles.text}>{route.params.part}</Text>
-        </View>
-        <View style={{ marginHorizontal: 30 }}>
-          <Text>Please select</Text>
-          <TouchableOpacity
+        <View style={{ marginHorizontal: "2%" }}>
+          <View style={{ marginTop: 16 }}>
+            <Text
+              style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}
+            >
+              Consult with Be Okay
+            </Text>
+            <Text
+              style={{
+                maxWidth: 180,
+                color: "#7E7E7E",
+
+                fontSize: 15,
+                fontWeight: "400",
+              }}
+            >
+              We take care of your health as is variable to you!
+            </Text>
+          </View>
+          <View
             style={{
-              flexDirection: "row",
+              marginTop: 48,
+              height: 98,
               alignItems: "center",
-              marginBottom: 6,
             }}
           >
-            <Image source={require("../../assets/lungs.png")} />
-            <Text style={{ marginLeft: 10 }}>Lungs</Text>
-          </TouchableOpacity>
-          <View>
-            <Text style={{ marginBottom: 5 }}>Describe Illiness</Text>
-            <TextInput
-              autoCorrect={false}
-              multiline
-              numberOfLines={7}
+            <Text style={{ marginBottom: 14, fontWeight: "bold" }}>
+              Address your Consultation
+            </Text>
+            <View style={styles.textCover}>
+              <Text style={styles.text}>{route.params.part}</Text>
+            </View>
+          </View>
+          <View
+            style={{
+              backgroundColor: "white",
+              paddingHorizontal: 10,
+              paddingVertical: 20,
+              justifyContent: "center",
+              borderTopEndRadius: 10,
+              borderTopLeftRadius: 10,
+            }}
+          >
+            <View style={{ marginLeft: "7%" }}>
+              <Text style={{ marginBottom: 20, fontWeight: "bold" }}>
+                Please select
+              </Text>
+              <TouchableOpacity
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginBottom: 6,
+                }}
+              >
+                <Image source={require("../../assets/lungs.png")} />
+                <Text
+                  style={{ marginLeft: 10, fontSize: 18, fontWeight: "700" }}
+                >
+                  Lungs
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View>
+              <Text
+                style={{
+                  marginBottom: 5,
+                  marginLeft: "7%",
+                  fontWeight: "bold",
+                }}
+              >
+                Describe illness
+              </Text>
+              <TextInput
+                autoCorrect={false}
+                multiline
+                style={{
+                  borderRadius: 5,
+                  backgroundColor: COLORS.paragraph,
+                  height: 100,
+
+                  paddingTop: 6,
+                  textAlignVertical: "top",
+                  borderRadius: 10,
+                  marginLeft: 5,
+                  paddingLeft: 4,
+                }}
+                onChangeText={(text) => setValue(text)}
+                value={value}
+              />
+            </View>
+            <Button
+              text="Next"
+              onPress={() => navigation.navigate("Method", { desc: value })}
               style={{
-                borderRadius: 5,
-                backgroundColor: COLORS.paragraph,
-                height: 200,
-                marginLeft: 4,
-                paddingLeft: 10,
-                paddingTop: 3,
-                textAlignVertical: "top",
-                borderRadius: 10,
+                backgroundColor: COLORS.primary,
+                height: 50,
+                marginTop: 20,
+                marginBottom: 10,
+                width: "100%",
+
+                alignSelf: "center",
               }}
-              onChangeText={(value) => ChangeDesc(value)}
-              value={value}
+              style1={{ color: "white", fontWeight: "bold" }}
             />
           </View>
-          <Button
-            text="Next"
-            onPress={() => navigation.navigate("Method", { desc: value })}
-            style={{
-              backgroundColor: COLORS.primary,
-              height: 50,
-              marginTop: 10,
-              marginBottom: 10,
-              width: "100%",
-            }}
-          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -109,12 +150,15 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.white,
-
-    marginLeft: 10,
-    marginTop: 10,
+    fontWeight: "bold",
     padding: 10,
-    borderRadius: 10,
+  },
+  textCover: {
+    borderRadius: 40,
     backgroundColor: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "40%",
   },
   input: {
     borderColor: COLORS.primary,

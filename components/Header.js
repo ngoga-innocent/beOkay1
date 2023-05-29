@@ -19,7 +19,8 @@ const Header = () => {
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={COLORS.primary} />
       <View style={styles.header}>
-        <View
+        <TouchableOpacity
+          onPress={() => navigation.navigate("profile")}
           style={{
             alignItems: "center",
             justifyContent: "center",
@@ -35,7 +36,7 @@ const Header = () => {
             source={require("../assets/Ellipse15.png")}
             style={{ width: 50, height: 50, alignSelf: "center" }}
           />
-        </View>
+        </TouchableOpacity>
         <View
           style={{
             flexDirection: "row",

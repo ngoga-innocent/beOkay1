@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { React, useState } from "react";
 import { COLORS } from "../../../components/Colors";
@@ -35,8 +36,14 @@ const Aiconsultation = ({ navigation }) => {
     }
   };
   return (
-    <KeyboardAvoidingView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "position" : null}
+      enabled
+      style={{ flex: 2 }}
+      keyboardVerticalOffset={120}
+    >
       <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         style={{ marginHorizontal: 5 }}
       >
@@ -46,6 +53,7 @@ const Aiconsultation = ({ navigation }) => {
             height: 161,
             margin: 8,
             padding: 4,
+            flex: 1,
           }}
         >
           <Text
@@ -74,7 +82,7 @@ const Aiconsultation = ({ navigation }) => {
           </View>
         </View>
         <View style={{ margin: 12 }}>
-          <Text style={{ marginVertical: 6 }}>
+          <Text style={{ marginVertical: 6, fontWeight: "bold" }}>
             Did You consult with Doctor?
           </Text>
           <RadioForm
@@ -85,10 +93,13 @@ const Aiconsultation = ({ navigation }) => {
             animation
             buttonColor={COLORS.paragraph}
             selectedButtonColor={COLORS.primary}
-            buttonWrapStyle={{ margin: 10 }}
+            buttonWrapStyle={{ margin: 40 }}
+            // style={{ margin: 5, padding: 4 }}
+            buttonStyle={{ margin: 50 }}
+            labelStyle={{ marginRight: 40 }}
           />
           <View style={{ marginVertical: 5 }}>
-            <Text>Describe your Illness</Text>
+            <Text style={{ fontWeight: "800" }}>Describe your Illness</Text>
             <TextInput
               multiline
               numberOfLines={6}
@@ -102,15 +113,18 @@ const Aiconsultation = ({ navigation }) => {
             />
           </View>
           <View>
-            <Text>Previous Illness</Text>
+            <Text style={{ fontWeight: "800" }}>Previous Illness</Text>
             <Input
               name2="search"
-              style={{ backgroundColor: COLORS.paragraph }}
+              style={{ backgroundColor: COLORS.paragraph, width: "100%" }}
               placeholder="Type of illness"
+              style1={{ marginRight: "8%" }}
             />
           </View>
           <View style={{ marginTop: 5 }}>
-            <Text>Estimated Body Temperature</Text>
+            <Text style={{ fontWeight: "800" }}>
+              Estimated Body Temperature
+            </Text>
             <View
               style={{
                 flexDirection: "row",
@@ -119,7 +133,7 @@ const Aiconsultation = ({ navigation }) => {
               }}
             >
               <Slider
-                style={{ width: 300, height: 60 }}
+                style={{ width: "80%", height: 60 }}
                 minimumValue={0}
                 maximumValue={1}
                 minimumTrackTintColor={COLORS.primary}
@@ -140,7 +154,7 @@ const Aiconsultation = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
-          <Text>Are You pregnant?</Text>
+          <Text style={{ fontWeight: "800" }}>Are You pregnant?</Text>
           <RadioForm
             radio_props={item}
             initial={0}
@@ -149,20 +163,21 @@ const Aiconsultation = ({ navigation }) => {
             animation
             buttonColor={COLORS.paragraph}
             selectedButtonColor={COLORS.primary}
+            labelStyle={{ marginRight: 40 }}
           />
 
           <View style={{ marginTop: 5 }}>
             {pregnant == 0 ? (
               <View
                 style={{
-                  flexDirection: "row-reverse",
+                  flexDirection: "row",
                   alignItems: "center",
                   justifyContent: "center",
                   marginRight: 5,
                 }}
               >
                 <Slider
-                  style={{ width: 300, height: 60 }}
+                  style={{ width: "70%", height: 60 }}
                   minimumValue={0}
                   maximumValue={0.1}
                   minimumTrackTintColor={COLORS.primary}
@@ -187,33 +202,42 @@ const Aiconsultation = ({ navigation }) => {
             ) : null}
           </View>
           <View>
-            <Text>Any Medication Taken Before</Text>
+            <Text style={{ fontWeight: "800" }}>
+              Current Medication or Treatment
+            </Text>
             <Input
               name2="search"
-              style={{ backgroundColor: COLORS.paragraph }}
+              style={{ backgroundColor: COLORS.paragraph, width: "100%" }}
               placeholder="Medication"
+              style1={{ marginRight: "8%" }}
             />
           </View>
           <View>
-            <Text>What symptom is Bothering you most?</Text>
+            <Text style={{ fontWeight: "800", marginTop: 10 }}>
+              What symptom is Bothering you most?
+            </Text>
             <Input
               name2="search"
-              style={{ backgroundColor: COLORS.paragraph }}
+              style={{ backgroundColor: COLORS.paragraph, width: "100%" }}
               placeholder="Type of illness"
+              style1={{ marginRight: "8%" }}
             />
           </View>
           <View>
-            <Text style={{ maxWidth: 190 }}>
+            <Text style={{ maxWidth: 400, fontWeight: "800", marginTop: 10 }}>
               Is there any specific diagnosis you are windering about?
             </Text>
             <Input
               name2="search"
-              style={{ backgroundColor: COLORS.paragraph }}
+              style={{ backgroundColor: COLORS.paragraph, width: "100%" }}
               placeholder="Type of illness"
+              style1={{ marginRight: "8%" }}
             />
           </View>
           <View style={{ marginTop: 5 }}>
-            <Text>Pain Duration</Text>
+            <Text style={{ fontWeight: "800", marginTop: 10 }}>
+              Pain Duration
+            </Text>
             <View
               style={{
                 flexDirection: "row",
@@ -222,7 +246,7 @@ const Aiconsultation = ({ navigation }) => {
               }}
             >
               <Slider
-                style={{ width: 300, height: 60 }}
+                style={{ width: "80%", height: 60 }}
                 minimumValue={0}
                 maximumValue={0.3}
                 minimumTrackTintColor={COLORS.primary}
@@ -278,6 +302,7 @@ const Aiconsultation = ({ navigation }) => {
                 width: "100%",
                 marginBottom: 30,
               }}
+              style1={{ color: "white", fontWeight: "bold" }}
               onPress={() => navigation.navigate("AiResult")}
             />
           ) : (
@@ -289,6 +314,7 @@ const Aiconsultation = ({ navigation }) => {
                 width: "100%",
                 marginBottom: 30,
               }}
+              style1={{ color: "white", fontWeight: "bold" }}
             />
           )}
         </View>

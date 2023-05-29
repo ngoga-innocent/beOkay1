@@ -85,7 +85,7 @@ const Login = ({ navigation }) => {
           style={{ color: COLORS.primary }}
           title1=" On Be Okay"
           style1={{ color: COLORS.text }}
-          paragraph="Lorem ipsum dolor amet consecteur.Gravida sit fermentum ac"
+          paragraph="Stay health using our digital healthcare services(self-test technology,live chat and home followups)"
           style2={{ color: COLORS.paragraph }}
         />
         <Text style={{ fontSize: 20, marginLeft: 32 }}>LOGIN</Text>

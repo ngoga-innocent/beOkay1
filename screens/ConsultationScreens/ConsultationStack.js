@@ -15,6 +15,8 @@ import Paypal from "../Payments/Paypal";
 import { COLORS } from "../../components/Colors";
 import Aiconsultation from "./AIScreen/Aiconsultation";
 import Icon from "react-native-vector-icons/AntDesign";
+import Profile from "../Profile/Profile";
+import Patient_Profile from "../Profile/Patient_Profile";
 
 const ConsultationStack = ({ navigation }) => {
   const stack = createStackNavigator();
@@ -40,6 +42,7 @@ const ConsultationStack = ({ navigation }) => {
         component={Method}
         options={{ headerShown: false }}
       />
+
       <stack.Screen
         name="Aiconsultation"
         component={Aiconsultation}
@@ -121,10 +124,37 @@ const ConsultationStack = ({ navigation }) => {
         }}
       />
       <stack.Screen
-        name="payment"
-        component={Payment}
+        name="profile"
+        component={Profile}
         options={{ headerShown: false }}
       />
+      <stack.Screen
+        name="patient_profile"
+        component={Patient_Profile}
+        options={{
+          headerTitle: "Pateint Profile",
+          headerLeft: () => (
+            <View>
+              <TouchableOpacity onPress={() => navigation.navigate("profile")}>
+                <Icon name="arrowleft" size={30} color="black" />
+              </TouchableOpacity>
+            </View>
+          ),
+          headerStyle: {
+            height: 120,
+            backgroundColor: "#8BB85C",
+            elevation: 30,
+            shadowColor: "#000",
+          },
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: COLORS.white,
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        }}
+      />
+
       <stack.Screen
         name="momo"
         component={Momo}

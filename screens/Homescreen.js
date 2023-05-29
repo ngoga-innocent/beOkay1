@@ -39,10 +39,16 @@ export default class Homescreen extends Component {
             marginTop: "50%",
           }}
         />
-        <Text style={{ color: COLORS.white, fontSize: 18, marginTop: "50%" }}>
-          Powered by HOUSE MAJOR Ltd
-        </Text>
-
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Text style={{ color: COLORS.white, fontSize: 15, marginTop: "50%" }}>
+            Powered by
+          </Text>
+          <Text
+            style={{ color: COLORS.white, fontSize: 18, fontWeight: "bold" }}
+          >
+            HOUSE MAJOR Ltd
+          </Text>
+        </View>
         <Text style={{ color: COLORS.white, fontSize: 18, marginTop: "50%" }}>
           Sponsors
         </Text>

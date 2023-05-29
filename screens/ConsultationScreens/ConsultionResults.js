@@ -6,6 +6,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { useFonts } from "expo-font";
 import Fonts from "../../components/Fonts";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import MapScreen from "../../components/map";
 
 const ConsultationResults = () => {
   const [Font] = useFonts({
@@ -202,6 +203,9 @@ const ConsultationResults = () => {
                 </View>
               )}
             />
+            <View style={{ marginTop: 20 }}>
+              <MapScreen />
+            </View>
           </View>
         </View>
       </View>
