@@ -18,12 +18,14 @@ import Icon from "react-native-vector-icons/AntDesign";
 import Profile from "../Profile/Profile";
 import Patient_Profile from "../Profile/Patient_Profile";
 
+import ScheduleAppointment from "../DoctorScreen/ScheduleAppointment";
+
 const ConsultationStack = ({ navigation }) => {
   const stack = createStackNavigator();
   return (
-    <stack.Navigator initialRouteName="Consultation">
+    <stack.Navigator initialRouteName="Consultations">
       <stack.Screen
-        name="Consultation"
+        name="Consultations"
         component={Consultation}
         options={{ headerShown: false }}
       />
@@ -154,6 +156,13 @@ const ConsultationStack = ({ navigation }) => {
           },
         }}
       />
+      {/* Doctor Screens with Buttom Tab */}
+      <stack.Screen
+        name="Schedule"
+        component={ScheduleAppointment}
+        options={{ headerShown: false }}
+      />
+      {/* End Doctor Screens */}
 
       <stack.Screen
         name="momo"

@@ -37,7 +37,8 @@
     "react-native-simple-radio-button": "^2.7.4",
     "react-native-svg": "12.3.0",
     "react-native-tab-view": "^3.5.1",
-    "react-native-vector-icons": "^9.2.0"
+    "react-native-vector-icons": "^9.2.0",
+    "expo-document-picker": "~10.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

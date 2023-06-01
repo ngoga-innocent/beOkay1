@@ -16,7 +16,7 @@ import Slider from "@react-native-community/slider";
 import RadioForm from "react-native-simple-radio-button";
 import { COLORS } from "../../components/Colors";
 const Patient_Profile = () => {
-  const [range, setRange] = useState("32");
+  const [range, setRange] = useState("3");
   const item = [
     { label: "Yes", value: 0 },
     { label: "No", value: 1 },
@@ -60,8 +60,8 @@ const Patient_Profile = () => {
     <KeyboardAvoidingView
       behavior="position"
       enabled
-      style={{ flex: 2 }}
-      keyboardVerticalOffset={120}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={40}
     >
       <ScrollView
         style={{

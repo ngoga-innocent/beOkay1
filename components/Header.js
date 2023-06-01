@@ -13,10 +13,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import Signup from "../screens/loginScreens/Signup";
 
-const Header = () => {
+const Header = ({ style }) => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, style]}>
       <StatusBar backgroundColor={COLORS.primary} />
       <View style={styles.header}>
         <TouchableOpacity
