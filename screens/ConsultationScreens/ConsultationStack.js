@@ -17,6 +17,9 @@ import Aiconsultation from "./AIScreen/Aiconsultation";
 import Icon from "react-native-vector-icons/AntDesign";
 import Profile from "../Profile/Profile";
 import Patient_Profile from "../Profile/Patient_Profile";
+import Mycalendar from "../DoctorScreen/Mycalendar";
+import ConsultationHistory from "../DoctorScreen/ConsultationHistory";
+import PatientRecord from "../DoctorScreen/patientRecord";
 
 import ScheduleAppointment from "../DoctorScreen/ScheduleAppointment";
 
@@ -162,11 +165,26 @@ const ConsultationStack = ({ navigation }) => {
         component={ScheduleAppointment}
         options={{ headerShown: false }}
       />
+      <stack.Screen
+        name="mycalendar"
+        component={Mycalendar}
+        options={{ headerShown: false }}
+      />
+      <stack.Screen
+        name="history"
+        component={ConsultationHistory}
+        options={{ headerShown: false }}
+      />
+      <stack.Screen
+        name="patientRecord"
+        component={PatientRecord}
+        options={{ headerShown: false }}
+      />
       {/* End Doctor Screens */}
 
       <stack.Screen
-        name="momo"
-        component={Momo}
+        name="payment"
+        component={Payment}
         options={{ headerShown: false }}
       />
       <stack.Screen

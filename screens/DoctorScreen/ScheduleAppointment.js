@@ -14,8 +14,9 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import CalendarScreen from "./Calendar";
 
-const ScheduleAppointment = () => {
+const ScheduleAppointment = ({ navigation }) => {
   const date = new Date().getDate();
   const hour = new Date().getHours();
   const time = new Date().getMonth();
@@ -93,6 +94,7 @@ const ScheduleAppointment = () => {
           style1={{ fontSize: 15 }}
         />
         <Button
+          onPress={() => navigation.navigate("mycalendar")}
           text="My Calendar"
           style={{
             backgroundColor: COLORS.backgrounds,
@@ -223,7 +225,9 @@ const ScheduleAppointment = () => {
               </View>
             )}
           />
+          {/* <CalendarScreen /> */}
           <Button
+            onPress={() => navigation.navigate("history")}
             text="Schedule an appoint"
             style={{
               height: height / 17,
