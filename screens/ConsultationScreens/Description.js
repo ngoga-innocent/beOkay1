@@ -19,10 +19,53 @@ import Button from "../../components/Button";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Url from "../../Url";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
 const Description = ({ navigation, route }) => {
   const [value, setValue] = useState("");
   const height = useHeaderHeight();
+  const [choice, setChoice] = useState("Myself");
+  const [isLoading, setLoading] = useState(false);
+
+  const getResults = async () => {
+    // const JWT = await AsyncStorage.getItem("token");
+    setLoading(true);
+    const JWT =
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2MzIwMTI2LCJpYXQiOjE2ODYyMzM3MjYsImp0aSI6IjA5Y2Y1MjI5YzkyNjQ0NWViYjI3OTExYjE3NTRjZTJhIiwidXNlcl9pZCI6Ijg4NTY2MjZlLWRlMTUtNGE0Zi04NmVlLWZmYmE3N2NkZmZhZCIsInVzZXJuYW1lIjoiU29waG9uaWUiLCJmdWxsX25hbWUiOiJCZW5qYW1pbiBOZ2Frb3V0b3UiLCJlbWFpbCI6InNvcGhvLm5nYWtAZ21haWwuY29tZWVlZWUiLCJwaG9uZV9udW1iZXIiOiIrMjUwNzg4ODg4IiwiYWRkcmVzcyI6bnVsbCwidXNlcl90eXBlIjoicGF0aWVudCJ9.bkQWCdWJdDBaOewcNHbsDfNaUDzPiuS1yWpG41bCp4I";
+
+    console.log(JWT);
+    console.log(value);
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "JWT " + `${JWT}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      symptoms: value,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`${Url}/patients/consult-doctor/?choice=Myself`, requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          navigation.navigate("Method");
+          setLoading(false);
+          return response.json();
+        } else {
+          setLoading(false);
+          return response.json();
+        }
+      })
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  };
 
   return (
     // <KeyboardWrapper>
@@ -31,6 +74,7 @@ const Description = ({ navigation, route }) => {
       behavior={Platform.OS == "ios" ? "position" : null}
       // keyboardVerticalOffset={height}
     >
+      <Spinner visible={isLoading} />
       <ScrollView>
         <Header />
         <View style={{ marginHorizontal: "2%" }}>
@@ -126,7 +170,7 @@ const Description = ({ navigation, route }) => {
             </View>
             <Button
               text="Next"
-              onPress={() => navigation.navigate("Method", { desc: value })}
+              onPress={() => getResults()}
               style={{
                 backgroundColor: COLORS.primary,
                 height: 50,

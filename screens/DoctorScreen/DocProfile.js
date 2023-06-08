@@ -7,6 +7,7 @@ import {
   Image,
   Dimensions,
   Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 import { React, useState } from "react";
 import { COLORS, width, height } from "../../components/Colors";
@@ -124,12 +125,17 @@ const Docprofile = ({ route, navigation }) => {
   };
 
   return (
-    <KeyboardWrapper>
+    <KeyboardAvoidingView
+      enabled
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 70 : 0}
+      style={{ flex: 1 }}
+    >
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Spinner visible={isLoading} />
         <View
           style={{
-            marginTop: width / 5,
+            marginTop: width / 8,
             marginBottom: -width / 3,
             flexDirection: "row",
             alignItems: "center",
@@ -138,23 +144,25 @@ const Docprofile = ({ route, navigation }) => {
         >
           <Image
             source={require("../../assets/logo2.png")}
-            style={{ width: width / 5, height: height / 10 }}
+            style={{ width: width / 10, height: height / 18 }}
           />
-          <Text style={{ fontSize: 20, fontWeight: "600", color: "white" }}>
+          <Text style={{ fontSize: 17, fontWeight: "600", color: "white" }}>
             Be Okay
           </Text>
         </View>
         <SignupHeader
           title="Complete Profile"
           paragraph="Please take few minutes to complete your Profile"
+          style={{ marginBottom: -height / 30 }}
+          style2={{ marginBottom: height / 23 }}
         />
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-evenly",
-            marginBottom: height / 30,
-            height: height / 8,
+            marginBottom: height / 40,
+            height: height / 10,
             width: "90%",
             alignSelf: "center",
             backgroundColor: COLORS.white,
@@ -182,7 +190,7 @@ const Docprofile = ({ route, navigation }) => {
           >
             <Avatar
               source={require("../../assets/Ellipse15.png")}
-              size="large"
+              size="medium"
             />
             <Text
               style={{
@@ -208,11 +216,11 @@ const Docprofile = ({ route, navigation }) => {
               multiline
               placeholder="Short Bio"
               numberOfLines={4}
-              style={{ height: height / 10, width: "100%" }}
+              style={{ height: height / 14, width: "100%" }}
             />
             <Dropdown Items={Status} placeholder="status" />
             <Dropdown Items={Specialization} placeholder="Specialisations" />
-            <View style={{ marginTop: 15 }}>
+            <View style={{ marginTop: 12 }}>
               <Text style={{ fontSize: 16, fontWeight: "bold" }}>
                 Consultation Availability
               </Text>
@@ -224,7 +232,7 @@ const Docprofile = ({ route, navigation }) => {
             <View
               style={{
                 backgroundColor: COLORS.backgrounds,
-                marginTop: 40,
+                marginTop: 32,
                 borderRadius: 8,
                 overflow: "visible",
               }}
@@ -287,7 +295,7 @@ const Docprofile = ({ route, navigation }) => {
           </View>
         </View>
       </ScrollView>
-    </KeyboardWrapper>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -295,7 +303,7 @@ export default Docprofile;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: COLORS.doctor,
   },
   SecondView: {

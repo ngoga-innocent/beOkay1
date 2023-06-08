@@ -9,6 +9,7 @@ import Input from "../../components/Input";
 import Icon from "react-native-vector-icons/Ionicons";
 import Spinner from "react-native-loading-spinner-overlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Url from "../../Url";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -42,38 +43,36 @@ const Login = ({ navigation }) => {
     setSecureText(false);
   };
   const loginCheck = () => {
-    // if (accept) {
-    //   setIsLoading(true);
-    //   var myHeaders = new Headers();
-    //   myHeaders.append("Content-Type", "application/json");
-    //   var raw = JSON.stringify({
-    //     username: email,
-    //     password: password,
-    //   });
-    //   var requestOptions = {
-    //     method: "POST"
-    //     headers: myHeaders,
-    //     body: raw,
-    //     redirect: "follow",
-    //   };
-    //   fetch("https://beok.onrender.com/login/", requestOptions)
-    //     .then((response) => response.json())
-
-    //     .catch((error) => console.log("error", error))
-    //     .then((response) => {
-    //       const res = response;
-    //       if (res.access) {
-    //         setIsLoading(false);
-    //         AsyncStorage.setItem("token", res.access);
-    navigation.replace("Tabs");
-    // } else {
-    //   setIsLoading(false);
-    //   alert(res.detail);
-    // }
-    //     });
-    // } else {
-    //   alert("please accept the agreement");
-    // }
+    if (accept) {
+      setIsLoading(true);
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      var raw = JSON.stringify({
+        username: email,
+        password: password,
+      });
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      fetch(`${Url}/login/`, requestOptions)
+        .then((response) => response.json())
+        .catch((error) => console.log("error", error))
+        .then((response) => {
+          if (response.access) {
+            setIsLoading(false);
+            AsyncStorage.setItem("token", response.access);
+            navigation.replace("Tabs");
+          } else {
+            setIsLoading(false);
+            return alert(res.detail);
+          }
+        });
+    } else {
+      alert("please accept the agreement");
+    }
   };
 
   return (

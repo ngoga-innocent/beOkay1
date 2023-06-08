@@ -1,1 +1,1 @@
-// export default url = "https://beok.onrender.com";
+export default url = "https://beok.onrender.com";
