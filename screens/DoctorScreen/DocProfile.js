@@ -14,10 +14,7 @@ import { COLORS, width, height } from "../../components/Colors";
 import SignupHeader from "../loginScreens/SignupHeader";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import KeyboardWrapper from "../../components/keyboardWrapper";
-import Icon from "react-native-vector-icons/Ionicons";
-import Material from "react-native-vector-icons/MaterialCommunityIcons";
-import useNavigation from "@react-navigation/native";
+
 import axios from "axios";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import url from "../../Url";
@@ -288,9 +285,7 @@ const Docprofile = ({ route, navigation }) => {
                 marginTop: 20,
                 alignSelf: "center",
               }}
-              onPress={() =>
-                navigation.navigate("Consultation", { screen: "Schedule" })
-              }
+              onPress={() => navigation.navigate("Dashboard")}
             />
           </View>
         </View>

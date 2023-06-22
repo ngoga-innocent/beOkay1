@@ -98,20 +98,22 @@ const Aiconsultation = ({ navigation }) => {
             buttonStyle={{ margin: 50 }}
             labelStyle={{ marginRight: 40 }}
           />
-          <View style={{ marginVertical: 5 }}>
-            <Text style={{ fontWeight: "800" }}>Describe your Illness</Text>
-            <TextInput
-              multiline
-              numberOfLines={6}
-              style={{
-                backgroundColor: COLORS.paragraph,
-                border: 1,
-                borderRadius: 12,
-                height: 100,
-                textAlignVertical: "top",
-              }}
-            />
-          </View>
+          {value == 0 && (
+            <View style={{ marginVertical: 5 }}>
+              <Text style={{ fontWeight: "800" }}>Describe your Illness</Text>
+              <TextInput
+                multiline
+                numberOfLines={6}
+                style={{
+                  backgroundColor: COLORS.paragraph,
+                  border: 1,
+                  borderRadius: 12,
+                  height: 100,
+                  textAlignVertical: "top",
+                }}
+              />
+            </View>
+          )}
           <View>
             <Text style={{ fontWeight: "800" }}>Previous Illness</Text>
             <Input

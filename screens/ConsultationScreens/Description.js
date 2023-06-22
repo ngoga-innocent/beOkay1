@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   useWindowDimensions,
   Platform,
+  Alert,
 } from "react-native";
 import { React, useState } from "react";
 import Header from "../../components/Header";
@@ -22,21 +23,22 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Url from "../../Url";
 import Spinner from "react-native-loading-spinner-overlay/lib";
+import Results from "./AIScreen/Results";
 
 const Description = ({ navigation, route }) => {
   const [value, setValue] = useState("");
   const height = useHeaderHeight();
   const [choice, setChoice] = useState("Myself");
   const [isLoading, setLoading] = useState(false);
+  const [results, setResults] = useState("");
+  const [prescription, setPrescription] = useState("");
+  const [recommended_test, setRecTest] = useState("");
+  const [recommendation, setRecommendation] = useState("");
 
   const getResults = async () => {
-    // const JWT = await AsyncStorage.getItem("token");
+    const JWT = await AsyncStorage.getItem("token");
     setLoading(true);
-    const JWT =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2MzIwMTI2LCJpYXQiOjE2ODYyMzM3MjYsImp0aSI6IjA5Y2Y1MjI5YzkyNjQ0NWViYjI3OTExYjE3NTRjZTJhIiwidXNlcl9pZCI6Ijg4NTY2MjZlLWRlMTUtNGE0Zi04NmVlLWZmYmE3N2NkZmZhZCIsInVzZXJuYW1lIjoiU29waG9uaWUiLCJmdWxsX25hbWUiOiJCZW5qYW1pbiBOZ2Frb3V0b3UiLCJlbWFpbCI6InNvcGhvLm5nYWtAZ21haWwuY29tZWVlZWUiLCJwaG9uZV9udW1iZXIiOiIrMjUwNzg4ODg4IiwiYWRkcmVzcyI6bnVsbCwidXNlcl90eXBlIjoicGF0aWVudCJ9.bkQWCdWJdDBaOewcNHbsDfNaUDzPiuS1yWpG41bCp4I";
 
-    console.log(JWT);
-    console.log(value);
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "JWT " + `${JWT}`);
     myHeaders.append("Content-Type", "application/json");
@@ -52,7 +54,7 @@ const Description = ({ navigation, route }) => {
       redirect: "follow",
     };
 
-    fetch(`${Url}/patients/consult-doctor/?choice=Myself`, requestOptions)
+    fetch(`${Url}/patients/consult-doctor/?choice=${choice}`, requestOptions)
       .then((response) => {
         if (response.ok) {
           navigation.navigate("Method");
@@ -60,10 +62,24 @@ const Description = ({ navigation, route }) => {
           return response.json();
         } else {
           setLoading(false);
+          Alert.alert(message);
           return response.json();
         }
       })
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result.prescription);
+        console.log(result.recommendation);
+        console.log(result.recommended_tests);
+        console.log(result.results);
+        AsyncStorage.setItem("prescription", result.prescription);
+
+        AsyncStorage.setItem("recommendation", result.recommendation);
+
+        AsyncStorage.setItem("recommended_test", result.recommended_tests);
+
+        AsyncStorage.setItem("results", result.results);
+        setLoading(false);
+      })
       .catch((error) => console.log("error", error));
   };
 

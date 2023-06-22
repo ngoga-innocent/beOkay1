@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import {
   View,
   Text,
@@ -16,8 +16,34 @@ import AntiDesign from "react-native-vector-icons/AntDesign";
 import { Svg, Circle } from "react-native-svg";
 import Foundation from "react-native-vector-icons/Foundation";
 import CircularProgressBar from "../../components/CircularProgressBar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Profile = ({ navigation }) => {
   const width = Dimensions.get("screen").width;
+  useLayoutEffect(() => {
+    getProfile();
+  }, []);
+  const [name, setName] = useState("");
+  const [phone_number, setPhone] = useState("");
+
+  const getProfile = async () => {
+    const token = await AsyncStorage.getItem("token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "JWT " + `${token}`);
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`${url}/users/edit-profile/`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setName(result.full_name);
+        setPhone(result.phone_number);
+      })
+      .catch((error) => console.log("error", error));
+  };
   const Head = () => {
     return (
       <SafeAreaView style={styles.container}>
@@ -146,11 +172,11 @@ const Profile = ({ navigation }) => {
             >
               Names
             </Text>
-            <Text>Issa Emile</Text>
+            <Text>{name}</Text>
           </View>
           <View>
             <Text style={{ fontWeight: "bold" }}>Phone Number</Text>
-            <Text>+250785587579</Text>
+            <Text>{phone_number}</Text>
           </View>
         </View>
         <TouchableOpacity
@@ -235,6 +261,14 @@ const Profile = ({ navigation }) => {
         progress={55}
         size={0}
         thickness={4}
+      />
+      <ProfReusablecomp
+        name="arrowsalt"
+        title="Switch to doctor"
+        progress={55}
+        size={0}
+        thickness={4}
+        onPress={() => navigation.navigate("docTab")}
       />
     </View>
   );

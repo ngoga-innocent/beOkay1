@@ -67,7 +67,7 @@ const Login = ({ navigation }) => {
             navigation.replace("Tabs");
           } else {
             setIsLoading(false);
-            return alert(res.detail);
+            return alert(response.detail);
           }
         });
     } else {

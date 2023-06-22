@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Text, View, ScrollView } from "react-native";
 import { COLORS } from "../../components/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -7,8 +7,12 @@ import { useFonts } from "expo-font";
 import Fonts from "../../components/Fonts";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import MapScreen from "../../components/map";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ConsultationResults = () => {
+  useLayoutEffect(() => {
+    getDiseaseDetails();
+  }, []);
   const [Font] = useFonts({
     Inter: require("../../assets/Fonts/Inter.ttf"),
   });
@@ -21,6 +25,22 @@ const ConsultationResults = () => {
     { distance: "500m", name: "VIVA Pharamcy", status: "open" },
     { distance: "1.5km", name: "The cure Pharamacy", status: "open till 20h" },
   ]);
+  const [results, setResults] = useState("");
+  const [prescription, setPrescription] = useState("");
+  const [recommended_test, setRecTest] = useState("");
+  const [recommendation, setRecommendation] = useState("");
+
+  const getDiseaseDetails = async () => {
+    const results = await AsyncStorage.getItem("results");
+    const recommendation = await AsyncStorage.getItem("recommendation");
+    const recommended_test = await AsyncStorage.getItem("recommended_test");
+    const prescription = await AsyncStorage.getItem("prescription");
+    console.log(results);
+    setResults(results);
+    setPrescription(prescription);
+    setRecTest(recommended_test);
+    setRecommendation(recommendation);
+  };
   return (
     <ScrollView
       style={{ flex: 1, padding: 4 }}
@@ -59,39 +79,48 @@ const ConsultationResults = () => {
 
         <Text
           style={{
-            fontWeight: "400",
-            fontSize: 16,
-            fontFamily: "Inter",
+            fontSize: 18,
+
             marginTop: 6,
+            fontWeight: "bold",
+
+            // textTransform:'capitalize'
           }}
         >
-          Illnes Details
+          illness Details
         </Text>
         <View style={{ marginHorizontal: 20, marginTop: 25 }}>
           <Text
             style={{
-              fontSize: 16,
-              fontWeight: "bold",
+              fontSize: 14,
+              fontStyle: "italic",
               marginBottom: 10,
-              fontFamily: "Inter",
+              // fontFamily: "Inter",
             }}
           >
-            Fabry Disease
+            {results}
           </Text>
-          <Text
+          <View
             style={{
               letterSpacing: 2,
               lineHeight: 20,
               fontWeight: "400",
-              fontFamily: "Inter",
+              // fontFamily: "Inter",
             }}
           >
-            Fabry disease is a rare genetic disease that is passed down through
-            your family. it affects organs all around your body,including your
-            heart,brain and kidney, and can cause them to get less blood than
-            they need. Over time,this can cause chronic kidney disease or kidney
-            failure
-          </Text>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 18,
+                marginBottom: 10,
+              }}
+            >
+              Prescription
+            </Text>
+            <Text style={{ fontSize: 14, fontStyle: "italic" }}>
+              {prescription}
+            </Text>
+          </View>
         </View>
         <View style={{ marginTop: 30, marginBottom: 30 }}>
           <Text
@@ -113,7 +142,7 @@ const ConsultationResults = () => {
               marginBottom: 8,
             }}
           >
-            You need to consult with doctor at least in 3 days
+            {recommendation}
           </Text>
           <TouchableOpacity style={{ flexDirection: "row", padding: 7 }}>
             <Fontisto name="doctor" size={20} color={COLORS.primary} />

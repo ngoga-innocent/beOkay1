@@ -1,19 +1,22 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Login from "../screens/loginScreens/Login";
 import ConsultationStack from "../screens/ConsultationScreens/ConsultationStack";
-import Consultation from "../screens/ConsultationScreens/Consultation";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import Docprofile from "../screens/DoctorScreen/DocProfile";
+import Icon from "react-native-vector-icons/AntDesign";
 import { COLORS } from "./Colors";
-import { NavigationContainer } from "@react-navigation/native";
+
 import UserLanding from "../screens/ConsultationScreens/UserLanding";
 import User from "../screens/OtherScreen/User";
 import Emergency from "../screens/OtherScreen/Emergency";
 import { View, TouchableOpacity } from "react-native";
 import AntiDesign from "react-native-vector-icons/AntDesign";
+import DoctorProfile from "../screens/DoctorScreen/DoctorProfile";
+import Dashboard from "../screens/DoctorScreen/Dashboard";
+import ScheduleAppointment from "../screens/DoctorScreen/ScheduleAppointment";
+import Mycalendar from "../screens/DoctorScreen/Mycalendar";
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
+function DoctorTab() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -21,14 +24,16 @@ function MyTabs() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Home") {
-            iconName = focused ? "home" : "home";
-          } else if (route.name === "consultation") {
-            iconName = focused ? "stethoscope" : "stethoscope";
-          } else if (route.name === "user") {
-            iconName = focused ? "user-clock" : "user-clock";
-          } else if (route.name === "Hospitals") {
-            iconName = focused ? "hospital-alt" : "hospital-alt";
+          if (route.name === "Dashboard") {
+            iconName = focused ? "dashboard" : "dashboard";
+          } else if (route.name === "Profile") {
+            iconName = focused ? "user" : "user";
+          } else if (route.name === "Community") {
+            iconName = focused ? "addusergroup" : "addusergroup";
+          } else if (route.name === "Emergency") {
+            iconName = focused ? "close" : "close";
+          } else if (route.name === "Calendar") {
+            iconName = focused ? "calendar" : "calendar";
           }
 
           // You can return any component that you like here!
@@ -39,18 +44,23 @@ function MyTabs() {
       })}
     >
       <Tab.Screen
-        name="Home"
-        component={UserLanding}
+        name="Dashboard"
+        component={ScheduleAppointment}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="consultation"
-        component={ConsultationStack}
+        name="Profile"
+        component={DoctorProfile}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="user"
-        component={User}
+        name="Calendar"
+        component={Mycalendar}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Emergency"
+        component={Docprofile}
         options={{
           headerTitle: "Medical Report",
           headerLeft: () => (
@@ -75,11 +85,11 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Hospitals"
+        name="Community"
         component={Emergency}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
   );
 }
-export default MyTabs;
+export default DoctorTab;

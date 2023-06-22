@@ -22,6 +22,7 @@ import ConsultationHistory from "../DoctorScreen/ConsultationHistory";
 import PatientRecord from "../DoctorScreen/patientRecord";
 
 import ScheduleAppointment from "../DoctorScreen/ScheduleAppointment";
+import Support from "../OtherScreen/Support";
 
 const ConsultationStack = ({ navigation }) => {
   const stack = createStackNavigator();
@@ -159,12 +160,17 @@ const ConsultationStack = ({ navigation }) => {
           },
         }}
       />
-      {/* Doctor Screens with Buttom Tab */}
       <stack.Screen
+        name="support"
+        component={Support}
+        options={{ headerShown: false }}
+      />
+      {/* Doctor Screens with Buttom Tab */}
+      {/* <stack.Screen
         name="Schedule"
         component={ScheduleAppointment}
         options={{ headerShown: false }}
-      />
+      /> */}
       <stack.Screen
         name="mycalendar"
         component={Mycalendar}
