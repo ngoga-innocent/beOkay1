@@ -57,7 +57,7 @@ const Description = ({ navigation, route }) => {
     fetch(`${Url}/patients/consult-doctor/?choice=${choice}`, requestOptions)
       .then((response) => {
         if (response.ok) {
-          navigation.navigate("Method");
+          navigation.navigate("consultation", { screen: "Aiconsultation" });
           setLoading(false);
           return response.json();
         } else {

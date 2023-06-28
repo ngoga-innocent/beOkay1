@@ -46,8 +46,8 @@ const UserLanding = ({ navigation }) => {
   };
   const Appointments = () => (
     <ScrollView
-      style={{ height: "100%" }}
-      contentContainerStyle={{ flexGrow: 1 }}
+      style={{ height: 200 }}
+      // contentContainerStyle={{ flexGrow: 1 }}
       scrollEnabled
     >
       {Appointment.map((item, index) => {
@@ -110,11 +110,7 @@ const UserLanding = ({ navigation }) => {
   );
 
   const Mycalendar = () => (
-    <ScrollView
-      style={{ flex: 1, flexGrow: 1 }}
-      contentContainerStyle={{ flexGrow: 1 }}
-      scrollEnabled
-    >
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <CalendarScreen />
     </ScrollView>
   );
@@ -206,7 +202,7 @@ const UserLanding = ({ navigation }) => {
   ];
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={[styles.container, { flex: 1 }]}>
       <Header />
       <View style={styles.modal}>
         <View style={styles.modalheader}>
@@ -228,9 +224,6 @@ const UserLanding = ({ navigation }) => {
           >
             {currentDay} {currentDate}
           </Text>
-          {/* <TouchableOpacity onPress={() => setShowModal(false)}>
-            <Entypo name="circle-with-cross" color={COLORS.primary} size={24} />
-          </TouchableOpacity> */}
         </View>
 
         {/* <Text style={{ fontSize: 14, color: "#809502", marginHorizontal: 4 }}>
@@ -389,7 +382,9 @@ const UserLanding = ({ navigation }) => {
           }}
         >
           <TouchableOpacity
-            onPress={() => navigation.navigate("consultation")}
+            onPress={() =>
+              navigation.navigate("consultation", { screen: "Consultations" })
+            }
             style={{ justifyContent: "center", alignItems: "center" }}
           >
             <Image
@@ -404,6 +399,9 @@ const UserLanding = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("consultation", { screen: "chatting" })
+            }
             style={{ justifyContent: "center", alignItems: "center" }}
           >
             <Image
@@ -426,8 +424,8 @@ const UserLanding = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </View>
-
-        {/* <Text
+      </View>
+      {/* <Text
           style={{
             fontWeight: "500",
             fontSize: 16,
@@ -437,45 +435,44 @@ const UserLanding = ({ navigation }) => {
         >
           Appointment and Schedule
         </Text> */}
-        <View style={{ height: height }}>
-          <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={{ width: width }}
-            renderTabBar={(props) => (
-              <TabBar
-                {...props}
-                indicatorStyle={{ backgroundColor: "white" }}
-                indicatorContainerStyle={{ height: 4 }}
-                style={{ backgroundColor: COLORS.white }}
-                renderLabel={({ route, focused, color }) => (
-                  <View
+      <View style={{ flex: 1 }}>
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: width }}
+          renderTabBar={(props) => (
+            <TabBar
+              {...props}
+              indicatorStyle={{ backgroundColor: "white" }}
+              indicatorContainerStyle={{ height: 4 }}
+              style={{ backgroundColor: COLORS.white }}
+              renderLabel={({ route, focused, color }) => (
+                <View
+                  style={{
+                    borderRadius: focused ? width / 10 : null,
+                    backgroundColor: focused ? COLORS.primary : null,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
                     style={{
-                      borderRadius: focused ? width / 10 : null,
-                      backgroundColor: focused ? COLORS.primary : null,
-                      justifyContent: "center",
-                      alignItems: "center",
+                      color: focused ? COLORS.white : null,
+                      textAlign: "center",
+                      padding: 9,
+                      fontWeight: "bold",
                     }}
                   >
-                    <Text
-                      style={{
-                        color: focused ? COLORS.white : null,
-                        textAlign: "center",
-                        padding: 9,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {route.title}
-                    </Text>
-                  </View>
-                )}
-              />
-            )}
-          />
-        </View>
+                    {route.title}
+                  </Text>
+                </View>
+              )}
+            />
+          )}
+        />
       </View>
-    </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({

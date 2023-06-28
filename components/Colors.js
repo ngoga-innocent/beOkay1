@@ -9,6 +9,8 @@ export const COLORS = {
   backgrounds: "#D1D1D1",
   black: "black",
   consultationbg: "#95a7cc",
+  warning: "#EEFFDC",
+  chatheader: "#EDFFFD",
 };
 export const width = Dimensions.get("screen").width;
 export const height = Dimensions.get("screen").height;

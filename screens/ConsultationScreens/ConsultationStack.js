@@ -23,6 +23,7 @@ import PatientRecord from "../DoctorScreen/patientRecord";
 
 import ScheduleAppointment from "../DoctorScreen/ScheduleAppointment";
 import Support from "../OtherScreen/Support";
+import ChattingStack from "../Chatting/chattingStack";
 
 const ConsultationStack = ({ navigation }) => {
   const stack = createStackNavigator();
@@ -202,6 +203,32 @@ const ConsultationStack = ({ navigation }) => {
         name="paypal"
         component={Paypal}
         options={{ headerShown: false }}
+      />
+      <stack.Screen
+        name="chatting"
+        component={ChattingStack}
+        options={{
+          headerTitle: "Consultation",
+          headerLeft: () => (
+            <View>
+              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                <Icon name="arrowleft" size={30} color="white" />
+              </TouchableOpacity>
+            </View>
+          ),
+          headerStyle: {
+            height: 120,
+            backgroundColor: "#8BB85C",
+            elevation: 30,
+            shadowColor: "#000",
+          },
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: COLORS.white,
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        }}
       />
     </stack.Navigator>
   );

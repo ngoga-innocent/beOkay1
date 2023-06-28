@@ -6,11 +6,12 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/Header";
 import Entypo from "react-native-vector-icons/Entypo";
-import { COLORS } from "../../components/Colors";
+import { COLORS, width } from "../../components/Colors";
 import { ColorSpace } from "react-native-reanimated";
+import { head, body, leg, hand } from "../../components/bodypart";
 
 const Consultation = ({ navigation }) => {
   const department = [
@@ -22,8 +23,13 @@ const Consultation = ({ navigation }) => {
     "Internal medicine",
     "Chronic diseases",
   ];
+  const selectedfn = (item) => {
+    navigation.navigate("Description", { part: item });
+  };
+
+  const [bodyPart, setBodyPart] = useState();
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Header />
       <View style={styles.modal}>
         <View style={styles.modalheader}>
@@ -73,7 +79,7 @@ const Consultation = ({ navigation }) => {
           <Text>View All</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ backgroundColor: "white", alignItems: "center" }}>
+      <View style={{ backgroundColor: "white" }}>
         <Text
           style={{
             marginLeft: 16,
@@ -84,16 +90,75 @@ const Consultation = ({ navigation }) => {
         >
           Please locate your Illiness
         </Text>
-        <Image
-          source={require("../../assets/AI.png")}
-          style={{ alignSelf: "center" }}
-        />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Image
+            source={require("../../assets/AI.png")}
+            // style={{ alignSelf: "center" }}
+            // resizeMode="contain"
+          />
+          <FlatList
+            data={bodyPart}
+            style={{
+              marginLeft: "20%",
+            }}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => selectedfn(item.name)}
+                style={{
+                  flexDirection: "row",
+                  marginBottom: 5,
+                  alignItems: "center",
+                  height: 60,
+                }}
+              >
+                <View
+                  style={{
+                    height: 38,
+                    width: 38,
+                    borderRadius: 38,
+                    backgroundColor: COLORS.black,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginRight: 15,
+                  }}
+                >
+                  <Image
+                    source={item.image}
+                    resizeMode="contain"
+                    style={{
+                      width: 38,
+                      height: 38,
+                      borderRadius: 38,
+                      borderWidth: 1,
+                      borderColor: COLORS.black,
+                    }}
+                  />
+                </View>
+                <Text style={{ fontSize: 14 }}>{item.name}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Describe", { disease: "head" })}
+          onPress={() => setBodyPart(head)}
           style={styles.head}
         ></TouchableOpacity>
-        <TouchableOpacity style={styles.body}></TouchableOpacity>
-        <TouchableOpacity style={styles.leg}></TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setBodyPart(body)}
+          style={styles.body}
+        ></TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setBodyPart(hand)}
+          style={styles.hand1}
+        ></TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setBodyPart(hand)}
+          style={styles.hand2}
+        ></TouchableOpacity>
+        <TouchableOpacity
+          style={styles.leg}
+          onPress={() => setBodyPart(leg)}
+        ></TouchableOpacity>
       </View>
     </View>
   );
@@ -130,26 +195,47 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   head: {
-    width: "15%",
+    width: "8%",
     height: "15%",
     borderRadius: 20,
+    // backgroundColor: COLORS.primary,
 
     position: "absolute",
     marginTop: "4%",
+    marginLeft: "9%",
   },
   body: {
-    height: "20%",
-    width: "25%",
-
+    height: "12%",
+    width: "11%",
+    // backgroundColor: COLORS.doctor,
     position: "absolute",
     marginTop: "21%",
+    marginLeft: "8%",
+    borderRadius: 10,
   },
   leg: {
-    height: 100,
-    width: 90,
-
+    height: "22%",
+    width: "10%",
+    marginLeft: "8%",
     position: "absolute",
-    marginTop: "53%",
+    marginTop: "48%",
+    // backgroundColor: COLORS.consultationbg,
+  },
+  hand1: {
+    height: "6%",
+    width: "6%",
+    // backgroundColor: "red",
+    marginTop: "25%",
+    position: "absolute",
+    marginLeft: "1%",
+  },
+  hand2: {
+    height: "6%",
+    width: width / 18,
+    // backgroundColor: "red",
+    marginTop: "25%",
+    position: "absolute",
+    left: "25%",
   },
 });
 
