@@ -146,7 +146,7 @@ const Describedisease = ({ navigation, route }) => {
           )}
         />
       </View>
-      <Button
+      {/* <Button
         text="Describe Illiness"
         style={{
           backgroundColor: COLORS.primary,
@@ -156,7 +156,7 @@ const Describedisease = ({ navigation, route }) => {
           alignSelf: "center",
         }}
         style1={{ color: COLORS.white }}
-      />
+      /> */}
     </View>
   );
 };

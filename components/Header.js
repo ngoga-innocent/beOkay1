@@ -8,15 +8,24 @@ import {
   SafeAreaView,
   Platform,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { COLORS, height, width } from "./Colors";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import Signup from "../screens/loginScreens/Signup";
 import Entypo from "react-native-vector-icons/Entypo";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Header = ({ style }) => {
   const navigation = useNavigation();
+  const [name, setName] = useState("");
+  useEffect(() => {
+    async function Getname() {
+      const username = await AsyncStorage.getItem("name");
+      setName(username);
+    }
+    Getname();
+  });
   return (
     <SafeAreaView style={[styles.container, style]}>
       <StatusBar backgroundColor={COLORS.primary} />
@@ -57,6 +66,11 @@ const Header = ({ style }) => {
           >
             Be Okay
           </Text> */}
+          <Text
+            style={{ color: COLORS.white, fontSize: 20, fontWeight: "bold" }}
+          >
+            {name}
+          </Text>
         </View>
         <View
           style={{

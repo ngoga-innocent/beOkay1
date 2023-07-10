@@ -11,7 +11,7 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Header from "../../components/Header";
 import { COLORS } from "../../components/Colors";
 import Input from "../../components/Input";
@@ -34,53 +34,72 @@ const Description = ({ navigation, route }) => {
   const [prescription, setPrescription] = useState("");
   const [recommended_test, setRecTest] = useState("");
   const [recommendation, setRecommendation] = useState("");
-
+  const name = route.params.name;
   const getResults = async () => {
-    const JWT = await AsyncStorage.getItem("token");
-    setLoading(true);
-
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "JWT " + `${JWT}`);
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      symptoms: value,
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch(`${Url}/patients/consult-doctor/?choice=${choice}`, requestOptions)
-      .then((response) => {
-        if (response.ok) {
-          navigation.navigate("consultation", { screen: "Aiconsultation" });
-          setLoading(false);
-          return response.json();
-        } else {
-          setLoading(false);
-          Alert.alert(message);
-          return response.json();
-        }
-      })
-      .then((result) => {
-        console.log(result.prescription);
-        console.log(result.recommendation);
-        console.log(result.recommended_tests);
-        console.log(result.results);
-        AsyncStorage.setItem("prescription", result.prescription);
-
-        AsyncStorage.setItem("recommendation", result.recommendation);
-
-        AsyncStorage.setItem("recommended_test", result.recommended_tests);
-
-        AsyncStorage.setItem("results", result.results);
-        setLoading(false);
-      })
-      .catch((error) => console.log("error", error));
+    if (name === "checkup") {
+      navigation.navigate("consultation", {
+        screen: "Aiconsultation",
+      });
+      setLoading(false);
+      return response.json();
+    } else if (name === "chat") {
+      navigation.navigate("consultation", {
+        screen: "chatting",
+      });
+    } else if (name === "homecare") {
+      navigation.navigate("consultation", { screen: "homeCare" });
+    }
+    // const JWT = await AsyncStorage.getItem("token");
+    // setLoading(true);
+    // var myHeaders = new Headers();
+    // myHeaders.append("Authorization", "JWT " + `${JWT}`);
+    // myHeaders.append("Content-Type", "application/json");
+    // var raw = JSON.stringify({
+    //   symptoms: value,
+    // });
+    // var requestOptions = {
+    //   method: "POST",
+    //   headers: myHeaders,
+    //   body: raw,
+    //   redirect: "follow",
+    // };
+    // fetch(`${Url}/patients/consult-doctor/?choice=${choice}`, requestOptions)
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       if (name === "checkup") {
+    //         navigation.navigate("consultation", {
+    //           screen: "Aiconsultation",
+    //         });
+    //         setLoading(false);
+    //         return response.json();
+    //       } else if (name === "chat") {
+    //         navigation.navigate("consultation", {
+    //           screen: "chatting",
+    //         });
+    //         setLoading(false);
+    //         return response.json();
+    //       } else {
+    //         setLoading(false);
+    //         return response.json();
+    //       }
+    //     } else {
+    //       setLoading(false);
+    //       Alert.alert(message);
+    //       return response.json();
+    //     }
+    //   })
+    //   .then((result) => {
+    //     console.log(result.prescription);
+    //     console.log(result.recommendation);
+    //     console.log(result.recommended_tests);
+    //     console.log(result.results);
+    //     AsyncStorage.setItem("prescription", result.prescription);
+    //     AsyncStorage.setItem("recommendation", result.recommendation);
+    //     AsyncStorage.setItem("recommended_test", result.recommended_tests);
+    //     AsyncStorage.setItem("results", result.results);
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => console.log("error", error));
   };
 
   return (

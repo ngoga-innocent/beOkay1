@@ -150,7 +150,10 @@ const UserLanding = ({ navigation }) => {
           return response.json();
         }
       })
-      .then((result) => setName(result.username))
+      .then((result) => {
+        AsyncStorage.setItem("name", result.username);
+        setName(result.username);
+      })
       .catch((error) => console.log("error", error));
   };
   const status = {
@@ -383,7 +386,10 @@ const UserLanding = ({ navigation }) => {
         >
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate("consultation", { screen: "Consultations" })
+              navigation.navigate("consultation", {
+                screen: "Consultations",
+                params: { name: "checkup" },
+              })
             }
             style={{ justifyContent: "center", alignItems: "center" }}
           >
@@ -400,7 +406,10 @@ const UserLanding = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate("consultation", { screen: "chatting" })
+              navigation.navigate("consultation", {
+                screen: "Consultations",
+                params: { name: "chat" },
+              })
             }
             style={{ justifyContent: "center", alignItems: "center" }}
           >
@@ -413,6 +422,12 @@ const UserLanding = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("consultation", {
+                screen: "Consultations",
+                params: { name: "homecare" },
+              })
+            }
             style={{ justifyContent: "center", alignItems: "center" }}
           >
             <Image

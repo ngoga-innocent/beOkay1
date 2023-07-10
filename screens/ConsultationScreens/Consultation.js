@@ -6,14 +6,16 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Entypo from "react-native-vector-icons/Entypo";
-import { COLORS, width } from "../../components/Colors";
+import { COLORS, height, width } from "../../components/Colors";
 import { ColorSpace } from "react-native-reanimated";
 import { head, body, leg, hand } from "../../components/bodypart";
+import Viewall from "../OtherScreen/Viewall";
 
-const Consultation = ({ navigation }) => {
+const Consultation = ({ navigation, route }) => {
+  const { name } = route.params;
   const department = [
     "Mental health",
     "Fertility",
@@ -23,11 +25,18 @@ const Consultation = ({ navigation }) => {
     "Internal medicine",
     "Chronic diseases",
   ];
-  const selectedfn = (item) => {
-    navigation.navigate("Description", { part: item });
-  };
 
+  const selectedfn = (item) => {
+    setBody(!body);
+    navigation.navigate("Description", { part: item, name: name });
+  };
+  useEffect(() => {
+    setBodyPart();
+  });
   const [bodyPart, setBodyPart] = useState();
+  const [bodystate, setBody] = useState(false);
+  const [clicked, setClicked] = useState("");
+  const [showViewAll, setShowViewAll] = useState(false);
   return (
     <View style={{ flex: 1 }}>
       <Header />
@@ -60,7 +69,9 @@ const Consultation = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               underlayColor="blue"
-              onPress={() => navigation.navigate("Description", { part: item })}
+              onPress={() =>
+                navigation.navigate("Description", { part: item, name: name })
+              }
             >
               <View style={styles.text}>
                 <Text>{item}</Text>
@@ -70,6 +81,7 @@ const Consultation = ({ navigation }) => {
           horizontal
         />
         <TouchableOpacity
+          onPress={() => setShowViewAll(!showViewAll)}
           style={{
             justifyContent: "flex-end",
             alignItems: "flex-end",
@@ -78,6 +90,7 @@ const Consultation = ({ navigation }) => {
         >
           <Text>View All</Text>
         </TouchableOpacity>
+        {showViewAll === true && <Viewall name={name} />}
       </View>
       <View style={{ backgroundColor: "white" }}>
         <Text
@@ -90,74 +103,120 @@ const Consultation = ({ navigation }) => {
         >
           Please locate your Illiness
         </Text>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Image
-            source={require("../../assets/AI.png")}
-            // style={{ alignSelf: "center" }}
-            // resizeMode="contain"
-          />
-          <FlatList
-            data={bodyPart}
-            style={{
-              marginLeft: "20%",
-            }}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => selectedfn(item.name)}
-                style={{
-                  flexDirection: "row",
-                  marginBottom: 5,
-                  alignItems: "center",
-                  height: 60,
-                }}
-              >
-                <View
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            height: "90%",
+          }}
+        >
+          <View style={{ marginLeft: bodystate == false ? width / 2.5 : null }}>
+            <Image
+              source={require("../../assets/AI.png")}
+              // style={{ alignSelf: "center" }}
+              // resizeMode="contain"
+            />
+          </View>
+          {bodystate == true && (
+            <FlatList
+              data={bodyPart}
+              style={{
+                marginLeft: "20%",
+                height: "100%",
+              }}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() => selectedfn(item.name)}
                   style={{
-                    height: 38,
-                    width: 38,
-                    borderRadius: 38,
-                    backgroundColor: COLORS.black,
-                    justifyContent: "center",
+                    flexDirection: "row",
+                    marginBottom: 5,
                     alignItems: "center",
-                    marginRight: 15,
+                    height: 60,
                   }}
                 >
-                  <Image
-                    source={item.image}
-                    resizeMode="contain"
+                  <View
                     style={{
-                      width: 38,
                       height: 38,
+                      width: 38,
                       borderRadius: 38,
-                      borderWidth: 1,
-                      borderColor: COLORS.black,
+                      backgroundColor: COLORS.black,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 15,
                     }}
-                  />
-                </View>
-                <Text style={{ fontSize: 14 }}>{item.name}</Text>
-              </TouchableOpacity>
-            )}
-          />
+                  >
+                    <Image
+                      source={item.image}
+                      resizeMode="contain"
+                      style={{
+                        width: 38,
+                        height: 38,
+                        borderRadius: 38,
+                        borderWidth: 1,
+                        borderColor: COLORS.black,
+                      }}
+                    />
+                  </View>
+                  <Text style={{ fontSize: 14 }}>{item.name}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          )}
         </View>
         <TouchableOpacity
-          onPress={() => setBodyPart(head)}
-          style={styles.head}
+          onPress={() => {
+            clicked !== "head"
+              ? (setClicked("head"), setBody(true), setBodyPart(head))
+              : (setBody(!body), setClicked(""), setBodyPart(""));
+          }}
+          style={[
+            styles.head,
+            { marginLeft: bodystate == true ? "9%" : width / 2 },
+          ]}
         ></TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setBodyPart(body)}
-          style={styles.body}
+          onPress={() => {
+            clicked !== "body"
+              ? (setClicked("body"), setBody(true), setBodyPart(body))
+              : (setBody(!body), setClicked(""), setBodyPart(""));
+          }}
+          style={[
+            styles.bodysty,
+            { marginLeft: bodystate == true ? "8%" : width / 2 },
+          ]}
         ></TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setBodyPart(hand)}
-          style={styles.hand1}
+          onPress={() => {
+            clicked !== "hand1"
+              ? (setClicked("hand1"), setBody(true), setBodyPart(hand))
+              : (setBody(!bodystate), setClicked(""), setBodyPart(""));
+          }}
+          style={[
+            styles.hand1,
+            { marginLeft: bodystate == true ? "1%" : width / 2.4 },
+          ]}
         ></TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setBodyPart(hand)}
-          style={styles.hand2}
+          onPress={() => {
+            clicked !== "hand2"
+              ? (setClicked("hand2"), setBody(true), setBodyPart(hand))
+              : (setBody(!bodystate), setClicked(""), setBodyPart(""));
+          }}
+          style={[
+            styles.hand2,
+            { left: bodystate == true ? "25%" : width / 1.6 },
+          ]}
         ></TouchableOpacity>
         <TouchableOpacity
-          style={styles.leg}
-          onPress={() => setBodyPart(leg)}
+          style={[
+            styles.leg,
+            { marginLeft: bodystate == true ? "8%" : width / 2 },
+          ]}
+          onPress={() => {
+            clicked !== "leg"
+              ? (setClicked("leg"), setBody(true), setBodyPart(leg))
+              : (setBody(!bodystate), setClicked(""), setBodyPart(""));
+          }}
         ></TouchableOpacity>
       </View>
     </View>
@@ -195,47 +254,44 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   head: {
-    width: "8%",
+    width: width / 9,
     height: "15%",
     borderRadius: 20,
     // backgroundColor: COLORS.primary,
 
     position: "absolute",
-    marginTop: "4%",
-    marginLeft: "9%",
+    marginTop: height / 27,
   },
-  body: {
-    height: "12%",
-    width: "11%",
+  bodysty: {
+    height: height / 10,
+    width: width / 8,
     // backgroundColor: COLORS.doctor,
     position: "absolute",
     marginTop: "21%",
-    marginLeft: "8%",
+
     borderRadius: 10,
   },
   leg: {
-    height: "22%",
-    width: "10%",
-    marginLeft: "8%",
+    height: height / 10,
+    width: width / 8,
+
     position: "absolute",
     marginTop: "48%",
     // backgroundColor: COLORS.consultationbg,
   },
   hand1: {
-    height: "6%",
-    width: "6%",
+    height: height / 12,
+    width: width / 12,
     // backgroundColor: "red",
     marginTop: "25%",
     position: "absolute",
-    marginLeft: "1%",
   },
   hand2: {
-    height: "6%",
-    width: width / 18,
+    height: height / 27,
+    width: width / 13,
     // backgroundColor: "red",
     marginTop: "25%",
     position: "absolute",
-    left: "25%",
   },
 });
 

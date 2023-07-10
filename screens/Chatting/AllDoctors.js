@@ -42,7 +42,8 @@ const AllDoctors = () => {
     },
     {
       name: "Dr.Jeanne",
-      description: "Lorem ipsum dotor sit amet consecteur.",
+      description:
+        "Lorem ipsum dotor sit amet consecteur.Lorem ipsum dotor sit amet consecteur.Lorem ipsum dotor sit amet consecteur.Lorem ipsum dotor sit amet consecteur.Lorem ipsum dotor sit amet consecteur.",
       available: "12h30 -17h30 ",
       image: require("../../assets/Drjeanne.png"),
     },
@@ -167,10 +168,14 @@ const AllDoctors = () => {
             return (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate("chat", {
-                    name: item.name,
-                    image: item.image,
-                    available: item.available,
+                  navigation.navigate("consultation", {
+                    screen: "doctorDetails",
+                    params: {
+                      name: item.name,
+                      image: item.image,
+                      available: item.available,
+                      description: item.description,
+                    },
                   })
                 }
                 style={{
@@ -185,7 +190,9 @@ const AllDoctors = () => {
                   <Text style={{ fontSize: 17, fontWeight: "600" }}>
                     {item.name}
                   </Text>
-                  <Text style={{ maxWidth: width / 2.6 }}>
+                  <Text
+                    style={{ maxWidth: width / 2.6, maxHeight: height / 19 }}
+                  >
                     {item.description}
                   </Text>
                 </View>

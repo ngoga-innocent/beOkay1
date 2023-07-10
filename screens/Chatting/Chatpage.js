@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
 import { Avatar } from "react-native-elements";
 import { width, height, COLORS } from "../../components/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -10,6 +10,7 @@ import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import AudioRecorderPlayer from "react-native-audio-recorder-player";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { PDFView } from "react-native-view-pdf";
 import {
   Bubble,
   GiftedChat,
@@ -17,6 +18,7 @@ import {
   Send,
   Actions,
   Composer,
+  Message,
 } from "react-native-gifted-chat";
 import { Audio, Video } from "expo-av";
 
@@ -53,6 +55,9 @@ const Chatpage = ({ navigation, route }) => {
     return (
       <Bubble
         {...props}
+        renderMessageDocument={(messageProps) => (
+          <DocumentMessage {...messageProps} />
+        )}
         renderMessageAudio={(messageProps) => (
           <AudioMessage {...messageProps} onPress={handleAudioPress} />
         )}
@@ -66,6 +71,23 @@ const Chatpage = ({ navigation, route }) => {
           },
         }}
       />
+    );
+  };
+  const DocumentMessage = ({ currentMessage }) => {
+    const { document } = currentMessage;
+
+    const handleDocumentPress = () => {
+      // Implement your logic to handle the document press
+      // For example, you can open the PDF in a separate screen or download it.
+      // You can use a third-party library like 'react-native-pdf' to handle PDF rendering.
+    };
+
+    return (
+      <TouchableOpacity onPress={handleDocumentPress}>
+        <View style={{ backgroundColor: "white", padding: 10 }}>
+          <Text>{document.name}</Text>
+        </View>
+      </TouchableOpacity>
     );
   };
   const handleRecordVoice = async () => {
@@ -88,22 +110,45 @@ const Chatpage = ({ navigation, route }) => {
   const renderSend = (props) => {
     return (
       <Send {...props}>
-        <View style={{ flexDirection: "row-reverse" }}>
-          <View
-            style={{
-              alignSelf: "center",
-              width: width / 10,
-              height: width / 10,
-              borderRadius: width / 20,
-              backgroundColor: COLORS.black,
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: 2,
-              marginRight: 7,
-            }}
-          >
-            <MaterialIcons name="send" color={COLORS.doctor} size={30} />
-          </View>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity onPress={handleRecordVoice}>
+            <View
+              style={{
+                alignSelf: "center",
+                width: width / 10,
+                height: width / 10,
+                borderRadius: width / 20,
+                backgroundColor: COLORS.black,
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 2,
+                marginRight: 7,
+              }}
+            >
+              <MaterialIcons
+                name="microphone"
+                color={COLORS.doctor}
+                size={30}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableWithoutFeedback>
+            <View
+              style={{
+                alignSelf: "center",
+                width: width / 10,
+                height: width / 10,
+                borderRadius: width / 20,
+                backgroundColor: COLORS.black,
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 2,
+                marginRight: 7,
+              }}
+            >
+              <MaterialIcons name="send" color={COLORS.doctor} size={30} />
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </Send>
     );
@@ -130,31 +175,34 @@ const Chatpage = ({ navigation, route }) => {
 
         const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsMultipleSelection: true,
         });
 
         if (!result.cancelled) {
-          const { uri, width, height } = result;
-
-          const imageMessage = {
-            _id: Math.round(Math.random() * 1000000),
-            image: {
-              uri,
-              width,
-              height,
-            },
-            user: {
-              _id: 1,
-            },
-            createdAt: new Date(),
-          };
+          const selectedImages = result.selected.map((image) => {
+            const { uri, width, height } = image;
+            return {
+              _id: Math.round(Math.random() * 1000000),
+              image: {
+                uri,
+                width,
+                height,
+              },
+              user: {
+                _id: 1,
+              },
+              createdAt: new Date(),
+            };
+          });
 
           setMessages((previousMessages) =>
-            GiftedChat.append(previousMessages, [imageMessage])
+            GiftedChat.append(previousMessages, selectedImages)
           );
-          console.log("Picked image:", { uri, width, height });
+
+          console.log("Selected images:", selectedImages);
         }
       } catch (error) {
-        console.log("Error picking image:", error);
+        console.log("Error picking images:", error);
       }
     };
 
@@ -170,30 +218,35 @@ const Chatpage = ({ navigation, route }) => {
 
         const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+          allowsMultipleSelection: true,
         });
 
         if (!result.cancelled) {
-          const { uri, width, height, duration } = result;
+          const selectedVideos = result.selected.map((video) => {
+            const { uri, width, height, duration } = video;
 
-          const videoMessage = {
-            _id: Math.round(Math.random() * 1000000),
-            video: {
-              uri,
-              width,
-              height,
-              duration,
-            },
-            user: {
-              _id: 1,
-            },
-            createdAt: new Date(),
-          };
+            const videoMessage = {
+              _id: Math.round(Math.random() * 1000000),
+              video: {
+                uri,
+                width,
+                height,
+                duration,
+              },
+              user: {
+                _id: 1,
+              },
+              createdAt: new Date(),
+            };
 
-          setMessages((previousMessages) =>
-            GiftedChat.append(previousMessages, [videoMessage])
-          );
+            setMessages((previousMessages) =>
+              GiftedChat.append(previousMessages, [videoMessage])
+            );
 
-          console.log("Picked video:", { uri, width, height, duration });
+            console.log("Picked video:", { uri, width, height, duration });
+
+            return videoMessage;
+          });
         }
       } catch (error) {
         console.log("Error picking video:", error);
@@ -208,6 +261,24 @@ const Chatpage = ({ navigation, route }) => {
 
         if (result.type === "success") {
           // Handle the picked document here
+
+          const { uri, name, size } = result;
+
+          const documentMessage = {
+            _id: Math.round(Math.random() * 1000000),
+            file: {
+              uri,
+              name,
+              size,
+            },
+            user: {
+              _id: 1,
+            },
+            createdAt: new Date(),
+          };
+          setMessages((previousMessages) =>
+            GiftedChat.append(previousMessages, [documentMessage])
+          );
           console.log("Picked document:", result);
         } else {
           console.log("Document picking cancelled");
@@ -270,7 +341,33 @@ const Chatpage = ({ navigation, route }) => {
   //       console.log("Failed to load audio", error);
   //     }
   //   };
+  const CustomMessage = (props) => {
+    const { currentMessage } = props;
 
+    if (currentMessage.file) {
+      return (
+        <View>
+          <Text>{currentMessage.file.name}</Text>
+          <TouchableOpacity
+          // onPress={() => handleDocumentOpen(currentMessage.file.uri)}
+          >
+            <Text>Open Document</Text>
+          </TouchableOpacity>
+        </View>
+      );
+
+      // Render document as a link or an embedded document viewer
+      // return (
+      //   <View>e
+      //     <Text>{currentMessage.file.name}</Text>
+      //     {/* Render a link or an embedded document viewer */}
+      //   </View>
+      // );
+    }
+
+    // Render regular text message
+    return <Message {...props} />;
+  };
   const ChatUI = () => {
     return (
       <GiftedChat
@@ -291,6 +388,8 @@ const Chatpage = ({ navigation, route }) => {
         renderComposer={renderComposer}
         renderMessageVideo={renderMessageVideo}
         renderMessageImage={renderMessageImage}
+        renderMessage={(props) => <CustomMessage {...props} />}
+
         // onPressActionButton={handleRecordVoice}
       />
     );
