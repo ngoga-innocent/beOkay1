@@ -87,7 +87,7 @@ const UserLanding = ({ navigation }) => {
                   color: COLORS.paragraph,
                   fontSize: 14,
                   fontWeight: "400",
-                  marginButtom: 4,
+                  marginBottom: 4,
                 }}
               >
                 {item.date}

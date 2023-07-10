@@ -27,6 +27,7 @@ import ChattingStack from "../Chatting/chattingStack";
 import Viewall from "../OtherScreen/Viewall";
 import HomeCare from "./HomeCare";
 import DoctorDetails from "./DoctorDetails";
+import SuccessApointment from "./SuccessApointment";
 
 const ConsultationStack = ({ navigation }) => {
   const stack = createStackNavigator();
@@ -40,6 +41,11 @@ const ConsultationStack = ({ navigation }) => {
       <stack.Screen
         name="viewall"
         component={Viewall}
+        options={{ headerShown: false }}
+      />
+      <stack.Screen
+        name="success"
+        component={SuccessApointment}
         options={{ headerShown: false }}
       />
       <stack.Screen

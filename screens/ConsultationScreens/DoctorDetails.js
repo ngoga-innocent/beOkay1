@@ -7,18 +7,43 @@ import {
   ScrollView,
   StyleSheet,
   Button,
+  Platform,
 } from "react-native";
 import { COLORS, height, width } from "../../components/Colors";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Entypo from "react-native-vector-icons/Entypo";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
-import DatePicker from "react-native-datepicker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import moment from "moment";
+
 const DoctorDetails = ({ navigation, route }) => {
   const [selectedDate, setSelectedDate] = useState("");
 
   const name = route.params.name;
   const description = route.params.description;
   const [rating, setRating] = useState(4);
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+  const [showPicker1, setShowPicker1] = useState(false);
+
+  const handleDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowPicker(Platform.OS === "ios");
+    setDate(currentDate);
+  };
+  const handleTimeChange = (selectedtime) => {
+    const currentTime = selectedtime || time;
+
+    setShowPicker1(Platform.OS === "ios");
+    setTime(currentTime);
+  };
+  const togglePicker = () => {
+    setShowPicker(!showPicker);
+  };
+  const togglePickerTime = () => {
+    setShowPicker1(!showPicker1);
+  };
   const ratingStars = [1, 2, 3, 4, 5];
   const doctor = {
     image: require("../../assets/profile.jpeg"),
@@ -68,7 +93,7 @@ const DoctorDetails = ({ navigation, route }) => {
       <View
         style={{
           backgroundColor: COLORS.primary,
-          height: height / 4,
+          height: height / 3,
           borderBottomEndRadius: width / 25,
           borderBottomLeftRadius: width / 25,
           paddingHorizontal: width / 16,
@@ -87,8 +112,8 @@ const DoctorDetails = ({ navigation, route }) => {
           <Image
             source={doctor.image}
             style={{
-              width: width / 5,
-              height: width / 5,
+              width: width / 4,
+              height: width / 4,
               borderRadius: width / 18,
               borderColor: COLORS.white,
               borderWidth: 1,
@@ -122,7 +147,7 @@ const DoctorDetails = ({ navigation, route }) => {
             </View>
           </View>
         </View>
-        <View style={{ flexDirection: "row", marginTop: 10 }}>
+        <View style={{ flexDirection: "row", marginTop: height / 16 }}>
           <Reusablecircle
             name="user-plus"
             name1={doctor.patients}
@@ -191,37 +216,103 @@ const DoctorDetails = ({ navigation, route }) => {
         >
           Schedule
         </Text>
-        <View style={{}}>
-          <DatePicker
-            style={styles.datePicker}
-            date={selectedDate}
-            mode="date"
-            placeholder="Select date"
-            format="YYYY-MM-DD"
-            minDate="1900-01-01"
-            maxDate="2100-12-31"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            customStyles={{
-              dateIcon: {
-                position: "absolute",
-                left: 0,
-                top: 4,
-                marginLeft: 0,
-              },
-              dateInput: {
-                marginLeft: 36,
-              },
-              // Add custom styles if needed
-            }}
-            onDateChange={(date) => setSelectedDate(date)}
-          />
-          <Button
-            title="Show Selected Date"
-            onPress={() => console.log(selectedDate)}
-          />
-        </View>
       </View>
+
+      <View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: width / 10,
+          }}
+        >
+          <View>
+            <Text>{date && date.toDateString()}</Text>
+          </View>
+          <View>
+            <Text>{time && moment(time).format("LT")}</Text>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingHorizontal: width / 20,
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLORS.primary,
+              alignItems: "center",
+              justifyContent: "center",
+              height: height / 20,
+              borderRadius: width / 30,
+
+              width: "48%",
+              marginTop: height / 70,
+            }}
+            onPress={() => togglePicker()}
+          >
+            <Text style={{ fontWeight: "bold", color: COLORS.white }}>
+              Choose Date
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLORS.primary,
+              alignItems: "center",
+              justifyContent: "center",
+              height: height / 20,
+              borderRadius: width / 30,
+              width: "48%",
+              marginTop: height / 70,
+            }}
+            onPress={() => togglePickerTime()}
+          >
+            <Text style={{ fontWeight: "bold", color: COLORS.white }}>
+              Choose Time
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {showPicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
+        {showPicker1 && (
+          <DateTimePicker
+            value={time}
+            mode="time"
+            display="default"
+            onChange={handleTimeChange}
+          />
+        )}
+      </View>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("consultation", {
+            screen: "success",
+          })
+        }
+        style={{
+          height: height / 20,
+          width: "95%",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: COLORS.primary,
+          alignSelf: "center",
+          marginTop: height / 30,
+          borderRadius: width / 40,
+        }}
+      >
+        <Text style={{ fontWeight: "bold", fontSize: 17, color: COLORS.white }}>
+          Book Appointment
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

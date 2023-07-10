@@ -9,11 +9,11 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "updates": {
+      "enabled": true,
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "useNextjs": true,
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
