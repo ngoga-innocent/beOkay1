@@ -22,7 +22,14 @@ const UserType = ({ navigation }) => {
     }
   };
   return (
-    <ScrollView style={styles.container}>
+    <View
+      style={{
+        flex: 1,
+        // alignItems: "center",
+        // justifyContent: "center",
+        backgroundColor: COLORS.primary,
+      }}
+    >
       <SignupHeader
         title="Welcome"
         title1="On Be Okay"
@@ -67,142 +74,89 @@ const UserType = ({ navigation }) => {
         style1={{ color: COLORS.primary, fontWeight: "bold" }}
         onPress={() => navigation.navigate("Login")}
       />
-      {/* 
-      <Button
-        icon="logo-google"
-        size={27}
-        text=" with Google"
-        style={styles.button}
-        color="red"
-      />
-      <Button
-        icon="logo-apple"
-        size={27}
-        text=" with Apple"
-        style={styles.button}
-      />
-      <Button
-        icon="mail"
-        size={27}
-        text="with Email"
-        style={styles.button}
-        onPress={() => navigation.navigate("Signup")}
-      />
-      <View style={styles.haveacc}>
-        <Text style={styles.login}>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <Text style={styles.loginbtn}>LOGIN</Text>
-        </TouchableOpacity>
-      </View> */}
-      {/* <View style={[styles.usembl, styles.lgn, { marginBottom: 40 }]}>
-        <TouchableOpacity
-          onPress={(usembl) => {
-            Mbl(usembl);
-          }}
-        >
-          {usembl ? (
-            <Material
-              name="toggle-switch"
-              color="white"
-              size={40}
-              marginLeft={10}
-            />
-          ) : (
-            <Material
-              name="toggle-switch-off"
-              color="grey"
-              size={40}
-              marginLeft={10}
-            />
-          )}
-        </TouchableOpacity>
-        <Text style={styles.usembl1}> Use Phone security to Login</Text>
-      </View> */}
-    </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
 
     backgroundColor: COLORS.primary,
   },
-  lgn: {
-    flexDirection: "row",
-  },
-  header: {
-    fontSize: 24,
-    color: COLORS.white,
-    marginTop: 103,
-    marginLeft: 32,
-    fontWeight: "bold",
-    flexDirection: "column",
-  },
-  header1: {
-    fontSize: 24,
-    color: COLORS.white,
 
-    marginLeft: 32,
-    fontWeight: "bold",
-    flexDirection: "column",
-  },
-  paragraph: {
-    color: COLORS.white,
-    fontSize: 17,
-    marginLeft: 32,
-    marginTop: 20,
-    maxWidth: 280,
-    marginBottom: 70,
-  },
+  // header: {
+  //   fontSize: 24,
+  //   color: COLORS.white,
+  //   marginTop: 103,
+  //   marginLeft: 32,
+  //   fontWeight: "bold",
+  //   flexDirection: "column",
+  // },
+  // header1: {
+  //   fontSize: 24,
+  //   color: COLORS.white,
+
+  //   marginLeft: 32,
+  //   fontWeight: "bold",
+  //   flexDirection: "column",
+  // },
+  // paragraph: {
+  //   color: COLORS.white,
+  //   fontSize: 17,
+  //   marginLeft: 32,
+  //   marginTop: 20,
+  //   maxWidth: 280,
+  //   marginBottom: 70,
+  // },
   button: {
     alignSelf: "center",
 
     marginBottom: 16,
-    height: "10%",
+    height: "6%",
   },
-  Signup: {
-    marginLeft: 32,
-    color: COLORS.white,
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 70,
-  },
-  login: {
-    color: "#E4E4E4",
-    marginLeft: 42,
-    fontSize: 16,
-  },
-  loginbtn: {
-    color: COLORS.white,
-    marginLeft: 5,
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  haveacc: {
-    flexDirection: "row",
-    marginVertical: 4,
+  // Signup: {
+  //   marginLeft: 32,
+  //   color: COLORS.white,
+  //   fontSize: 20,
+  //   fontWeight: "bold",
+  //   marginBottom: 70,
+  // },
+  // login: {
+  //   color: "#E4E4E4",
+  //   marginLeft: 42,
+  //   fontSize: 16,
+  // },
+  // loginbtn: {
+  //   color: COLORS.white,
+  //   marginLeft: 5,
+  //   fontSize: 20,
+  //   fontWeight: "bold",
+  // },
+  // haveacc: {
+  //   flexDirection: "row",
+  //   marginVertical: 4,
 
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  usembl: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: "15%",
-    fontSize: 17,
-    color: COLORS.white,
-    marginVertical: 15,
-    padding: 4,
-  },
-  usembl1: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 2,
-    fontSize: 17,
-    color: COLORS.white,
-    marginVertical: 10,
-    padding: 4,
-  },
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  // },
+  // usembl: {
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   marginLeft: "15%",
+  //   fontSize: 17,
+  //   color: COLORS.white,
+  //   marginVertical: 15,
+  //   padding: 4,
+  // },
+  // usembl1: {
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   marginLeft: 2,
+  //   fontSize: 17,
+  //   color: COLORS.white,
+  //   marginVertical: 10,
+  //   padding: 4,
+  // },
 });
 
 export default UserType;

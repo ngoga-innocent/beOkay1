@@ -25,8 +25,8 @@ function MyTabs() {
             iconName = focused ? "home" : "home";
           } else if (route.name === "consultation") {
             iconName = focused ? "stethoscope" : "stethoscope";
-          } else if (route.name === "user") {
-            iconName = focused ? "user-clock" : "user-clock";
+          } else if (route.name === "E.H.R") {
+            iconName = focused ? "file" : "file";
           } else if (route.name === "Hospitals") {
             iconName = focused ? "hospital-alt" : "hospital-alt";
           }
@@ -49,7 +49,7 @@ function MyTabs() {
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="user"
+        name="E.H.R"
         component={User}
         options={{
           headerTitle: "Medical Report",

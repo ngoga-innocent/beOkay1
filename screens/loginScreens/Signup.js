@@ -1,4 +1,13 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+} from "react-native";
 import { React, useState } from "react";
 import { COLORS } from "../../components/Colors";
 import SignupHeader from "./SignupHeader";
@@ -133,8 +142,12 @@ const Signup = ({ route, navigation }) => {
     }
   };
   return (
-    <KeyboardWrapper>
-      <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+    >
+      <ScrollView style={styles.container}>
         <Spinner visible={isLoading} />
         <SignupHeader
           title="You are"
@@ -226,8 +239,8 @@ const Signup = ({ route, navigation }) => {
             <Text style={styles.usembl1}> Use Mobile security to Login</Text>
           </View>
         </View>
-      </View>
-    </KeyboardWrapper>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -15,8 +16,20 @@ import Input from "../../components/Input";
 import Slider from "@react-native-community/slider";
 import RadioForm from "react-native-simple-radio-button";
 import { COLORS } from "../../components/Colors";
+import DateTimePicker from "@react-native-community/datetimepicker";
 const Patient_Profile = () => {
   const [range, setRange] = useState("3");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [showPicker, setShowPicker] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const handleDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowPicker(Platform.OS === "ios");
+    setDate(currentDate);
+  };
+  const togglePicker = () => {
+    setShowPicker(!showPicker);
+  };
   const item = [
     { label: "Yes", value: 0 },
     { label: "No", value: 1 },
@@ -91,7 +104,7 @@ const Patient_Profile = () => {
             }}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <AntDesign name="idcard" size="30%" />
+              <AntDesign name="idcard" size={30} />
               <Text style={{ marginLeft: 8, fontSize: 16, fontWeight: "600" }}>
                 Patient Profile
               </Text>
@@ -114,10 +127,47 @@ const Patient_Profile = () => {
           </View>
         </TouchableOpacity>
         <ReusableInput title="Names" placeholder="separate names by space" />
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <ReusableInput title="Date of Birth " placeholder="DD / MM / YYY" />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontWeight: "600" }}>Date Of Birth</Text>
+            <TouchableOpacity
+              style={{
+                backgroundColor: COLORS.primary,
+                alignItems: "center",
+                justifyContent: "center",
+                height: height / 20,
+                borderRadius: width / 30,
+
+                width: "48%",
+                marginTop: height / 70,
+              }}
+              onPress={() => togglePicker()}
+            >
+              {Platform.OS === "android" && (
+                <Text style={{ fontWeight: "bold", color: COLORS.white }}>
+                  Choose Date || {date}
+                </Text>
+              )}
+              {showPicker && (
+                <DateTimePicker
+                  value={date}
+                  mode="date"
+                  display="default"
+                  onChange={handleDateChange}
+                />
+              )}
+            </TouchableOpacity>
+          </View>
+
           <ReusableInput title="Gender" placeholder="Male" rewidth="40%" />
         </View>
+
         <View style={{ marginTop: 10 }}>
           <Text>Blood Type</Text>
           <View

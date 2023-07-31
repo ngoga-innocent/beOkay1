@@ -258,6 +258,7 @@ const UserLanding = ({ navigation }) => {
           </Text>
         </View>
         <TouchableOpacity
+          onPress={() => navigation.navigate("user")}
           style={{
             marginHorizontal: 10,
             flexDirection: "row",
@@ -290,6 +291,7 @@ const UserLanding = ({ navigation }) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => navigation.navigate("user")}
           style={{
             marginHorizontal: 10,
             flexDirection: "row",
@@ -322,6 +324,7 @@ const UserLanding = ({ navigation }) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => navigation.navigate("user")}
           style={{
             marginHorizontal: 10,
             flexDirection: "row",

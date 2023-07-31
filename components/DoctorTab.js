@@ -13,10 +13,11 @@ import AntiDesign from "react-native-vector-icons/AntDesign";
 import DoctorProfile from "../screens/DoctorScreen/DoctorProfile";
 import Dashboard from "../screens/DoctorScreen/Dashboard";
 import ScheduleAppointment from "../screens/DoctorScreen/ScheduleAppointment";
-import Mycalendar from "../screens/DoctorScreen/Mycalendar";
+
+import MyCalendar from "../screens/Navigations/MycalendarStack";
 const Tab = createBottomTabNavigator();
 
-function DoctorTab() {
+function DoctorTab({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -31,7 +32,7 @@ function DoctorTab() {
           } else if (route.name === "Community") {
             iconName = focused ? "addusergroup" : "addusergroup";
           } else if (route.name === "Emergency") {
-            iconName = focused ? "close" : "close";
+            iconName = focused ? "warning" : "warning";
           } else if (route.name === "Calendar") {
             iconName = focused ? "calendar" : "calendar";
           }
@@ -55,7 +56,7 @@ function DoctorTab() {
       />
       <Tab.Screen
         name="Calendar"
-        component={Mycalendar}
+        component={MyCalendar}
         options={{ headerShown: false }}
       />
       <Tab.Screen

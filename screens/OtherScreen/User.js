@@ -10,11 +10,16 @@ import {
 import { COLORS, width, height } from "../../components/Colors";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entype from "react-native-vector-icons/Entypo";
+import { useNavigation } from "@react-navigation/native";
 
 const User = () => {
+  const navigation = useNavigation();
   const ReusableBtn = ({ title, background, filen }) => {
     return (
       <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("consultation", { screen: "report" })
+        }
         style={{
           borderWidth: 1,
           height: height / 7,

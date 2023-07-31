@@ -18,7 +18,7 @@ const Mycalendar = ({ navigation }) => {
   const [selected, setSelected] = useState([0]);
   const days = ["Mo", "Tu", "We", "Th", "fr", "Sa", "Su"];
   return (
-    <ScrollView>
+    <ScrollView style={{ flex: 1 }}>
       <Header style={{ backgroundColor: COLORS.doctor }} />
       <View style={{ marginTop: 20, flexDirection: "row" }}>
         <Button
@@ -42,7 +42,17 @@ const Mycalendar = ({ navigation }) => {
           style1={{ fontSize: 15 }}
         />
       </View>
-      <View style={{ marginTop: height / 20, paddingHorizontal: 16 }}>
+      <View
+        style={{
+          marginTop: height / 20,
+          paddingHorizontal: 16,
+          backgroundColor: COLORS.primary,
+          flex: 2,
+          height: "100%",
+          paddingVertical: height / 20,
+          borderRadius: width / 10,
+        }}
+      >
         <Text style={styles.headers}>My Availability</Text>
         <FlatList
           horizontal
@@ -80,7 +90,7 @@ const Mycalendar = ({ navigation }) => {
             );
           }}
         />
-        <View style={{ marginTop: 15 }}>
+        <View style={{ marginTop: height / 40 }}>
           <Text style={styles.headers}>Time Range</Text>
           <View
             style={{
@@ -99,7 +109,7 @@ const Mycalendar = ({ navigation }) => {
             </View>
           </View>
         </View>
-        <View style={{ marginTop: 15 }}>
+        {/* <View style={{ marginTop: 15 }}>
           <Text style={styles.headers}>Custom Availability</Text>
           <Text
             style={{
@@ -141,19 +151,19 @@ const Mycalendar = ({ navigation }) => {
               <DateTime mode="time" />
             </View>
           </View>
-        </View>
-        <Button
-          onPress={() => navigation.navigate("history")}
-          text="Confirm Availability"
-          style={{
-            width: width - 40,
-            height: height / 17,
-            backgroundColor: COLORS.doctor,
-            marginTop: 20,
-          }}
-          style1={{ color: COLORS.white, fontSize: 22, fontWeight: "bold" }}
-        />
+        </View> */}
       </View>
+      <Button
+        onPress={() => navigation.navigate("history")}
+        text="Confirm Availability"
+        style={{
+          width: width - 20,
+          height: height / 17,
+          backgroundColor: COLORS.doctor,
+          marginTop: 20,
+        }}
+        style1={{ color: COLORS.white, fontSize: 22, fontWeight: "bold" }}
+      />
     </ScrollView>
   );
 };

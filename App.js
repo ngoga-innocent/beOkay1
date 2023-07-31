@@ -5,8 +5,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Home from "./Home";
-import MyDrawer from "./components/Drawer";
-import MyTabs from "./components/BottomTabs";
+import OveralStack from "./components/OveralStack";
+// import MyDrawer from "./components/Drawer";
+// import MyTabs from "./components/BottomTabs";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
@@ -53,7 +54,7 @@ export default function App() {
   return (
     isAppFirstLaunched != null && (
       <NavigationContainer>
-        {authtoken ? <MyDrawer /> : <Home />}
+        {authtoken ? <OveralStack /> : <Home />}
       </NavigationContainer>
     )
   );

@@ -23,9 +23,12 @@ import { Avatar } from "react-native-elements";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import Dropdown from "../../components/DropDown";
 import CustomCheckbox from "../../components/CheckBox";
+// import DocumentPicker from "react-native-document-picker";
+import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
 import * as DocumentPicker from "expo-document-picker";
-
-const Docprofile = ({ route, navigation }) => {
+const Docprofile = ({ route }) => {
+  const navigation = useNavigation();
   const width = Dimensions.get("screen").width,
     height = Dimensions.get("screen").height;
   const [result, setResult] = useState([]);
@@ -39,6 +42,8 @@ const Docprofile = ({ route, navigation }) => {
   const [usembl, setUsembl] = useState(false);
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [Profile, setProfile] = useState(null);
+  const [Document, setDocument] = useState(null);
   const Status = [
     { id: 1, name: "Nurse" },
     { id: 1, name: "Doctor" },
@@ -103,20 +108,55 @@ const Docprofile = ({ route, navigation }) => {
     //   alert("there is errors in your inputs");
     // }
   };
-  const handleFileSelect = async () => {
+  const ProfilePicker = async () => {
     try {
-      const res = DocumentPicker.pick({
-        type: [DocumentPicker.types.pdf], // Specify the file types to be picked
-      });
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Permission denied!");
+        }
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          quality: 1,
+        });
+
+        if (!result.canceled) {
+          // console.log(result.assets[0].uri);
+          setProfile(result.assets[0].uri);
+        } else {
+          console.log("canceled");
+        }
+      }
+      // const res = await DocumentPicker.pick({
+      //   type: [DocumentPicker.types.pdf], // Specify the file types to be picked
+      // });
 
       // Handle the selected file here, e.g., send it to the server or perform any necessary operations
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       //   if (DocumentPicker.isCancel(err)) {
       //     // User cancelled the file picker
       //     console.log("User cancelled the file picker");
       //   } else {
       // Handle any other errors
+      console.log("Error:", err);
+    }
+  };
+  const handleFileSelect = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "application/pdf", // Specify the file types to be picked (PDF in this case)
+      });
+      // console.log(result);
+      if (!result.canceled) {
+        // Handle the selected file here, e.g., send it to the server or perform any necessary operations
+        setDocument(result.assets[0].name);
+      } else {
+        console.log("Document picker cancelled");
+      }
+    } catch (err) {
       console.log("Error:", err);
     }
   };
@@ -186,9 +226,15 @@ const Docprofile = ({ route, navigation }) => {
             }}
           >
             <Avatar
-              source={require("../../assets/Ellipse15.png")}
+              source={
+                Profile == null
+                  ? require("../../assets/Ellipse15.png")
+                  : { uri: Profile }
+              }
               size="medium"
+              rounded
             />
+            {/* <Avatar source={Profile["uri"]} size="medium" /> */}
             <Text
               style={{
                 marginLeft: width / 17,
@@ -201,6 +247,7 @@ const Docprofile = ({ route, navigation }) => {
           </View>
 
           <TouchableOpacity
+            onPress={() => ProfilePicker()}
             style={{ flexDirection: "row", alignItems: "center" }}
           >
             <EvilIcons name="pencil" size={18} />
@@ -213,7 +260,11 @@ const Docprofile = ({ route, navigation }) => {
               multiline
               placeholder="Short Bio"
               numberOfLines={4}
-              style={{ height: height / 14, width: "100%" }}
+              style={{
+                height: height / 14,
+                width: "100%",
+                maxHeight: height / 10,
+              }}
             />
             <Dropdown Items={Status} placeholder="status" />
             <Dropdown Items={Specialization} placeholder="Specialisations" />
@@ -271,7 +322,7 @@ const Docprofile = ({ route, navigation }) => {
                 }}
               >
                 <Text style={{ color: COLORS.paragraph, marginLeft: 25 }}>
-                  Upload Equivalent Document
+                  {Document == null ? "Upload Equivalent Document" : Document}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -285,7 +336,9 @@ const Docprofile = ({ route, navigation }) => {
                 marginTop: 20,
                 alignSelf: "center",
               }}
-              onPress={() => navigation.navigate("Dashboard")}
+              onPress={() =>
+                navigation.navigate("allTab", { screen: "docTab" })
+              }
             />
           </View>
         </View>

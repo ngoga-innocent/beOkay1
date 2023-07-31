@@ -10,31 +10,31 @@ const Viewall = ({ onPress, route, name }) => {
   const navigation = useNavigation();
   const Categories = [
     {
-      name: "Cardioligist",
+      name: "Mental Health",
       img: require("../../assets/doctor.png"),
     },
     {
-      name: "Cardioligist",
+      name: "Fertility",
       img: require("../../assets/doctor.png"),
     },
     {
-      name: "Cardioligist",
+      name: " Sexually Transmitted Infection",
       img: require("../../assets/doctor.png"),
     },
     {
-      name: "Cardioligist",
+      name: "Pediatric Medecine",
       img: require("../../assets/doctor.png"),
     },
     {
-      name: "Cardioligist",
+      name: "Gyneocology",
       img: require("../../assets/doctor.png"),
     },
     {
-      name: "Cardioligist",
+      name: "Internal Medecine",
       img: require("../../assets/doctor.png"),
     },
     {
-      name: "Cardioligist",
+      name: "Chronical Diseases",
       img: require("../../assets/doctor.png"),
     },
   ];
@@ -83,7 +83,9 @@ const Viewall = ({ onPress, route, name }) => {
               >
                 <Image source={item.img} />
               </TouchableOpacity>
-              <Text>{item.name}</Text>
+              <Text style={{ maxWidth: width / 3.6, textAlign: "center" }}>
+                {item.name}
+              </Text>
             </View>
           );
         }}

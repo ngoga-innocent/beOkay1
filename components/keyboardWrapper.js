@@ -4,6 +4,7 @@ import {
   Keyboard,
   StyleSheet,
   TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import React from "react";
 import { COLORS } from "./Colors";
@@ -12,9 +13,7 @@ const KeyboardWrapper = ({ children }) => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          {children}
-        </TouchableWithoutFeedback>
+        <View>{children}</View>
       </ScrollView>
     </KeyboardAvoidingView>
   );

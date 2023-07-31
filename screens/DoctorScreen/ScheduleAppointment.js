@@ -4,6 +4,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  TextInput,
+  FlatList,
+  Alert,
+  Modal,
 } from "react-native";
 import { React, useState } from "react";
 import Header from "../../components/Header";
@@ -15,7 +19,7 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import CalendarScreen from "./Calendar";
 import AntiDesign from "react-native-vector-icons/AntDesign";
-import { FlatList } from "react-native-gesture-handler";
+
 import { Avatar } from "react-native-elements";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { TabView, TabBar } from "react-native-tab-view";
@@ -27,6 +31,7 @@ const ScheduleAppointment = ({ navigation }) => {
   const [name, setName] = useState("Jessica");
   const [joinCall, setJoin] = useState(false);
   const [visibleDesc, setDescription] = useState();
+  const [cancelappoint, setCanceled] = useState(false);
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "first", title: "Appointments & Schedule" },
@@ -106,6 +111,64 @@ const ScheduleAppointment = ({ navigation }) => {
       date: "dEC 7",
     },
   ];
+  const CancelAppointment = () => {
+    setCanceled(true);
+  };
+  const CancelPrompt = () => {
+    return (
+      <Modal
+        visible={cancelappoint}
+        animationType="fade"
+        style={{
+          alignSelf: "center",
+          flex: 1,
+
+          marginTop: height / 2.4,
+        }}
+        collapsable={true}
+      >
+        <View
+          style={{
+            flex: 1,
+            zIndex: 3,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: COLORS.green,
+          }}
+        >
+          <TextInput
+            placeholder="Why did you cancel appointment?"
+            multiline
+            numberOfLines={5}
+            style={{
+              height: height / 14,
+              maxHeight: height / 10,
+              borderColor: COLORS.warning,
+              borderWidth: 1,
+              padding: 5,
+              borderRadius: width / 25,
+              marginBottom: 10,
+              width: "95%",
+            }}
+          />
+          <TouchableOpacity
+            onPress={() => setCanceled(false)}
+            style={{
+              backgroundColor: COLORS.doctor,
+              alignItems: "center",
+              justifyContent: "center",
+              alignSelf: "center",
+              height: height / 23,
+              width: "95%",
+              borderRadius: width / 30,
+            }}
+          >
+            <Text style={{ fontWeight: "bold" }}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+    );
+  };
   const AppointmentView = () => (
     <View style={{}}>
       <FlatList
@@ -201,12 +264,17 @@ const ScheduleAppointment = ({ navigation }) => {
                   <TouchableOpacity
                     style={[
                       styles.button,
-                      { borderColor: "green", marginRight: 10 },
+                      {
+                        borderColor: COLORS.white,
+                        marginRight: 10,
+                        backgroundColor: COLORS.doctor,
+                      },
                     ]}
                   >
                     <Text>ACCEPT</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
+                    onPress={() => setCanceled(true)}
                     style={[styles.button, { borderColor: "red" }]}
                   >
                     <Text>CANCEL</Text>
@@ -249,6 +317,7 @@ const ScheduleAppointment = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
+      <CancelPrompt />
       {/* <Header style={{ backgroundColor: COLORS.doctor }} /> */}
       <View>
         <View
@@ -299,9 +368,7 @@ const ScheduleAppointment = ({ navigation }) => {
                   justifyContent: "center",
                   // alignItems: "center",
                   width: width / 2.3,
-                  backgroundColor: joinCall
-                    ? COLORS.doctor
-                    : COLORS.consultationbg,
+                  backgroundColor: joinCall ? COLORS.doctor : COLORS.primary,
                   marginRight: width / 20,
                   borderRadius: width / 22,
                   paddingHorizontal: "6%",

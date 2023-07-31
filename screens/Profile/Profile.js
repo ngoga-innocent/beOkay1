@@ -11,7 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { COLORS, width } from "../../components/Colors";
+import { COLORS, height, width } from "../../components/Colors";
 import { Avatar } from "react-native-elements";
 import AntiDesign from "react-native-vector-icons/AntDesign";
 import { Svg, Circle } from "react-native-svg";
@@ -312,9 +312,40 @@ const Profile = ({ navigation }) => {
         <View style={styles.header}>
           <View
             style={{
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: height / 30,
+            }}
+          >
+            <Avatar
+              rounded
+              source={require("../../assets/profile.jpeg")}
+              size="medium"
+            />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("consultation", {
+                  screen: "patient_profile",
+                })
+              }
+            >
+              <Text
+                style={{
+                  fontSize: 17,
+                  fontWeight: "bold",
+                  color: COLORS.doctor,
+                  marginTop: 2,
+                }}
+              >
+                Edit
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
               justifyContent: "center",
               alignItems: "center",
-              marginLeft: width / 3,
+              // marginLeft: width / 3,
             }}
           >
             <Text
@@ -326,24 +357,24 @@ const Profile = ({ navigation }) => {
                 textAlign: "center",
               }}
             >
-              Profile
+              {name}
             </Text>
           </View>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <TouchableOpacity
               // onPress={() => navigation.openDrawer()}
               style={{
-                height: 50,
-                width: 50,
+                height: 40,
+                width: 40,
                 backgroundColor: "white",
-                borderRadius: 50,
+                borderRadius: 40,
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
               <Icon
                 name="notifications"
-                size={40}
+                size={30}
                 style={{ alignSelf: "center" }}
                 color={COLORS.primary}
               />
@@ -353,50 +384,6 @@ const Profile = ({ navigation }) => {
       </SafeAreaView>
     );
   };
-
-  // const ProfReusablecomp = ({
-  //   name,
-  //   title,
-
-  //   progress,
-  //   thickness,
-  //   size,
-  //   record,
-  //   update,
-  //   onPress,
-  // }) => {
-  //   return (
-  //     <TouchableOpacity
-  //       onPress={onPress}
-  //       style={{
-  //         flexDirection: "row",
-  //         alignItems: "center",
-  //         justifyContent: "space-between",
-  //         height: width / 8,
-  //         width: width - 60,
-  //         alignSelf: "center",
-  //         backgroundColor: "#bdbbbb",
-  //         paddingHorizontal: 15,
-  //         borderRadius: 20,
-  //         marginBottom: 15,
-  //       }}
-  //     >
-  //       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-  //         <AntiDesign name={name} size={20} />
-  //         <Text style={{ marginLeft: 12 }}>{title}</Text>
-  //       </View>
-
-  //       <View>
-  //         <CircularProgressBar
-  //           progress={progress}
-  //           barColor="green"
-  //           thickness={thickness}
-  //           size={size}
-  //         />
-  //       </View>
-  //     </TouchableOpacity>
-  //   );
-  // };
 
   return (
     <View style={{ flex: 1 }}>
@@ -598,6 +585,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     height: 50,
+    paddingHorizontal: width / 20,
   },
   container1: {
     backgroundColor: "#f2f2f2",

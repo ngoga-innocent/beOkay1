@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Button,
   Platform,
+  FlatList,
 } from "react-native";
 import { COLORS, height, width } from "../../components/Colors";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -26,7 +27,119 @@ const DoctorDetails = ({ navigation, route }) => {
   const [time, setTime] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
   const [showPicker1, setShowPicker1] = useState(false);
+  const [availableHours, setAvailableHours] = useState([]);
+  const [choosenIndex, setChoosen] = useState();
+  const [selectedHour, setSelecetedHour] = useState();
+  const currentDate = new Date();
+  const options = { weekday: "short" };
+  //custom availability not well handled because of NO idea
 
+  const availability = [
+    {
+      date: currentDate.toLocaleDateString(undefined, {
+        weekday: "short",
+      }),
+      hours: [
+        "08:00 AM",
+        "9:00 AM",
+        "10:00 AM",
+        "02:00",
+        "03:00",
+        "04:00",
+        "5:00",
+      ],
+    },
+    {
+      date: new Date(
+        currentDate.getTime() + 1 * 24 * 60 * 60 * 1000
+      ).toLocaleDateString(undefined, {
+        weekday: "short",
+      }),
+      hours: [
+        "08:00 AM",
+        "9:00 AM",
+        "10:00 AM",
+        "02:00 PM",
+        "03:00 PM",
+        "04:00 PM",
+        "5:00 PM",
+      ],
+    },
+    {
+      date: new Date(
+        currentDate.getTime() + 2 * 24 * 60 * 60 * 1000
+      ).toLocaleDateString(undefined, {
+        weekday: "short",
+      }),
+      hours: [
+        "08:00 AM",
+        "9:00 AM",
+        "10:00 AM",
+        "02:00 PM",
+        "03:00 PM",
+        "04:00 PM",
+        "5:00 PM",
+      ],
+    },
+    {
+      date: new Date(
+        currentDate.getTime() + 3 * 24 * 60 * 60 * 1000
+      ).toLocaleDateString(undefined, {
+        weekday: "short",
+      }),
+      hours: [
+        "08:00 AM",
+        "9:00 AM",
+        "10:00 AM",
+        "02:00 PM",
+        "03:00 PM",
+        "04:00 PM",
+        "5:00 PM",
+      ],
+    },
+    {
+      date: new Date(
+        currentDate.getTime() + 4 * 24 * 60 * 60 * 1000
+      ).toLocaleDateString(undefined, {
+        weekday: "short",
+      }),
+      hours: [
+        "08:00 AM",
+        "9:00 AM",
+        "10:00 AM",
+        "02:00 PM",
+        "03:00 PM",
+        "04:00 PM",
+        "5:00 PM",
+      ],
+    },
+    {
+      date: new Date(
+        currentDate.getTime() + 5 * 24 * 60 * 60 * 1000
+      ).toLocaleDateString(undefined, {
+        weekday: "short",
+      }),
+      hours: [
+        "08:00 AM",
+        "9:00 AM",
+        "10:00 AM",
+        "02:00 PM",
+        "03:00 PM",
+        "04:00 PM",
+        "5:00 PM",
+      ],
+    },
+    {
+      date: new Date(
+        currentDate.getTime() + 6 * 24 * 60 * 60 * 1000
+      ).toLocaleDateString(undefined, {
+        weekday: "short",
+      }),
+      hours: ["08:00 PM", "9:00 PM", "04:00 PM", "5:00 PM"],
+    },
+  ];
+
+  //end Custom Availability
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShowPicker(Platform.OS === "ios");
@@ -43,6 +156,10 @@ const DoctorDetails = ({ navigation, route }) => {
   };
   const togglePickerTime = () => {
     setShowPicker1(!showPicker1);
+  };
+  const chooseDate = (item, index) => {
+    setChoosen(index);
+    setAvailableHours(item);
   };
   const ratingStars = [1, 2, 3, 4, 5];
   const doctor = {
@@ -217,8 +334,67 @@ const DoctorDetails = ({ navigation, route }) => {
           Schedule
         </Text>
       </View>
-
       <View>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          {availability.map((item, index) => {
+            return (
+              <TouchableOpacity
+                onPress={() => chooseDate(item.hours, index)}
+                key={index}
+                style={{
+                  paddingHorizontal: width / 30,
+                  borderWidth: 1,
+                  borderRadius: width / 50,
+
+                  marginHorizontal: width / 40,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor:
+                    choosenIndex === index ? COLORS.primary : null,
+                }}
+              >
+                <Text>{item.date.split(",")[0]}</Text>
+                <Text>{item.date.split(",")[1].split("/")[0]}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+      <Text
+        style={{
+          fontSize: 18,
+          marginBottom: 10,
+          marginTop: 10,
+          fontWeight: "bold",
+          marginLeft: width / 25,
+        }}
+      >
+        Select Time
+      </Text>
+      <FlatList
+        numColumns={3}
+        data={availableHours}
+        renderItem={({ item, index }) => {
+          return (
+            <TouchableOpacity
+              onPress={() => setSelecetedHour(index)}
+              style={{
+                marginLeft: width / 30,
+                borderRadius: width / 30,
+                borderWidth: 1,
+                paddingHorizontal: width / 15,
+                paddingVertical: height / 160,
+                alignItems: "center",
+                marginBottom: height / 90,
+                backgroundColor: selectedHour === index ? COLORS.primary : null,
+              }}
+            >
+              <Text>{item}</Text>
+            </TouchableOpacity>
+          );
+        }}
+      />
+      {/* <View>
         <View
           style={{
             flexDirection: "row",
@@ -291,11 +467,14 @@ const DoctorDetails = ({ navigation, route }) => {
             onChange={handleTimeChange}
           />
         )}
-      </View>
+      </View> */}
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("consultation", {
-            screen: "success",
+            screen: "payment",
+            params: {
+              next: "success",
+            },
           })
         }
         style={{

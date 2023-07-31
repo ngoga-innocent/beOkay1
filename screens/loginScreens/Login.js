@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
 import { React, useState } from "react";
 import SignupHeader from "./SignupHeader";
 import { COLORS } from "../../components/Colors";
@@ -10,6 +16,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Spinner from "react-native-loading-spinner-overlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Url from "../../Url";
+import { Platform } from "react-native";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -76,8 +83,10 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <KeyboardWrapper>
-      <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView>
         <Spinner visible={isLoading} />
         <SignupHeader
           title="Welcome"
@@ -192,8 +201,8 @@ const Login = ({ navigation }) => {
           </TouchableOpacity>
           <Text>Terms of service privacy policy</Text>
         </View>
-      </View>
-    </KeyboardWrapper>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({

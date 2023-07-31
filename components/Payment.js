@@ -14,17 +14,24 @@ import PaymentHeader from "./PaymentHeader";
 import PhoneInput from "react-native-phone-number-input";
 import Colors from "../components/Colors";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-const Payment = () => {
+const Payment = ({ route }) => {
   const [activepy, setActivepy] = useState("momo");
   const navigation = useNavigation();
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
+  const next = route.params.next;
   const [routes] = useState([
     { key: "momo", title: "Mobile Money" },
     { key: "card", title: " Card" },
     { key: "paypal", title: "Paypal" },
   ]);
-
+  const nextPage = () => {
+    if (next === "success") {
+      navigation.navigate("success");
+    } else {
+      navigation.navigate("Results");
+    }
+  };
   const Momo = () => {
     const [phonenumber, setPhoneNumber] = useState("");
     const SavedNumber = [
@@ -44,6 +51,7 @@ const Payment = () => {
         number: "+250737865431",
       },
     ];
+
     return (
       <View style={{ marginLeft: 20, marginTop: 10 }}>
         <Text style={{ fontWeight: "100", fontSize: 15 }}>Saved Number</Text>
@@ -159,7 +167,7 @@ const Payment = () => {
         <Text style={{ fontWeight: "bold", fontSize: 19 }}>20,000 Rwf</Text>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Results")}
+        onPress={() => nextPage()}
         style={{
           marginVertical: 30,
           backgroundColor: "#93BD67",

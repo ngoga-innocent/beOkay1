@@ -13,6 +13,7 @@ import { COLORS, height, width } from "../../components/Colors";
 import { ColorSpace } from "react-native-reanimated";
 import { head, body, leg, hand } from "../../components/bodypart";
 import Viewall from "../OtherScreen/Viewall";
+import Report from "./Report";
 
 const Consultation = ({ navigation, route }) => {
   const { name } = route.params;
@@ -30,38 +31,53 @@ const Consultation = ({ navigation, route }) => {
     setBody(!body);
     navigation.navigate("Description", { part: item, name: name });
   };
-  useEffect(() => {
-    setBodyPart();
-  });
-  const [bodyPart, setBodyPart] = useState();
+  // useEffect(() => {
+  //   setBodyPart();
+  // });
+  const [part, setBodyPart] = useState();
   const [bodystate, setBody] = useState(false);
   const [clicked, setClicked] = useState("");
   const [showViewAll, setShowViewAll] = useState(false);
+  const [showModal, setShowModal] = useState(true);
+  // const [part, setPart] = useState(body);
   return (
     <View style={{ flex: 1 }}>
       <Header />
-      <View style={styles.modal}>
-        <View style={styles.modalheader}>
-          <Text
-            style={{
-              color: "#809502",
-              fontSize: 18,
-              fontWeight: "bold",
-            }}
-          >
-            Consult with Be Okay
-          </Text>
-          <TouchableOpacity onPress={() => setShowModal(false)}>
-            <Entypo name="circle-with-cross" color={COLORS.primary} size={24} />
-          </TouchableOpacity>
-        </View>
+      {showModal && (
+        <View style={styles.modal}>
+          <View style={styles.modalheader}>
+            <Text
+              style={{
+                color: "#809502",
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              Consult with Be Okay
+            </Text>
+            <TouchableOpacity onPress={() => setShowModal(false)}>
+              <Entypo
+                name="circle-with-cross"
+                color={COLORS.primary}
+                size={24}
+              />
+            </TouchableOpacity>
+          </View>
 
-        <Text style={{ fontSize: 14, color: "#809502", marginHorizontal: 4 }}>
-          how are you doing?if there is any help you need please let Be-Okay
-          know
-        </Text>
-      </View>
-      <View style={{ marginHorizontal: 8, marginVertical: 8, height: 98 }}>
+          <Text style={{ fontSize: 14, color: "#809502", marginHorizontal: 4 }}>
+            how are you doing?if there is any help you need please let Be-Okay
+            know
+          </Text>
+        </View>
+      )}
+      <View
+        style={{
+          marginHorizontal: 8,
+          marginVertical: 8,
+          height: 98,
+          zIndex: 5,
+        }}
+      >
         <Text style={{ fontWeight: "bold" }}>Address your Consultation</Text>
         <FlatList
           data={department}
@@ -90,7 +106,9 @@ const Consultation = ({ navigation, route }) => {
         >
           <Text>View All</Text>
         </TouchableOpacity>
-        {showViewAll === true && <Viewall name={name} />}
+        <View style={{ zIndex: 8 }}>
+          {showViewAll === true && <Viewall name={name} />}
+        </View>
       </View>
       <View style={{ backgroundColor: "white" }}>
         <Text
@@ -107,7 +125,7 @@ const Consultation = ({ navigation, route }) => {
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            height: "90%",
+            height: height / 1.2,
           }}
         >
           <View style={{ marginLeft: bodystate == false ? width / 2.5 : null }}>
@@ -117,50 +135,55 @@ const Consultation = ({ navigation, route }) => {
               // resizeMode="contain"
             />
           </View>
+
           {bodystate == true && (
-            <FlatList
-              data={bodyPart}
-              style={{
-                marginLeft: "20%",
-                height: "100%",
-              }}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() => selectedfn(item.name)}
-                  style={{
-                    flexDirection: "row",
-                    marginBottom: 5,
-                    alignItems: "center",
-                    height: 60,
-                  }}
-                >
-                  <View
-                    style={{
-                      height: 38,
-                      width: 38,
-                      borderRadius: 38,
-                      backgroundColor: COLORS.black,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginRight: 15,
-                    }}
-                  >
-                    <Image
-                      source={item.image}
-                      resizeMode="contain"
+            <View style={{ flex: 1, height: height / 2.7 }}>
+              <FlatList
+                data={part}
+                style={{
+                  marginLeft: "20%",
+                }}
+                contentContainerStyle={{ flexGrow: 1 }}
+                renderItem={({ item }) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => selectedfn(item.name)}
                       style={{
-                        width: 38,
-                        height: 38,
-                        borderRadius: 38,
-                        borderWidth: 1,
-                        borderColor: COLORS.black,
+                        flexDirection: "row",
+                        marginBottom: 5,
+                        alignItems: "center",
+                        height: 60,
                       }}
-                    />
-                  </View>
-                  <Text style={{ fontSize: 14 }}>{item.name}</Text>
-                </TouchableOpacity>
-              )}
-            />
+                    >
+                      <View
+                        style={{
+                          height: 38,
+                          width: 38,
+                          borderRadius: 38,
+                          backgroundColor: COLORS.black,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginRight: 15,
+                        }}
+                      >
+                        <Image
+                          source={item.image}
+                          resizeMode="contain"
+                          style={{
+                            width: 38,
+                            height: 38,
+                            borderRadius: 38,
+                            borderWidth: 1,
+                            borderColor: COLORS.black,
+                          }}
+                        />
+                      </View>
+                      <Text style={{ fontSize: 14 }}>{item.name}</Text>
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            </View>
           )}
         </View>
         <TouchableOpacity
@@ -176,9 +199,15 @@ const Consultation = ({ navigation, route }) => {
         ></TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            clicked !== "body"
-              ? (setClicked("body"), setBody(true), setBodyPart(body))
-              : (setBody(!body), setClicked(""), setBodyPart(""));
+            if (clicked !== "body") {
+              setClicked("body");
+              setBody(true);
+              setBodyPart(body);
+            } else {
+              setBody(!body);
+              setClicked("");
+              setBodyPart([]);
+            }
           }}
           style={[
             styles.bodysty,
@@ -187,6 +216,7 @@ const Consultation = ({ navigation, route }) => {
         ></TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
+            console.log(hand);
             clicked !== "hand1"
               ? (setClicked("hand1"), setBody(true), setBodyPart(hand))
               : (setBody(!bodystate), setClicked(""), setBodyPart(""));

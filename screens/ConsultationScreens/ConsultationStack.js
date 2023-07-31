@@ -28,6 +28,7 @@ import Viewall from "../OtherScreen/Viewall";
 import HomeCare from "./HomeCare";
 import DoctorDetails from "./DoctorDetails";
 import SuccessApointment from "./SuccessApointment";
+import Report from "./Report";
 
 const ConsultationStack = ({ navigation }) => {
   const stack = createStackNavigator();
@@ -71,6 +72,11 @@ const ConsultationStack = ({ navigation }) => {
       <stack.Screen
         name="Method"
         component={Method}
+        options={{ headerShown: false }}
+      />
+      <stack.Screen
+        name="report"
+        component={Report}
         options={{ headerShown: false }}
       />
 
@@ -196,11 +202,11 @@ const ConsultationStack = ({ navigation }) => {
         component={ScheduleAppointment}
         options={{ headerShown: false }}
       /> */}
-      <stack.Screen
+      {/* <stack.Screen
         name="mycalendar"
         component={Mycalendar}
         options={{ headerShown: false }}
-      />
+      /> */}
       <stack.Screen
         name="history"
         component={ConsultationHistory}
