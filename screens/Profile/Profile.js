@@ -110,6 +110,14 @@ const Profile = ({ navigation }) => {
       })
       .catch((error) => console.log("error", error));
   };
+  const Logout = async () => {
+    try {
+      await AsyncStorage.clear();
+      navigation.navigate("Auth");
+    } catch (error) {
+      console.log("logout error", error);
+    }
+  };
 
   const Appointments = () => (
     <ScrollView
@@ -362,6 +370,7 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <TouchableOpacity
+              onPress={() => Logout()}
               // onPress={() => navigation.openDrawer()}
               style={{
                 height: 40,

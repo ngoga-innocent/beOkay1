@@ -14,9 +14,7 @@
       "url": "https://u.expo.dev/fb47c0c1-e42c-4570-8b1f-65a456f853a7"
     },
     "useNextjs": true,
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.BeOkay"

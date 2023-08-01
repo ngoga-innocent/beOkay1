@@ -61,28 +61,9 @@ function DoctorTab({ navigation }) {
       />
       <Tab.Screen
         name="Emergency"
-        component={Docprofile}
+        component={Emergency}
         options={{
-          headerTitle: "Medical Report",
-          headerLeft: () => (
-            <View>
-              <TouchableOpacity onPress={() => navigation.navigate("Method")}>
-                <AntiDesign name="arrowleft" size={30} color="black" />
-              </TouchableOpacity>
-            </View>
-          ),
-          headerStyle: {
-            height: 120,
-            backgroundColor: COLORS.backgrounds,
-            elevation: 30,
-            shadowColor: "#000",
-          },
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            color: "black",
-            justifyContent: "center",
-            alignItems: "center",
-          },
+          headerShown: false,
         }}
       />
       <Tab.Screen
