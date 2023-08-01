@@ -72,7 +72,11 @@ const User = () => {
           >
             Latest Report
           </Text>
-          <ReusableBtn background="#267C97" title="General Health" filen="5" />
+          <ReusableBtn
+            background="#267C97"
+            title="Prescription & medication"
+            filen="5"
+          />
           <ReusableBtn background="#C129F6" title="Diabetes" filen="8" />
           <ReusableBtn background="#267C97" title="General Health" filen="5" />
           <ReusableBtn background="#C129F6" title="Diabetes" filen="5" />

@@ -128,7 +128,7 @@ const Consultation = ({ navigation, route }) => {
             height: height / 1.2,
           }}
         >
-          <View style={{ marginLeft: bodystate == false ? width / 2.5 : null }}>
+          <View style={{ marginLeft: bodystate == false ? width / 3 : null }}>
             <Image
               source={require("../../assets/AI.png")}
               // style={{ alignSelf: "center" }}

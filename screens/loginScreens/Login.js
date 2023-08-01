@@ -92,7 +92,7 @@ const Login = ({ navigation }) => {
           title="Welcome"
           style={{ color: COLORS.primary }}
           title1=" On Be Okay"
-          style1={{ color: COLORS.text }}
+          style1={{ color: COLORS.black }}
           paragraph="Stay health using our digital healthcare services(self-test technology,live chat and home followups)"
           style2={{ color: COLORS.paragraph }}
         />

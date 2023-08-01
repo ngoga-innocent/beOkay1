@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { React, useState, useEffect } from "react";
 import Header from "../../components/Header";
-import { COLORS } from "../../components/Colors";
+import { COLORS, width } from "../../components/Colors";
 import Input from "../../components/Input";
 import KeyboardWrapper from "../../components/keyboardWrapper";
 import Button from "../../components/Button";
@@ -101,6 +101,11 @@ const Description = ({ navigation, route }) => {
     //   })
     //   .catch((error) => console.log("error", error));
   };
+  const Price = [
+    { name: "AI consultation", price: "4$" },
+    { name: "Home Care", price: "15$" },
+    { name: "Doctor Appointment", price: "24$" },
+  ];
 
   return (
     // <KeyboardWrapper>
@@ -133,6 +138,37 @@ const Description = ({ navigation, route }) => {
           </View>
           <View
             style={{
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: COLORS.doctor,
+              padding: width / 30,
+              borderRadius: width / 30,
+              marginTop: width / 20,
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 20,
+                textDecorationLine: "underline",
+                marginBottom: width / 50,
+              }}
+            >
+              Price for Services
+            </Text>
+            <View style={{}}>
+              {Price.map((item, index) => {
+                return (
+                  <View key={index} style={{ flexDirection: "row" }}>
+                    <Text style={{ fontWeight: "bold" }}>{item.name}:</Text>
+                    <Text>{item.price}</Text>
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+          <View
+            style={{
               marginTop: 48,
               height: 98,
               alignItems: "center",
@@ -155,7 +191,7 @@ const Description = ({ navigation, route }) => {
               borderTopLeftRadius: 10,
             }}
           >
-            <View style={{ marginLeft: "7%" }}>
+            {/* <View style={{ marginLeft: "7%" }}>
               <Text style={{ marginBottom: 20, fontWeight: "bold" }}>
                 Please select
               </Text>
@@ -173,7 +209,7 @@ const Description = ({ navigation, route }) => {
                   Lungs
                 </Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
 
             <View>
               <Text
