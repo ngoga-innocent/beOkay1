@@ -22,16 +22,6 @@ const Mycalendar = ({ navigation }) => {
       <Header style={{ backgroundColor: COLORS.doctor }} />
       <View style={{ marginTop: 20, flexDirection: "row" }}>
         <Button
-          onPress={() => navigation.navigate("Schedule")}
-          text="Appointment & Schedule"
-          style={{
-            backgroundColor: COLORS.backgrounds,
-            height: height / 20,
-            width: "60%",
-          }}
-          style1={{ fontSize: 15 }}
-        />
-        <Button
           onPress={() => navigation.navigate("mycalendar")}
           text="My Calendar"
           style={{

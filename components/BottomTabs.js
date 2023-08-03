@@ -11,6 +11,7 @@ import User from "../screens/OtherScreen/User";
 import Emergency from "../screens/OtherScreen/Emergency";
 import { View, TouchableOpacity } from "react-native";
 import AntiDesign from "react-native-vector-icons/AntDesign";
+import Hospitals from "../screens/OtherScreen/Hospitals";
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
@@ -76,7 +77,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Hospitals"
-        component={Emergency}
+        component={Hospitals}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>

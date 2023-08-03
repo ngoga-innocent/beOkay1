@@ -275,9 +275,11 @@ const styles = StyleSheet.create({
   loginbtn: {
     color: COLORS.primary,
     fontSize: 20,
+    fontWeight: "bold",
   },
   haveacc: {
     flexDirection: "row",
+    alignItems: "center",
   },
   Button: {
     backgroundColor: COLORS.primary,

@@ -97,12 +97,27 @@ const Login = ({ navigation }) => {
           style2={{ color: COLORS.paragraph }}
         />
         <Text style={{ fontSize: 20, marginLeft: 32 }}>LOGIN</Text>
-        <View style={{ marginLeft: 32, marginTop: 20, flexDirection: "row" }}>
-          <Text style={{ color: COLORS.paragraph, marginRight: 4 }}>
+        <View
+          style={{
+            marginLeft: 32,
+            marginTop: 20,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: COLORS.black, marginRight: 4 }}>
             Don't have an account
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-            <Text style={{ color: COLORS.primary }}>Signup</Text>
+            <Text
+              style={{
+                color: COLORS.primary,
+                fontWeight: "bold",
+                fontSize: 20,
+              }}
+            >
+              Signup
+            </Text>
           </TouchableOpacity>
         </View>
         <View
@@ -132,7 +147,7 @@ const Login = ({ navigation }) => {
         </View>
         <Text
           style={{
-            color: COLORS.paragraph,
+            color: COLORS.black,
             alignSelf: "center",
             marginTop: 10,
           }}
@@ -158,11 +173,13 @@ const Login = ({ navigation }) => {
             style1={{ marginRight: 5 }}
           />
           <View style={{ flexDirection: "row", marginLeft: 32 }}>
-            <Text style={{ color: COLORS.paragraph, marginRight: 4 }}>
+            <Text style={{ color: COLORS.black, marginRight: 4 }}>
               Forgot Password?
             </Text>
             <TouchableOpacity>
-              <Text style={{ color: COLORS.primary }}>Get Help</Text>
+              <Text style={{ color: COLORS.primary, fontWeight: "bold" }}>
+                Get Help
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

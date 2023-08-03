@@ -11,6 +11,7 @@ import { COLORS, width, height } from "../../components/Colors";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entype from "react-native-vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
+import Fontisto from "react-native-vector-icons/Fontisto";
 
 const User = () => {
   const navigation = useNavigation();
@@ -77,9 +78,14 @@ const User = () => {
             title="Prescription & medication"
             filen="5"
           />
-          <ReusableBtn background="#C129F6" title="Diabetes" filen="8" />
-          <ReusableBtn background="#267C97" title="General Health" filen="5" />
-          <ReusableBtn background="#C129F6" title="Diabetes" filen="5" />
+          <ReusableBtn
+            background="#C129F6"
+            title="Medical & Lab Test"
+            filen="8"
+          />
+          <ReusableBtn background="#267C97" title="Appointment" filen="5" />
+          <ReusableBtn background="#C129F6" title="Recomendations" filen="5" />
+          <ReusableBtn background="#C129F6" title="Daily Tips" filen="5" />
         </View>
       </ScrollView>
     </SafeAreaView>

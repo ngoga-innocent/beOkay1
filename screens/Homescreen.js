@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { Component } from "react";
 import sponsors from "../sponsors";
-import { COLORS } from "../components/Colors";
+import { COLORS, height } from "../components/Colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class Homescreen extends Component {
@@ -36,7 +36,7 @@ export default class Homescreen extends Component {
             width: "50%",
             height: "30%",
             alignSelf: "center",
-            marginTop: "50%",
+            marginTop: height / 2,
           }}
         />
         <View style={{ justifyContent: "center", alignItems: "center" }}>
