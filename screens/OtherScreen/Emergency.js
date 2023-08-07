@@ -138,8 +138,12 @@ const Emergency = () => {
           multiline={true}
           height1={height / 15}
         />
-        <ReusableInput title="Location" />
-        <ReusableInput title="Contact number" keyboardType="numeric" />
+        <ReusableInput title="Location" height1={height / 15} />
+        <ReusableInput
+          title="Contact number"
+          keyboardType="numeric"
+          height1={height / 18}
+        />
         <TouchableOpacity
           style={{
             backgroundColor: COLORS.primary,

@@ -42,6 +42,11 @@ const ScheduleAppointment = ({ navigation }) => {
     lastilliness: "headache",
     lastdrugs: "paracetamol",
   };
+  // const user = {
+  //   name: "Jessica",
+  //   profile: require("../../assets/cuate.png"),
+  // };
+
   const Appointment = [
     {
       date: "22 July 2023",
@@ -317,10 +322,10 @@ const ScheduleAppointment = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
+      <Header style={{ backgroundColor: COLORS.doctor }} />
       <CancelPrompt />
-      {/* <Header style={{ backgroundColor: COLORS.doctor }} /> */}
       <View>
-        <View
+        {/* <View
           style={{
             marginTop: height / 70,
             flexDirection: "row",
@@ -329,19 +334,17 @@ const ScheduleAppointment = ({ navigation }) => {
           }}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Avatar
-              size="large"
-              source={require("../../assets/cuate.png")}
-              rounded
-            />
+            <Avatar size="large" source={user.profile} rounded />
             <View style={{ marginLeft: width / 10 }}>
               <Text style={{ color: COLORS.backgrounds, fontSize: 15 }}>
                 Welcome Back
               </Text>
-              <Text style={{ fontWeight: "bold", fontSize: 23 }}>{name}</Text>
+              <Text style={{ fontWeight: "bold", fontSize: 23 }}>
+                {user.name}
+              </Text>
             </View>
           </View>
-        </View>
+        </View> */}
         <View
           style={{
             flexDirection: "row",
@@ -449,7 +452,7 @@ const ScheduleAppointment = ({ navigation }) => {
                   {joinCall === true ? (
                     <Text>Join Call </Text>
                   ) : (
-                    <Text>Wait Call </Text>
+                    <Text>Start Call </Text>
                   )}
                 </TouchableOpacity>
               </TouchableOpacity>
@@ -588,7 +591,7 @@ const ScheduleAppointment = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: height / 20,
+    // marginTop: height / 20,
   },
   modal: {
     marginHorizontal: 8,

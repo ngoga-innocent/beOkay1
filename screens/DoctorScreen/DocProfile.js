@@ -129,18 +129,7 @@ const Docprofile = ({ route }) => {
           console.log("canceled");
         }
       }
-      // const res = await DocumentPicker.pick({
-      //   type: [DocumentPicker.types.pdf], // Specify the file types to be picked
-      // });
-
-      // Handle the selected file here, e.g., send it to the server or perform any necessary operations
-      // console.log(res);
     } catch (err) {
-      //   if (DocumentPicker.isCancel(err)) {
-      //     // User cancelled the file picker
-      //     console.log("User cancelled the file picker");
-      //   } else {
-      // Handle any other errors
       console.log("Error:", err);
     }
   };

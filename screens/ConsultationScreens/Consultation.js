@@ -14,6 +14,7 @@ import { ColorSpace } from "react-native-reanimated";
 import { head, body, leg, hand } from "../../components/bodypart";
 import Viewall from "../OtherScreen/Viewall";
 import Report from "./Report";
+import { Categories } from "../../components/constant";
 
 const Consultation = ({ navigation, route }) => {
   const { name } = route.params;
@@ -106,8 +107,58 @@ const Consultation = ({ navigation, route }) => {
         >
           <Text>View All</Text>
         </TouchableOpacity>
-        <View style={{ zIndex: 8 }}>
-          {showViewAll === true && <Viewall name={name} />}
+        <View style={{}}>
+          {showViewAll === true && (
+            <View
+              style={{
+                backgroundColor: COLORS.white,
+
+                borderRadius: width / 20,
+                height: height / 1.8,
+                paddingBottom: height / 30,
+                marginBottom: height / 20,
+              }}
+            >
+              <FlatList
+                style={{ alignSelf: "center", paddingBottom: height / 6 }}
+                numColumns={3}
+                data={Categories}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item }) => {
+                  return (
+                    <View style={{ alignItems: "center" }}>
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate("Description", {
+                            part: item.name,
+                            name: name,
+                          })
+                        }
+                        style={{
+                          width: width / 8,
+                          height: width / 8,
+                          alignSelf: "center",
+                          paddingHorizontal: "10%",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderRadius: width / 4,
+                          backgroundColor: COLORS.primary,
+                          margin: width / 40,
+                        }}
+                      >
+                        <Image source={item.img} />
+                      </TouchableOpacity>
+                      <Text
+                        style={{ maxWidth: width / 3.6, textAlign: "center" }}
+                      >
+                        {item.name}
+                      </Text>
+                    </View>
+                  );
+                }}
+              />
+            </View>
+          )}
         </View>
       </View>
       <View style={{ backgroundColor: "white" }}>

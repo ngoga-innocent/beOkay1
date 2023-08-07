@@ -216,7 +216,7 @@ const DoctorDetails = ({ navigation, route }) => {
           paddingHorizontal: width / 16,
         }}
       >
-        <TouchableOpacity>
+        <TouchableOpacity style={{ marginTop: height / 30 }}>
           <AntDesign name="arrowleft" color={COLORS.white} size={30} />
         </TouchableOpacity>
         <View

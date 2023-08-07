@@ -1,17 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Login from "../screens/loginScreens/Login";
-import ConsultationStack from "../screens/ConsultationScreens/ConsultationStack";
-import Docprofile from "../screens/DoctorScreen/DocProfile";
+
 import Icon from "react-native-vector-icons/AntDesign";
 import { COLORS } from "./Colors";
 
-import UserLanding from "../screens/ConsultationScreens/UserLanding";
-import User from "../screens/OtherScreen/User";
 import Emergency from "../screens/OtherScreen/Emergency";
-import { View, TouchableOpacity } from "react-native";
-import AntiDesign from "react-native-vector-icons/AntDesign";
+
 import DoctorProfile from "../screens/DoctorScreen/DoctorProfile";
-import Dashboard from "../screens/DoctorScreen/Dashboard";
+
 import ScheduleAppointment from "../screens/DoctorScreen/ScheduleAppointment";
 
 import MyCalendar from "../screens/Navigations/MycalendarStack";

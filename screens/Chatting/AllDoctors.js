@@ -73,7 +73,8 @@ const AllDoctors = () => {
         }}
       >
         <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-          You are going to take real-Time consultationwith our doctors
+          You are going to take real-Time consultation with our doctors. service
+          Price is 4$
         </Text>
         <View
           style={{

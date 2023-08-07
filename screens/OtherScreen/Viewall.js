@@ -43,17 +43,14 @@ const Viewall = ({ onPress, route, name }) => {
       style={{
         zIndex: 7,
         backgroundColor: COLORS.white,
-        height: height / 4,
+
         borderColor: COLORS.primary,
         borderRadius: width / 10,
-        padding: 5,
+        padding: height / 50,
         borderWidth: 2,
+        height: height / 3,
       }}
     >
-      {/* <Header /> */}
-      <Text style={{ fontSize: 20, fontWeight: "bold", alignSelf: "center" }}>
-        Categories
-      </Text>
       <FlatList
         style={{ alignSelf: "center" }}
         numColumns={3}
@@ -61,7 +58,7 @@ const Viewall = ({ onPress, route, name }) => {
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
           return (
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <View style={{ alignItems: "center" }}>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate("Description", {

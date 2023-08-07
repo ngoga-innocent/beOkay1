@@ -183,23 +183,6 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <Button
-          text="Login"
-          style1={{ color: COLORS.white }}
-          style={{
-            backgroundColor: COLORS.primary,
-            marginVertical: 7,
-            alignSelf: "center",
-          }}
-          onPress={loginCheck}
-        />
-        <TouchableOpacity style={styles.fingercover}>
-          <Icon
-            name="ios-finger-print"
-            size={70}
-            style={{ alignSelf: "center", color: COLORS.paragraph }}
-          />
-        </TouchableOpacity>
         <View
           style={{
             paddingBottom: 10,
@@ -218,6 +201,23 @@ const Login = ({ navigation }) => {
           </TouchableOpacity>
           <Text>Terms of service privacy policy</Text>
         </View>
+        <Button
+          text="Login"
+          style1={{ color: COLORS.white }}
+          style={{
+            backgroundColor: COLORS.primary,
+            marginVertical: 7,
+            alignSelf: "center",
+          }}
+          onPress={loginCheck}
+        />
+        <TouchableOpacity style={styles.fingercover}>
+          <Icon
+            name="ios-finger-print"
+            size={70}
+            style={{ alignSelf: "center", color: COLORS.paragraph }}
+          />
+        </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
   );

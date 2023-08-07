@@ -12,15 +12,14 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entype from "react-native-vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
 import Fontisto from "react-native-vector-icons/Fontisto";
-
-const User = () => {
+import Header from "../../components/Header";
+import { Svg, Image, SvgXml } from "react-native-svg";
+const MedicalHr = () => {
   const navigation = useNavigation();
-  const ReusableBtn = ({ title, background, filen }) => {
+  const ReusableBtn = ({ title, background, filen, image }) => {
     return (
       <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("consultation", { screen: "report" })
-        }
+        onPress={() => navigation.navigate("E.H.R", { screen: "report" })}
         style={{
           borderWidth: 1,
           height: height / 7,
@@ -44,7 +43,8 @@ const User = () => {
             opacity: 0.75,
           }}
         >
-          <FontAwesome name="file-text" size={40} />
+          {/* <SvgXml xml={image} height={height / 30} width={width / 10} /> */}
+          {/* <FontAwesome name="file-text" size={40} /> */}
         </View>
         <View>
           <Text style={{ fontSize: 18, fontWeight: "600" }}>{title}</Text>
@@ -58,6 +58,7 @@ const User = () => {
   };
   return (
     <SafeAreaView>
+      <Header />
       <ScrollView
         style={{ paddingHorizontal: width / 15 }}
         showsVerticalScrollIndicator={false}
@@ -82,6 +83,7 @@ const User = () => {
             background="#C129F6"
             title="Medical & Lab Test"
             filen="8"
+            image={require("../../assets/FrontAwesome/prescription-bottle-medical-solid.svg")}
           />
           <ReusableBtn background="#267C97" title="Appointment" filen="5" />
           <ReusableBtn background="#C129F6" title="Recomendations" filen="5" />
@@ -91,4 +93,4 @@ const User = () => {
     </SafeAreaView>
   );
 };
-export default User;
+export default MedicalHr;

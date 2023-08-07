@@ -34,6 +34,17 @@ const Mycalendar = ({ navigation }) => {
       </View>
       <View
         style={{
+          padding: width / 25,
+          backgroundColor: COLORS.warning,
+          borderRadius: width / 10,
+          width: "90%",
+          alignSelf: "center",
+        }}
+      >
+        <Text>Schedule and Make Public your daily availability </Text>
+      </View>
+      <View
+        style={{
           marginTop: height / 20,
           paddingHorizontal: 16,
           backgroundColor: COLORS.primary,

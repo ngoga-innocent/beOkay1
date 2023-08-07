@@ -341,7 +341,7 @@ const Profile = ({ navigation }) => {
                 style={{
                   fontSize: 17,
                   fontWeight: "bold",
-                  color: COLORS.doctor,
+                  color: COLORS.white,
                   marginTop: 2,
                 }}
               >
@@ -381,8 +381,8 @@ const Profile = ({ navigation }) => {
                 justifyContent: "center",
               }}
             >
-              <Icon
-                name="notifications"
+              <AntDesign
+                name="logout"
                 size={30}
                 style={{ alignSelf: "center" }}
                 color={COLORS.primary}

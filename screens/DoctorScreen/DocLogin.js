@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { React, useState } from "react";
 import SignupHeader from "../loginScreens/SignupHeader";
-import { COLORS } from "../../components/Colors";
+import { COLORS, height, width } from "../../components/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import KeyboardWrapper from "../../components/keyboardWrapper";
 import Button from "../../components/Button";
@@ -158,6 +158,25 @@ const DocLogin = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
+        <View
+          style={{
+            paddingTop: height / 35,
+            marginBottom: height / 30,
+            paddingHorizontal: width / 25,
+            // justifyContent: "center",
+            // alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <TouchableOpacity onPress={Accepted}>
+            {accept ? (
+              <Icon name="checkbox" size={20} color={COLORS.primary} />
+            ) : (
+              <View style={styles.checkbox}></View>
+            )}
+          </TouchableOpacity>
+          <Text>Terms of service privacy policy</Text>
+        </View>
         <Button
           text="Login"
           style1={{ color: COLORS.white }}
@@ -175,24 +194,6 @@ const DocLogin = ({ navigation }) => {
             style={{ alignSelf: "center", color: COLORS.paragraph }}
           />
         </TouchableOpacity>
-        <View
-          style={{
-            paddingBottom: 10,
-            marginBottom: 40,
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "row",
-          }}
-        >
-          <TouchableOpacity onPress={Accepted}>
-            {accept ? (
-              <Icon name="checkbox" size={20} color={COLORS.primary} />
-            ) : (
-              <View style={styles.checkbox}></View>
-            )}
-          </TouchableOpacity>
-          <Text>Terms of service privacy policy</Text>
-        </View>
       </View>
     </KeyboardWrapper>
   );

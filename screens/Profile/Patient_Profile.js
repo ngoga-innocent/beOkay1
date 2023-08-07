@@ -17,6 +17,7 @@ import Slider from "@react-native-community/slider";
 import RadioForm from "react-native-simple-radio-button";
 import { COLORS } from "../../components/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import * as ImagePicker from "expo-image-picker";
 const Patient_Profile = () => {
   const [range, setRange] = useState("3");
   const [selectedDate, setSelectedDate] = useState("");
@@ -25,6 +26,7 @@ const Patient_Profile = () => {
   const [gender, setGender] = useState(null);
   const [selectGender, setSelectGender] = useState(false);
   const [addPeople, setAddPeople] = useState(false);
+  const [profile, setProfile] = useState(null);
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShowPicker(Platform.OS === "ios");
@@ -41,7 +43,33 @@ const Patient_Profile = () => {
   const [value, setValue] = useState(0);
   const width = Dimensions.get("screen").width,
     height = Dimensions.get("screen").height;
+  //handle Image Profile
+  const hnadleProfile = async () => {
+    try {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Permission denied!");
+        }
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          quality: 1,
+        });
 
+        if (!result.canceled) {
+          // console.log(result.assets[0].uri);
+          setProfile(result.assets[0].uri);
+        } else {
+          console.log("canceled");
+        }
+      }
+    } catch (err) {
+      console.log("Error:", err);
+    }
+  };
+  //end Chose Image Profile
   const ReusableInput = ({ title, placeholder, rewidth }) => {
     return (
       <View style={{ width: rewidth }}>
@@ -107,26 +135,18 @@ const Patient_Profile = () => {
             }}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <AntDesign name="idcard" size={30} />
               <Text style={{ marginLeft: 8, fontSize: 16, fontWeight: "600" }}>
-                Patient Profile
+                Edit Profile Picture
               </Text>
             </View>
 
-            <View
+            {/* <View
               style={{
                 marginRight: 8,
                 marginBottom: height / 90,
                 alignSelf: "center",
               }}
-            >
-              <CircularProgressBar
-                progress={2}
-                barColor="green"
-                thickness={7}
-                size={width / 10}
-              />
-            </View>
+            ></View> */}
           </View>
         </TouchableOpacity>
         <ReusableInput title="Names" placeholder="separate names by space" />

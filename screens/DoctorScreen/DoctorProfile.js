@@ -25,6 +25,7 @@ import EvilIcons from "react-native-vector-icons/EvilIcons";
 import Dropdown from "../../components/DropDown";
 import CustomCheckbox from "../../components/CheckBox";
 import * as DocumentPicker from "expo-document-picker";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 const Docprofile = ({ route, navigation }) => {
   const width = Dimensions.get("screen").width,
@@ -229,6 +230,9 @@ const Docprofile = ({ route, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity>
             <EvilIcons name="envelope" size={40} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <AntDesign name="edit" size={40} />
           </TouchableOpacity>
         </View>
       </View>
