@@ -19,7 +19,7 @@ const Payment = ({ route }) => {
   const navigation = useNavigation();
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
-  const next = route.params.next;
+  const next = route.params.next || "";
   const [routes] = useState([
     { key: "momo", title: "Mobile Money" },
     { key: "card", title: " Card" },

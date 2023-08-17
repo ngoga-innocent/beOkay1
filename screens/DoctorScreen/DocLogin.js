@@ -81,6 +81,7 @@ const DocLogin = ({ navigation }) => {
       <View style={styles.container}>
         <Spinner visible={isLoading} />
         <SignupHeader
+          marginTop="1%"
           title="Welcome"
           style={{ color: COLORS.doctor }}
           title1=" On Be Okay"
@@ -153,7 +154,11 @@ const DocLogin = ({ navigation }) => {
             <Text style={{ color: COLORS.paragraph, marginRight: 4 }}>
               Forgot Password?
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Auth", { screen: "Forgotpassword" })
+              }
+            >
               <Text style={{ color: COLORS.primary }}>Get Help</Text>
             </TouchableOpacity>
           </View>
@@ -163,8 +168,8 @@ const DocLogin = ({ navigation }) => {
             paddingTop: height / 35,
             marginBottom: height / 30,
             paddingHorizontal: width / 25,
-            // justifyContent: "center",
-            // alignItems: "center",
+            justifyContent: "center",
+            alignItems: "center",
             flexDirection: "row",
           }}
         >
@@ -184,6 +189,7 @@ const DocLogin = ({ navigation }) => {
             backgroundColor: COLORS.doctor,
             marginVertical: 7,
             alignSelf: "center",
+            width: "90%",
           }}
           onPress={loginCheck}
         />

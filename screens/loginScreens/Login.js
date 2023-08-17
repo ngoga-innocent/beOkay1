@@ -84,11 +84,13 @@ const Login = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
+      style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView>
         <Spinner visible={isLoading} />
         <SignupHeader
+          marginTop="1%"
           title="Welcome"
           style={{ color: COLORS.primary }}
           title1=" On Be Okay"
@@ -176,7 +178,11 @@ const Login = ({ navigation }) => {
             <Text style={{ color: COLORS.black, marginRight: 4 }}>
               Forgot Password?
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Auth", { screen: "Forgotpassword" })
+              }
+            >
               <Text style={{ color: COLORS.primary, fontWeight: "bold" }}>
                 Get Help
               </Text>
@@ -186,7 +192,7 @@ const Login = ({ navigation }) => {
         <View
           style={{
             paddingBottom: 10,
-            marginBottom: 40,
+            marginTop: 30,
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "row",
@@ -208,6 +214,7 @@ const Login = ({ navigation }) => {
             backgroundColor: COLORS.primary,
             marginVertical: 7,
             alignSelf: "center",
+            width: "90%",
           }}
           onPress={loginCheck}
         />

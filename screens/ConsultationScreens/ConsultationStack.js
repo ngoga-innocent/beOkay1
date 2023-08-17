@@ -29,7 +29,7 @@ import HomeCare from "./HomeCare";
 import DoctorDetails from "./DoctorDetails";
 import SuccessApointment from "./SuccessApointment";
 import Report from "./Report";
-
+import Notification from "../OtherScreen/Notification";
 const ConsultationStack = ({ navigation }) => {
   const stack = createStackNavigator();
   return (
@@ -169,27 +169,33 @@ const ConsultationStack = ({ navigation }) => {
         name="patient_profile"
         component={Patient_Profile}
         options={{
-          headerTitle: "Pateint Profile",
-          headerLeft: () => (
-            <View>
-              <TouchableOpacity onPress={() => navigation.navigate("profile")}>
-                <Icon name="arrowleft" size={30} color="black" />
-              </TouchableOpacity>
-            </View>
-          ),
-          headerStyle: {
-            height: 120,
-            backgroundColor: "#8BB85C",
-            elevation: 30,
-            shadowColor: "#000",
-          },
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            color: COLORS.white,
-            justifyContent: "center",
-            alignItems: "center",
-          },
+          headerShown: false,
+          // headerTitle: "Pateint Profile",
+          // headerLeft: () => (
+          //   <View>
+          //     <TouchableOpacity onPress={() => navigation.navigate("profile")}>
+          //       <Icon name="arrowleft" size={30} color="black" />
+          //     </TouchableOpacity>
+          //   </View>
+          // ),
+          // headerStyle: {
+          //   height: 120,
+          //   backgroundColor: "#8BB85C",
+          //   elevation: 30,
+          //   shadowColor: "#000",
+          // },
+          // headerTitleAlign: "center",
+          // headerTitleStyle: {
+          //   color: COLORS.white,
+          //   justifyContent: "center",
+          //   alignItems: "center",
+          // },
         }}
+      />
+      <stack.Screen
+        name="notification"
+        component={Notification}
+        options={{ headerShown: false }}
       />
       <stack.Screen
         name="support"
@@ -234,6 +240,7 @@ const ConsultationStack = ({ navigation }) => {
         component={Paypal}
         options={{ headerShown: false }}
       />
+
       <stack.Screen
         name="chatting"
         component={ChattingStack}

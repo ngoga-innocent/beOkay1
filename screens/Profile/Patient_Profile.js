@@ -18,6 +18,8 @@ import RadioForm from "react-native-simple-radio-button";
 import { COLORS } from "../../components/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
+import { Avatar } from "react-native-elements";
+
 const Patient_Profile = () => {
   const [range, setRange] = useState("3");
   const [selectedDate, setSelectedDate] = useState("");
@@ -27,6 +29,9 @@ const Patient_Profile = () => {
   const [selectGender, setSelectGender] = useState(false);
   const [addPeople, setAddPeople] = useState(false);
   const [profile, setProfile] = useState(null);
+  const [maritalstatus, setMaritalStatus] = useState(null);
+  const [selectStatus, setSelectStatus] = useState(false);
+  const [type, setType] = useState(null);
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShowPicker(Platform.OS === "ios");
@@ -39,12 +44,14 @@ const Patient_Profile = () => {
     { label: "Yes", value: 0 },
     { label: "No", value: 1 },
   ];
+  const maritalStatus = ["single", "married", "divorced", "widow"];
   const genderOptions = ["male", "female", "prefer not to say"];
+  const bloodtype = ["A", "AB", "B", "0"];
   const [value, setValue] = useState(0);
   const width = Dimensions.get("screen").width,
     height = Dimensions.get("screen").height;
   //handle Image Profile
-  const hnadleProfile = async () => {
+  const handleProfile = async () => {
     try {
       if (Platform.OS !== "web") {
         const { status } =
@@ -55,6 +62,7 @@ const Patient_Profile = () => {
         let result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
+          aspect: [3, 3],
           quality: 1,
         });
 
@@ -73,7 +81,7 @@ const Patient_Profile = () => {
   const ReusableInput = ({ title, placeholder, rewidth }) => {
     return (
       <View style={{ width: rewidth }}>
-        <Text style={{ fontSize: 17 }}>{title}</Text>
+        <Text style={{ fontWeight: "bold", fontSize: 17 }}>{title}</Text>
         <Input
           placeholder={placeholder}
           style={{ width: "100%", borderColor: "#989c99" }}
@@ -84,71 +92,98 @@ const Patient_Profile = () => {
 
   const BloodType = ({ title }) => {
     return (
-      <TouchableOpacity
-        style={{
-          height: height / 24,
-          width: width / 10,
-          borderRadius: width / 40,
-          borderWidth: 2,
-          justifyContent: "center",
-          alignItems: "center",
-          marginRight: width / 13,
-        }}
-      >
-        <Text style={{ fontWeight: "bold", fontSize: 17 }}>{title}</Text>
-      </TouchableOpacity>
+      <View style={{ flexDirection: "row" }}>
+        {bloodtype.map((item, index) => {
+          return (
+            <TouchableOpacity
+              onPress={() => setType(item)}
+              key={index}
+              style={{
+                height: height / 24,
+                width: width / 10,
+                borderRadius: width / 40,
+                borderWidth: 2,
+                justifyContent: "center",
+                alignItems: "center",
+                marginRight: width / 13,
+                backgroundColor: type == item ? COLORS.primary : null,
+              }}
+            >
+              <Text style={{ fontWeight: "bold", fontSize: 17 }}>{item}</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
     );
   };
+  const HeaderComponent = () => {
+    return (
+      <View
+        style={{
+          // backgroundColor: COLORS.primary,
+          height: height / 10,
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: width / 20,
+          justifyContent: "space-between",
+        }}
+      >
+        <TouchableOpacity onPress={() => handleProfile()}>
+          <Avatar
+            rounded
+            size="large"
+            source={
+              profile == null
+                ? require("../../assets/Ellipse15.png")
+                : { uri: profile }
+            }
+          />
+        </TouchableOpacity>
 
+        {/* <Image  /> */}
+        <Text
+          style={{
+            color: COLORS.white,
+            fontWeight: "bold",
+            fontSize: 20,
+          }}
+        >
+          Edit Profile
+        </Text>
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            padding: width / 30,
+            backgroundColor: COLORS.white,
+            borderRadius: width / 30,
+          }}
+        >
+          <Text style={{ color: COLORS.primary, fontWeight: "bold" }}>
+            Save Profile
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
   return (
     <KeyboardAvoidingView
       behavior="position"
       enabled
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor: COLORS.primary }}
       keyboardVerticalOffset={40}
     >
+      <HeaderComponent />
       <ScrollView
         style={{
           paddingHorizontal: 20,
           marginTop: 4,
           backgroundColor: "white",
+          borderTopLeftRadius: width / 10,
+          borderTopRightRadius: width / 10,
+          paddingTop: height / 30,
         }}
       >
-        <TouchableOpacity
-          style={{
-            backgroundColor: "#dae0db",
-            width: "100%",
-            height: height / 16,
-            alignSelf: "center",
-            borderRadius: 30,
-            borderWidth: 1,
-            borderColor: "#989c99",
-            paddingLeft: 10,
-            justifyContent: "center",
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ marginLeft: 8, fontSize: 16, fontWeight: "600" }}>
-                Edit Profile Picture
-              </Text>
-            </View>
-
-            {/* <View
-              style={{
-                marginRight: 8,
-                marginBottom: height / 90,
-                alignSelf: "center",
-              }}
-            ></View> */}
-          </View>
-        </TouchableOpacity>
         <ReusableInput title="Names" placeholder="separate names by space" />
         <View
           style={{
@@ -163,7 +198,9 @@ const Patient_Profile = () => {
           }}
         >
           <View style={{ marginLeft: width / 40 }}>
-            <Text style={{ fontWeight: "600" }}>Date Of Birth</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 17 }}>
+              Date Of Birth
+            </Text>
             <TouchableOpacity
               style={{
                 backgroundColor: COLORS.backgrounds,
@@ -177,7 +214,7 @@ const Patient_Profile = () => {
               }}
               onPress={() => togglePicker()}
             >
-              <Text>{"Choose Date" || date}</Text>
+              <Text style={{ fontSize: 17 }}>{"Choose Date" || date}</Text>
               {/* {Platform.OS === "android" && (
                 <Text style={{ fontWeight: "bold", color: COLORS.white }}>
                   Choose Date || {date}
@@ -193,12 +230,6 @@ const Patient_Profile = () => {
               )}
             </TouchableOpacity>
           </View>
-          <View style={{ width: "35%" }}>
-            <ReusableInput
-              title="Marital Status"
-              placeholder="Marital Status"
-            />
-          </View>
           <View
             style={{
               width: "40%",
@@ -206,7 +237,62 @@ const Patient_Profile = () => {
               justifyContent: "center",
             }}
           >
-            <Text>Gender</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 17 }}>
+              Marital Status
+            </Text>
+            <TouchableOpacity
+              onPress={() => setSelectStatus(!selectStatus)}
+              style={{
+                height: height / 17,
+                backgroundColor: selectStatus
+                  ? COLORS.white
+                  : COLORS.backgrounds,
+                alignSelf: "center",
+                justifyContent: "center",
+                borderRadius: width / 30,
+                marginTop: height / 60,
+              }}
+            >
+              {selectStatus == true ? (
+                <View style={{ marginTop: height / 40 }}>
+                  {maritalStatus.map((item, index) => {
+                    return (
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() => {
+                          setMaritalStatus(item), setSelectStatus(false);
+                        }}
+                        style={{
+                          backgroundColor: COLORS.backgrounds,
+                          marginBottom: 5,
+                          borderRadius: width / 10,
+                          padding: 4,
+                          alignItems: "center",
+                          width: "100%",
+                        }}
+                      >
+                        <Text>{item}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              ) : (
+                <Text style={{ paddingHorizontal: width / 45 }}>
+                  {maritalstatus == null ? "Choose Status" : maritalstatus}
+                </Text>
+              )}
+            </TouchableOpacity>
+          </View>
+          {/* <ReusableInput title="Gender" placeholder="Male" rewidth="30%" /> */}
+
+          <View
+            style={{
+              width: "40%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ fontWeight: "bold", fontSize: 17 }}>Gender</Text>
             <TouchableOpacity
               onPress={() => setSelectGender(!selectGender)}
               style={{
@@ -274,10 +360,8 @@ const Patient_Profile = () => {
               marginTop: 10,
             }}
           >
-            <BloodType title="A" />
-            <BloodType title="AB" />
-            <BloodType title="B" />
-            <BloodType title="O" />
+            <BloodType />
+
             <TouchableOpacity
               style={{
                 backgroundColor: "grey",
@@ -354,6 +438,24 @@ const Patient_Profile = () => {
             rewidth={width / 2.5}
           />
         </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            marginTop: height / 60,
+          }}
+        >
+          <ReusableInput
+            title="Current Medication "
+            placeholder="Find Medecine"
+            rewidth={width / 2.5}
+          />
+          <ReusableInput
+            title="Current Disease "
+            placeholder="Disease"
+            rewidth={width / 2.5}
+          />
+        </View>
         <TouchableOpacity
           onPress={() => setAddPeople(!addPeople)}
           style={{
@@ -365,61 +467,76 @@ const Patient_Profile = () => {
             justifyContent: "center",
             borderRadius: width / 20,
             marginTop: height / 60,
+            marginBottom: height / 6,
           }}
         >
           <Text style={{ fontWeight: "bold", color: COLORS.white }}>
             Add Other People
           </Text>
         </TouchableOpacity>
-        {addPeople && (
-          <View style={{ marginTop: height / 40 }}>
+      </ScrollView>
+      {addPeople && (
+        <ScrollView
+          style={{
+            backgroundColor: COLORS.primary,
+            position: "absolute",
+            bottom: 0,
+            borderTopLeftRadius: width / 20,
+            borderTopRightRadius: width / 20,
+            width: width,
+            paddingHorizontal: width / 30,
+            marginBottom: height / 10,
+            height: height / 2.8,
+            zIndex: 4,
+            paddingVertical: height / 30,
+          }}
+        >
+          <Text
+            style={{ alignSelf: "center", fontWeight: "bold", fontSize: 20 }}
+          >
+            Add Depedent
+          </Text>
+          <ReusableInput title="Name" placeholder="Dependent Name" />
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-around" }}
+          >
+            <ReusableInput
+              title="Gender "
+              placeholder="Gender"
+              rewidth={width / 2.5}
+            />
+            <ReusableInput
+              title="Relationship "
+              placeholder="Relationship"
+              rewidth={width / 2.5}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => setAddPeople(!addPeople)}
+            style={{
+              height: height / 20,
+              width: width - 20,
+              backgroundColor: COLORS.white,
+              borderRadius: width / 30,
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: height / 40,
+              marginBottom: height / 20,
+              alignSelf: "center",
+            }}
+          >
             <Text
-              style={{ alignSelf: "center", fontWeight: "bold", fontSize: 20 }}
-            >
-              Add Depedent
-            </Text>
-            <ReusableInput title="Name" placeholder="Dependent Name" />
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-around" }}
-            >
-              <ReusableInput
-                title="Gender "
-                placeholder="Gender"
-                rewidth={width / 2.5}
-              />
-              <ReusableInput
-                title="Relationship "
-                placeholder="Relationship"
-                rewidth={width / 2.5}
-              />
-            </View>
-            <TouchableOpacity
-              onPress={() => setAddPeople(!addPeople)}
               style={{
-                height: height / 20,
-                width: width - 20,
-                backgroundColor: COLORS.primary,
-                borderRadius: width / 30,
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: height / 40,
-                marginBottom: height / 40,
-                alignSelf: "center",
+                fontSize: 20,
+                fontWeight: "bold",
+                color: COLORS.text,
               }}
             >
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: COLORS.white,
-                }}
-              >
-                Add People
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </ScrollView>
+              Add People
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+      )}
     </KeyboardAvoidingView>
   );
 };

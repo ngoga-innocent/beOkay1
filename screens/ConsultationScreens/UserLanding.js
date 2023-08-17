@@ -206,7 +206,7 @@ const UserLanding = ({ navigation }) => {
 
   return (
     <View style={[styles.container, { flex: 1 }]}>
-      <Header />
+      <Header style={{ paddingHorizontal: width / 17 }} />
       <View style={styles.modal}>
         <View style={styles.modalheader}>
           <Text
@@ -258,7 +258,7 @@ const UserLanding = ({ navigation }) => {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("user")}
+          onPress={() => navigation.navigate("E.H.R")}
           style={{
             marginHorizontal: 10,
             flexDirection: "row",
@@ -291,7 +291,7 @@ const UserLanding = ({ navigation }) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("user")}
+          onPress={() => navigation.navigate("E.H.R")}
           style={{
             marginHorizontal: 10,
             flexDirection: "row",
@@ -324,7 +324,7 @@ const UserLanding = ({ navigation }) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("user")}
+          onPress={() => navigation.navigate("E.H.R")}
           style={{
             marginHorizontal: 10,
             flexDirection: "row",

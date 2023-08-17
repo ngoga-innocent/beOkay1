@@ -17,7 +17,7 @@ import Report from "./Report";
 import { Categories } from "../../components/constant";
 
 const Consultation = ({ navigation, route }) => {
-  const { name } = route.params;
+  const { name } = route.params || "";
   const department = [
     "Mental health",
     "Fertility",
@@ -56,7 +56,7 @@ const Consultation = ({ navigation, route }) => {
             >
               Consult with Be Okay
             </Text>
-            <TouchableOpacity onPress={() => setShowModal(false)}>
+            <TouchableOpacity onPress={() => setShowModal(!showModal)}>
               <Entypo
                 name="circle-with-cross"
                 color={COLORS.primary}

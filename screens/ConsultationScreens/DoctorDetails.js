@@ -293,7 +293,7 @@ const DoctorDetails = ({ navigation, route }) => {
             fontWeight: "bold",
           }}
         >
-          Specializatios
+          Specializations
         </Text>
         <View>
           <ScrollView

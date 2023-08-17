@@ -8,6 +8,7 @@ import {
   FlatList,
   Alert,
   Modal,
+  SafeAreaView,
 } from "react-native";
 import { React, useState } from "react";
 import Header from "../../components/Header";
@@ -19,7 +20,8 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import CalendarScreen from "./Calendar";
 import AntiDesign from "react-native-vector-icons/AntDesign";
-
+import AntDesign from "react-native-vector-icons/AntDesign";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
 import { Avatar } from "react-native-elements";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { TabView, TabBar } from "react-native-tab-view";
@@ -116,64 +118,132 @@ const ScheduleAppointment = ({ navigation }) => {
       date: "dEC 7",
     },
   ];
+  const Profile = {
+    Image: require("../../assets/cuate.png"),
+    name: "Dr .Kanimba",
+    specialite: "Physiology",
+    rating: 4.4,
+    bio: "Attended Doctorates in Francais for specialization in Physiology",
+  };
   const CancelAppointment = () => {
     setCanceled(true);
   };
   const CancelPrompt = () => {
     return (
-      <Modal
-        visible={cancelappoint}
-        animationType="fade"
+      <View
         style={{
-          alignSelf: "center",
-          flex: 1,
-
-          marginTop: height / 2.4,
+          position: "absolute",
+          bottom: 0,
+          height: height / 2.6,
+          backgroundColor: COLORS.white,
+          width: width,
+          borderTopEndRadius: width / 17,
+          borderTopStartRadius: width / 17,
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 3,
         }}
-        collapsable={true}
       >
-        <View
+        <Text
           style={{
-            flex: 1,
-            zIndex: 3,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: COLORS.green,
+            marginBottom: height / 50,
+            fontWeight: "bold",
+            fontSize: 20,
           }}
         >
-          <TextInput
-            placeholder="Why did you cancel appointment?"
-            multiline
-            numberOfLines={5}
-            style={{
-              height: height / 14,
-              maxHeight: height / 10,
-              borderColor: COLORS.warning,
-              borderWidth: 1,
-              padding: 5,
-              borderRadius: width / 25,
-              marginBottom: 10,
-              width: "95%",
-            }}
-          />
-          <TouchableOpacity
-            onPress={() => setCanceled(false)}
-            style={{
-              backgroundColor: COLORS.doctor,
-              alignItems: "center",
-              justifyContent: "center",
-              alignSelf: "center",
-              height: height / 23,
-              width: "95%",
-              borderRadius: width / 30,
-            }}
+          Reason for Cancellation
+        </Text>
+        <TextInput
+          placeholder="Why did you cancel appointment?"
+          multiline
+          numberOfLines={5}
+          style={{
+            height: height / 8,
+            maxHeight: height / 10,
+            borderColor: COLORS.black,
+            borderWidth: 1,
+            padding: 5,
+            borderRadius: width / 25,
+            marginBottom: 10,
+            width: "95%",
+          }}
+        />
+        <TouchableOpacity
+          onPress={() => setCanceled(false)}
+          style={{
+            backgroundColor: COLORS.doctor,
+            alignItems: "center",
+            justifyContent: "center",
+            alignSelf: "center",
+            height: height / 18,
+            width: "95%",
+            borderRadius: width / 30,
+          }}
+        >
+          <Text
+            style={{ fontWeight: "bold", color: COLORS.text, fontSize: 19 }}
           >
-            <Text style={{ fontWeight: "bold" }}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+            Submit
+          </Text>
+        </TouchableOpacity>
+      </View>
     );
   };
+  // const CancelPrompt = () => {
+  //   return (
+  //     <Modal
+  //       visible={cancelappoint}
+  //       animationType="fade"
+  //       style={{
+  //         // alignSelf: "center",
+
+  //         marginTop: height / 2.4,
+  //       }}
+  //       collapsable={true}
+  //     >
+  //       <View
+  //         style={{
+  //           // flex: 1,
+  //           marginTop: height / 2.4,
+  //           zIndex: 3,
+  //           justifyContent: "center",
+  //           alignItems: "center",
+  //           // backgroundColor: COLORS.green,
+  //         }}
+  //       >
+  //         <TextInput
+  //           placeholder="Why did you cancel appointment?"
+  //           multiline
+  //           numberOfLines={5}
+  //           style={{
+  //             height: height / 14,
+  //             maxHeight: height / 10,
+  //             borderColor: COLORS.black,
+  //             borderWidth: 1,
+  //             padding: 5,
+  //             borderRadius: width / 25,
+  //             marginBottom: 10,
+  //             width: "95%",
+  //           }}
+  //         />
+  //         <TouchableOpacity
+  //           onPress={() => setCanceled(false)}
+  //           style={{
+  //             backgroundColor: COLORS.doctor,
+  //             alignItems: "center",
+  //             justifyContent: "center",
+  //             alignSelf: "center",
+  //             height: height / 23,
+  //             width: "95%",
+  //             borderRadius: width / 30,
+  //           }}
+  //         >
+  //           <Text style={{ fontWeight: "bold" }}>Submit</Text>
+  //         </TouchableOpacity>
+  //       </View>
+  //     </Modal>
+  //   );
+  // };
   const AppointmentView = () => (
     <View style={{}}>
       <FlatList
@@ -321,9 +391,55 @@ const ScheduleAppointment = ({ navigation }) => {
     }
   };
   return (
-    <View style={styles.container}>
-      <Header style={{ backgroundColor: COLORS.doctor }} />
-      <CancelPrompt />
+    <SafeAreaView style={styles.container}>
+      <View style={{ paddingHorizontal: width / 30 }}>
+        <View
+          style={{
+            marginTop: height / 70,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <TouchableOpacity onPress={() => navigation.navigate("Docprofile")}>
+              <Avatar
+                source={Profile.Image}
+                size="large"
+                rounded
+                containerStyle={{ borderWidth: 1 }}
+              />
+            </TouchableOpacity>
+            <View style={{ marginLeft: width / 20 }}>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+                {Profile.name}
+              </Text>
+              <Text style={{ fontWeight: "700" }}>{Profile.specialite}</Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <EvilIcons name="star" color="orange" size={20} />
+                <Text style={{ fontSize: 17, marginLeft: width / 25 }}>
+                  {Profile.rating}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      {/* <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+          height: height / 2.6,
+          backgroundColor: COLORS.green,
+          width: width,
+          borderRadius: width / 7,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text>Family</Text>
+      </View> */}
+      {cancelappoint && <CancelPrompt />}
       <View>
         {/* <View
           style={{
@@ -345,22 +461,23 @@ const ScheduleAppointment = ({ navigation }) => {
             </View>
           </View>
         </View> */}
+
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            marginTop: height / 40,
+            marginTop: height / 20,
             paddingHorizontal: width / 20,
           }}
         >
-          <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+          <Text style={{ fontWeight: "bold", fontSize: 17 }}>
             Upcoming Consultations
           </Text>
           <AntiDesign name="arrowright" size={30} />
         </View>
         <FlatList
-          style={{ marginTop: height / 23, paddingHorizontal: width / 20 }}
+          style={{ marginTop: height / 40, paddingHorizontal: width / 20 }}
           showsHorizontalScrollIndicator={false}
           horizontal
           data={consultations}
@@ -450,9 +567,9 @@ const ScheduleAppointment = ({ navigation }) => {
                   }}
                 >
                   {joinCall === true ? (
-                    <Text>Join Call </Text>
+                    <Text style={{ fontWeight: "bold" }}>Join Session </Text>
                   ) : (
-                    <Text>Start Call </Text>
+                    <Text style={{ fontWeight: "bold" }}>Begin Session</Text>
                   )}
                 </TouchableOpacity>
               </TouchableOpacity>
@@ -538,12 +655,14 @@ const ScheduleAppointment = ({ navigation }) => {
       <View
         style={{
           flex: 1,
-          // backgroundColor: COLORS.white,
-          marginHorizontal: 8,
+          backgroundColor: COLORS.white,
+          // marginHorizontal: 8,
           borderRadius: 7,
           marginTop: height / 70,
           height: "100%",
-          // marginVertical: 4,
+          padding: width / 40,
+          borderTopLeftRadius: width / 20,
+          borderTopRightRadius: width / 20,
         }}
       >
         <TabView
@@ -585,12 +704,13 @@ const ScheduleAppointment = ({ navigation }) => {
           )}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.doctor,
     // marginTop: height / 20,
   },
   modal: {

@@ -13,24 +13,26 @@ import { COLORS, height, width } from "../../components/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import * as DocumentPicker from "expo-document-picker";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeCare = () => {
-  const [document, setSelectedDocs] = useState(null);
-  const pickDocument = async () => {
+  const [document, setDocument] = useState(null);
+  const navigation = useNavigation();
+  const handleFileSelect = async () => {
     try {
-      const result = await DocumentPicker.getDocumentAsync();
-
-      if (result.type === "success") {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "application/pdf", // Specify the file types to be picked (PDF in this case)
+      });
+      // console.log(result);
+      if (!result.canceled) {
         console.log(result);
-        setSelectedDocs(result);
-        // Process the selected document
+        // Handle the selected file here, e.g., send it to the server or perform any necessary operations
+        setDocument(result.assets[0].name);
       } else {
-        return;
-        // User cancelled document picker or an error occurred
+        console.log("Document picker cancelled");
       }
-    } catch (error) {
-      return;
-      // Handle any errors
+    } catch (err) {
+      console.log("Error:", err);
     }
   };
 
@@ -81,7 +83,7 @@ const HomeCare = () => {
               Add related Medica Docs
             </Text>
             <TouchableOpacity
-              onPress={() => pickDocument()}
+              onPress={() => handleFileSelect()}
               style={{
                 backgroundColor: COLORS.backgrounds,
                 height: height / 20,
@@ -93,7 +95,7 @@ const HomeCare = () => {
             >
               <Text>Choose</Text>
             </TouchableOpacity>
-            {document && <Text>{document.name}</Text>}
+            {document !== null && <Text>{document}</Text>}
           </View>
           <Inputs name="Location" style1={{ height: height / 20 }} />
           <Inputs name="Contact Address" style1={{ height: height / 20 }} />
@@ -125,6 +127,12 @@ const HomeCare = () => {
 
           <Inputs name="Other Comment" style1={{ maxHeight: 80, height: 80 }} />
           <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("consultation", {
+                screen: "payment",
+                params: { next: "homecare" },
+              })
+            }
             style={{
               height: height / 20,
               backgroundColor: COLORS.primary,

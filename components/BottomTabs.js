@@ -9,6 +9,7 @@ import UserLanding from "../screens/ConsultationScreens/UserLanding";
 
 import Hospitals from "../screens/OtherScreen/Hospitals";
 import EHR from "../screens/Navigations/EHR";
+import Emergency from "../screens/OtherScreen/Emergency";
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
@@ -27,6 +28,8 @@ function MyTabs() {
             iconName = focused ? "file" : "file";
           } else if (route.name === "Hospitals") {
             iconName = focused ? "hospital-alt" : "hospital-alt";
+          } else if (route.name === "Emergency") {
+            iconName = focused ? "ban" : "ban";
           }
 
           // You can return any component that you like here!
@@ -56,6 +59,11 @@ function MyTabs() {
       <Tab.Screen
         name="Hospitals"
         component={Hospitals}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Emergency"
+        component={Emergency}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>

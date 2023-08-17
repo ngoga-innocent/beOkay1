@@ -150,6 +150,7 @@ const Signup = ({ route, navigation }) => {
       <ScrollView style={styles.container}>
         <Spinner visible={isLoading} />
         <SignupHeader
+          marginTop="1%"
           title="You are"
           title1="Almost There"
           paragraph=" Stay healthy using our digital healthcare services (self-test technology, livechat and home followups)"

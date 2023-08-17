@@ -119,6 +119,7 @@ const Docprofile = ({ route }) => {
         let result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
+          aspect: [3, 3],
           quality: 1,
         });
 
@@ -159,7 +160,7 @@ const Docprofile = ({ route }) => {
     >
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Spinner visible={isLoading} />
-        <View
+        {/* <View
           style={{
             marginTop: width / 8,
             marginBottom: -width / 3,
@@ -175,8 +176,9 @@ const Docprofile = ({ route }) => {
           <Text style={{ fontSize: 17, fontWeight: "600", color: "white" }}>
             Be Okay
           </Text>
-        </View>
+        </View> */}
         <SignupHeader
+          marginTop="1%"
           title="Complete Profile"
           paragraph="Please take few minutes to complete your Profile"
           style={{ marginBottom: -height / 30 }}
@@ -220,7 +222,7 @@ const Docprofile = ({ route }) => {
                   ? require("../../assets/Ellipse15.png")
                   : { uri: Profile }
               }
-              size="medium"
+              size="large"
               rounded
             />
             {/* <Avatar source={Profile["uri"]} size="medium" /> */}

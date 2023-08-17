@@ -9,6 +9,7 @@ import {
 import Header from "../../components/Header";
 import { COLORS, height, width } from "../../components/Colors";
 import Input from "../../components/Input";
+import MapScreen from "../../components/map";
 const Emergency = () => {
   const [emergecyty, setEmergency] = useState(null);
   const [choose, setChoose] = useState(false);
@@ -44,7 +45,7 @@ const Emergency = () => {
   };
   return (
     <KeyboardAvoidingView style={{ flex: 1, backgroundColor: COLORS.white }}>
-      <Header />
+      <Header style={{ paddingHorizontal: width / 40 }} />
 
       <ScrollView
         style={{ backgroundColor: COLORS.white, paddingHorizontal: width / 30 }}
@@ -138,7 +139,11 @@ const Emergency = () => {
           multiline={true}
           height1={height / 15}
         />
-        <ReusableInput title="Location" height1={height / 15} />
+        {/* <ReusableInput title="Location" height1={height / 15} /> */}
+        <View>
+          <Text>Location</Text>
+          <MapScreen />
+        </View>
         <ReusableInput
           title="Contact number"
           keyboardType="numeric"

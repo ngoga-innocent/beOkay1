@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { COLORS } from "./Colors";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
 const CustomCheckbox = ({ label }) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -10,9 +12,14 @@ const CustomCheckbox = ({ label }) => {
 
   return (
     <TouchableOpacity style={styles.container} onPress={toggleCheckbox}>
-      <View
-        style={[styles.checkbox, isChecked ? styles.checked : styles.unchecked]}
-      />
+      <View>
+        {isChecked ? (
+          <FontAwesome name="check-square" size={30} color={COLORS.doctor} />
+        ) : (
+          <FontAwesome name="square-o" size={30} />
+          // <View style={[styles.unchecked, styles.checkbox]} />
+        )}
+      </View>
       <Text>{label}</Text>
     </TouchableOpacity>
   );

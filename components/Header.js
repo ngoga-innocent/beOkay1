@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import Signup from "../screens/loginScreens/Signup";
 import Entypo from "react-native-vector-icons/Entypo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { Avatar } from "react-native-elements";
 const Header = ({ style }) => {
   const navigation = useNavigation();
   const [name, setName] = useState("");
@@ -45,10 +45,15 @@ const Header = ({ style }) => {
             borderRadius: 50,
           }}
         >
-          <Image
+          <Avatar
+            rounded
+            size="large"
+            source={require("../assets/Ellipse15.png")}
+          />
+          {/* <Image
             source={require("../assets/Ellipse15.png")}
             style={{ width: 50, height: 50, alignSelf: "center" }}
-          />
+          /> */}
         </TouchableOpacity>
         <View
           style={{
@@ -80,7 +85,9 @@ const Header = ({ style }) => {
           }}
         >
           <TouchableOpacity
-            // onPress={() => navigation.openDrawer()}
+            onPress={() =>
+              navigation.navigate("consultation", { screen: "notification" })
+            }
             style={{
               // height: width / 9,
               // width: width / 9,
@@ -133,6 +140,7 @@ const styles = StyleSheet.create({
     height: Platform.OS === "ios" ? 130 : height / 8,
     elevation: 100,
     justifyContent: "center",
+    paddingHorizontal: width / 20,
   },
   header: {
     flexDirection: "row",

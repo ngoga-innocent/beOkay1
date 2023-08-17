@@ -160,15 +160,28 @@ const Profile = ({ navigation }) => {
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>Contact:</Text>
         <Text style={styles.txt}>{patient.contact}</Text>
       </View>
-      <Text
+      <View
         style={{
-          fontWeight: "bold",
-          fontSize: 20,
-          paddingVertical: width / 50,
+          borderWidth: 1,
+          borderColor: COLORS.primary,
+          borderRadius: width / 50,
+          paddingVertical: height / 100,
+          paddingHorizontal: width / 60,
+          marginBottom: -height / 50,
+          alignSelf: "center",
+          backgroundColor: COLORS.white,
+          zIndex: 1,
         }}
       >
-        Family & Dependents details
-      </Text>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: height / 45,
+          }}
+        >
+          Family & Dependents details
+        </Text>
+      </View>
       {patient.familyInfo.map((item, index) => {
         return (
           <View
@@ -232,15 +245,33 @@ const Profile = ({ navigation }) => {
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>Pregnant</Text>
         <Text style={styles.txt}>{patient.pregnant}</Text>
       </View>
-      <Text
+      <View
         style={{
-          fontWeight: "bold",
-          fontSize: 20,
-          paddingVertical: width / 150,
+          borderWidth: 1,
+          borderColor: COLORS.primary,
+          borderRadius: width / 50,
+          paddingVertical: height / 100,
+          paddingHorizontal: width / 60,
+          marginBottom: -height / 50,
+          alignSelf: "center",
+          backgroundColor: COLORS.white,
+          zIndex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          width: width / 2,
         }}
       >
-        Allergies
-      </Text>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: height / 60,
+            paddingVertical: width / 150,
+          }}
+        >
+          Allergies
+        </Text>
+      </View>
+
       <View
         style={{
           backgroundColor: COLORS.backgrounds,
@@ -258,15 +289,32 @@ const Profile = ({ navigation }) => {
           );
         })}
       </View>
-      <Text
+      <View
         style={{
-          fontWeight: "bold",
-          fontSize: 20,
-          paddingVertical: width / 150,
+          borderWidth: 1,
+          borderColor: COLORS.primary,
+          borderRadius: width / 50,
+          paddingVertical: height / 100,
+          paddingHorizontal: width / 60,
+          marginBottom: -height / 50,
+          alignSelf: "center",
+          backgroundColor: COLORS.white,
+          zIndex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          width: width / 2,
         }}
       >
-        Chronical Disease
-      </Text>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: height / 60,
+            paddingVertical: width / 150,
+          }}
+        >
+          Chronical Diseases
+        </Text>
+      </View>
       <View
         style={{
           backgroundColor: COLORS.backgrounds,
@@ -284,15 +332,32 @@ const Profile = ({ navigation }) => {
           );
         })}
       </View>
-      <Text
+      <View
         style={{
-          fontWeight: "bold",
-          fontSize: 20,
-          paddingVertical: width / 150,
+          borderWidth: 1,
+          borderColor: COLORS.primary,
+          borderRadius: width / 50,
+          paddingVertical: height / 100,
+          paddingHorizontal: width / 60,
+          marginBottom: -height / 50,
+          alignSelf: "center",
+          backgroundColor: COLORS.white,
+          zIndex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          width: width / 2,
         }}
       >
-        Habits
-      </Text>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: height / 60,
+            paddingVertical: width / 150,
+          }}
+        >
+          Habits
+        </Text>
+      </View>
       <View
         style={{
           backgroundColor: COLORS.backgrounds,
@@ -328,7 +393,7 @@ const Profile = ({ navigation }) => {
             <Avatar
               rounded
               source={require("../../assets/profile.jpeg")}
-              size="medium"
+              size="large"
             />
             <TouchableOpacity
               onPress={() =>
@@ -373,19 +438,20 @@ const Profile = ({ navigation }) => {
               onPress={() => Logout()}
               // onPress={() => navigation.openDrawer()}
               style={{
-                height: 40,
-                width: 40,
-                backgroundColor: "white",
+                height: width / 10,
+                width: width / 10,
+                backgroundColor: COLORS.text,
                 borderRadius: 40,
                 alignItems: "center",
                 justifyContent: "center",
+                opacity: 2,
               }}
             >
               <AntDesign
-                name="logout"
-                size={30}
-                style={{ alignSelf: "center" }}
-                color={COLORS.primary}
+                name="poweroff"
+                size={20}
+                style={{ alignSelf: "center", fontWeight: "bold" }}
+                color={COLORS.white}
               />
             </TouchableOpacity>
           </View>
