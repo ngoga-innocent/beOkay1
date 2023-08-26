@@ -19,6 +19,7 @@ import { COLORS } from "../../components/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import { Avatar } from "react-native-elements";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Patient_Profile = () => {
   const [range, setRange] = useState("3");
@@ -84,7 +85,11 @@ const Patient_Profile = () => {
         <Text style={{ fontWeight: "bold", fontSize: 17 }}>{title}</Text>
         <Input
           placeholder={placeholder}
-          style={{ width: "100%", borderColor: "#989c99" }}
+          style={{
+            width: "100%",
+            borderColor: "#989c99",
+            backgroundColor: COLORS.backgrounds,
+          }}
         />
       </View>
     );
@@ -168,375 +173,381 @@ const Patient_Profile = () => {
   };
   return (
     <KeyboardAvoidingView
-      behavior="position"
+      behavior={Platform.OS === "ios" ? "padding" : null}
       enabled
       style={{ flex: 1, backgroundColor: COLORS.primary }}
-      keyboardVerticalOffset={40}
+      keyboardVerticalOffset={height / 1.4}
     >
-      <HeaderComponent />
-      <ScrollView
-        style={{
-          paddingHorizontal: 20,
-          marginTop: 4,
-          backgroundColor: "white",
-          borderTopLeftRadius: width / 10,
-          borderTopRightRadius: width / 10,
-          paddingTop: height / 30,
-        }}
-      >
-        <ReusableInput title="Names" placeholder="separate names by space" />
-        <View
+      <SafeAreaView>
+        <HeaderComponent />
+        <ScrollView
           style={{
-            flex: 1,
-            flexDirection: "row-reverse",
-            justifyContent: "space-between",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginTop: height / 80,
-            paddingVertical: height / 80,
-            marginBottom: height / 80,
+            paddingHorizontal: 20,
+            marginTop: 4,
+            backgroundColor: "white",
+            borderTopLeftRadius: width / 10,
+            borderTopRightRadius: width / 10,
+            paddingTop: height / 30,
           }}
         >
-          <View style={{ marginLeft: width / 40 }}>
-            <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-              Date Of Birth
-            </Text>
-            <TouchableOpacity
-              style={{
-                backgroundColor: COLORS.backgrounds,
-                alignItems: "center",
-                justifyContent: "center",
-                height: height / 17,
-                borderRadius: width / 30,
+          <ReusableInput title="Names" placeholder="separate names by space" />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row-reverse",
+              justifyContent: "space-between",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: height / 80,
+              paddingVertical: height / 80,
+              marginBottom: height / 80,
+            }}
+          >
+            <View style={{ marginLeft: width / 40 }}>
+              <Text style={{ fontWeight: "bold", fontSize: 17 }}>
+                Date Of Birth
+              </Text>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: COLORS.backgrounds,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: height / 17,
+                  borderRadius: width / 30,
 
-                width: "100%",
-                marginTop: height / 70,
-              }}
-              onPress={() => togglePicker()}
-            >
-              <Text style={{ fontSize: 17 }}>{"Choose Date" || date}</Text>
-              {/* {Platform.OS === "android" && (
+                  width: "100%",
+                  marginTop: height / 70,
+                }}
+                onPress={() => togglePicker()}
+              >
+                <Text style={{ fontSize: 17 }}>{"Choose Date" || date}</Text>
+                {/* {Platform.OS === "android" && (
                 <Text style={{ fontWeight: "bold", color: COLORS.white }}>
                   Choose Date || {date}
                 </Text>
               )} */}
-              {showPicker && (
-                <DateTimePicker
-                  value={date}
-                  mode="date"
-                  display="default"
-                  onChange={handleDateChange}
-                />
-              )}
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              width: "40%",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-              Marital Status
-            </Text>
-            <TouchableOpacity
-              onPress={() => setSelectStatus(!selectStatus)}
-              style={{
-                height: height / 17,
-                backgroundColor: selectStatus
-                  ? COLORS.white
-                  : COLORS.backgrounds,
-                alignSelf: "center",
-                justifyContent: "center",
-                borderRadius: width / 30,
-                marginTop: height / 60,
-              }}
-            >
-              {selectStatus == true ? (
-                <View style={{ marginTop: height / 40 }}>
-                  {maritalStatus.map((item, index) => {
-                    return (
-                      <TouchableOpacity
-                        key={index}
-                        onPress={() => {
-                          setMaritalStatus(item), setSelectStatus(false);
-                        }}
-                        style={{
-                          backgroundColor: COLORS.backgrounds,
-                          marginBottom: 5,
-                          borderRadius: width / 10,
-                          padding: 4,
-                          alignItems: "center",
-                          width: "100%",
-                        }}
-                      >
-                        <Text>{item}</Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-              ) : (
-                <Text style={{ paddingHorizontal: width / 45 }}>
-                  {maritalstatus == null ? "Choose Status" : maritalstatus}
-                </Text>
-              )}
-            </TouchableOpacity>
-          </View>
-          {/* <ReusableInput title="Gender" placeholder="Male" rewidth="30%" /> */}
-
-          <View
-            style={{
-              width: "40%",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text style={{ fontWeight: "bold", fontSize: 17 }}>Gender</Text>
-            <TouchableOpacity
-              onPress={() => setSelectGender(!selectGender)}
-              style={{
-                height: height / 17,
-                backgroundColor: selectGender
-                  ? COLORS.white
-                  : COLORS.backgrounds,
-                alignSelf: "center",
-                justifyContent: "center",
-                borderRadius: width / 30,
-                marginTop: height / 60,
-              }}
-            >
-              {selectGender == true ? (
-                <View style={{ marginTop: height / 40 }}>
-                  {genderOptions.map((item, index) => {
-                    return (
-                      <TouchableOpacity
-                        key={index}
-                        onPress={() => {
-                          setGender(item), setSelectGender(false);
-                        }}
-                        style={{
-                          backgroundColor: COLORS.backgrounds,
-                          marginBottom: 5,
-                          borderRadius: width / 10,
-                          padding: 4,
-                          alignItems: "center",
-                          width: "100%",
-                        }}
-                      >
-                        <Text>{item}</Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-              ) : (
-                <Text style={{ paddingHorizontal: width / 45 }}>
-                  {gender == null ? "Choose Gender" : gender}{" "}
-                </Text>
-              )}
-            </TouchableOpacity>
-          </View>
-          {/* <ReusableInput title="Gender" placeholder="Male" rewidth="30%" /> */}
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-          <ReusableInput
-            title="Location"
-            placeholder="Location"
-            rewidth={width / 2.5}
-          />
-          <ReusableInput
-            title="Contact"
-            placeholder="Contact"
-            rewidth={width / 2.5}
-          />
-        </View>
-
-        <View style={{ marginTop: 10 }}>
-          <Text>Blood Type</Text>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginTop: 10,
-            }}
-          >
-            <BloodType />
-
-            <TouchableOpacity
-              style={{
-                backgroundColor: "grey",
-                width: width / 5,
-                height: height / 22,
-                borderRadius: 20,
-
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text>Unknown</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {gender != "male" && (
-          <>
-            <View style={{ marginTop: 10 }}>
-              <Text>Pregnant Status</Text>
-              <RadioForm
-                radio_props={item}
-                initial={0}
-                onPress={(value) => setValue(value)}
-                formHorizontal={true}
-                animation
-                buttonColor={COLORS.paragraph}
-                selectedButtonColor={COLORS.primary}
-                buttonWrapStyle={{ margin: 40 }}
-                // style={{ margin: 5, padding: 4 }}
-                buttonStyle={{ margin: 50 }}
-                labelStyle={{ marginRight: 40 }}
-              />
-              {value == 0 && (
-                <Slider
-                  style={{ width: "100%", height: 60 }}
-                  minimumValue={0}
-                  maximumValue={0.092}
-                  minimumTrackTintColor={COLORS.primary}
-                  maximumTrackTintColor="grey"
-                  thumbTintColor={COLORS.primary}
-                  value={0.03}
-                  onValueChange={(value) =>
-                    setRange(parseInt(value * 100 + "%"))
-                  }
-                />
-              )}
+                {showPicker && (
+                  <DateTimePicker
+                    value={date}
+                    mode="date"
+                    display="default"
+                    onChange={handleDateChange}
+                  />
+                )}
+              </TouchableOpacity>
             </View>
-            {value == 0 && (
-              <View
+            <View
+              style={{
+                width: "40%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ fontWeight: "bold", fontSize: 17 }}>
+                Marital Status
+              </Text>
+              <TouchableOpacity
+                onPress={() => setSelectStatus(!selectStatus)}
                 style={{
-                  alignSelf: "flex-end",
-                  backgroundColor: "grey",
-                  padding: 10,
-                  height: height / 24,
-                  alignItems: "center",
+                  height: height / 17,
+                  backgroundColor: selectStatus
+                    ? COLORS.white
+                    : COLORS.backgrounds,
+                  alignSelf: "center",
                   justifyContent: "center",
-                  borderRadius: 20,
+                  borderRadius: width / 30,
+                  marginTop: height / 60,
                 }}
               >
-                <Text>{range} months</Text>
-              </View>
-            )}
-          </>
-        )}
-        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-          <ReusableInput
-            title="Chronicle Disease "
-            placeholder="Find Disease"
-            rewidth={width / 2.5}
-          />
-          <ReusableInput
-            title="Allergies "
-            placeholder="Allergies"
-            rewidth={width / 2.5}
-          />
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            marginTop: height / 60,
-          }}
-        >
-          <ReusableInput
-            title="Current Medication "
-            placeholder="Find Medecine"
-            rewidth={width / 2.5}
-          />
-          <ReusableInput
-            title="Current Disease "
-            placeholder="Disease"
-            rewidth={width / 2.5}
-          />
-        </View>
-        <TouchableOpacity
-          onPress={() => setAddPeople(!addPeople)}
-          style={{
-            width: width - 20,
-            height: height / 20,
-            backgroundColor: COLORS.primary,
-            alignSelf: "center",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: width / 20,
-            marginTop: height / 60,
-            marginBottom: height / 6,
-          }}
-        >
-          <Text style={{ fontWeight: "bold", color: COLORS.white }}>
-            Add Other People
-          </Text>
-        </TouchableOpacity>
-      </ScrollView>
-      {addPeople && (
-        <ScrollView
-          style={{
-            backgroundColor: COLORS.primary,
-            position: "absolute",
-            bottom: 0,
-            borderTopLeftRadius: width / 20,
-            borderTopRightRadius: width / 20,
-            width: width,
-            paddingHorizontal: width / 30,
-            marginBottom: height / 10,
-            height: height / 2.8,
-            zIndex: 4,
-            paddingVertical: height / 30,
-          }}
-        >
-          <Text
-            style={{ alignSelf: "center", fontWeight: "bold", fontSize: 20 }}
-          >
-            Add Depedent
-          </Text>
-          <ReusableInput title="Name" placeholder="Dependent Name" />
+                {selectStatus == true ? (
+                  <View style={{ marginTop: height / 40 }}>
+                    {maritalStatus.map((item, index) => {
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            setMaritalStatus(item), setSelectStatus(false);
+                          }}
+                          style={{
+                            backgroundColor: COLORS.backgrounds,
+                            marginBottom: 5,
+                            borderRadius: width / 10,
+                            padding: 4,
+                            alignItems: "center",
+                            width: "100%",
+                          }}
+                        >
+                          <Text>{item}</Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                ) : (
+                  <Text style={{ paddingHorizontal: width / 45 }}>
+                    {maritalstatus == null ? "Choose Status" : maritalstatus}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </View>
+            {/* <ReusableInput title="Gender" placeholder="Male" rewidth="30%" /> */}
+
+            <View
+              style={{
+                width: "40%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ fontWeight: "bold", fontSize: 17 }}>Gender</Text>
+              <TouchableOpacity
+                onPress={() => setSelectGender(!selectGender)}
+                style={{
+                  height: height / 17,
+                  backgroundColor: selectGender
+                    ? COLORS.white
+                    : COLORS.backgrounds,
+                  alignSelf: "center",
+                  justifyContent: "center",
+                  borderRadius: width / 30,
+                  marginTop: height / 60,
+                }}
+              >
+                {selectGender == true ? (
+                  <View style={{ marginTop: height / 40 }}>
+                    {genderOptions.map((item, index) => {
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            setGender(item), setSelectGender(false);
+                          }}
+                          style={{
+                            backgroundColor: COLORS.backgrounds,
+                            marginBottom: 5,
+                            borderRadius: width / 10,
+                            padding: 4,
+                            alignItems: "center",
+                            width: "100%",
+                          }}
+                        >
+                          <Text>{item}</Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                ) : (
+                  <Text style={{ paddingHorizontal: width / 45 }}>
+                    {gender == null ? "Choose Gender" : gender}{" "}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </View>
+            {/* <ReusableInput title="Gender" placeholder="Male" rewidth="30%" /> */}
+          </View>
           <View
             style={{ flexDirection: "row", justifyContent: "space-around" }}
           >
             <ReusableInput
-              title="Gender "
-              placeholder="Gender"
+              title="Location"
+              placeholder="Location"
               rewidth={width / 2.5}
             />
             <ReusableInput
-              title="Relationship "
-              placeholder="Relationship"
+              title="Contact"
+              placeholder="Contact"
+              rewidth={width / 2.5}
+            />
+          </View>
+
+          <View style={{ marginTop: 10 }}>
+            <Text>Blood Type</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 10,
+              }}
+            >
+              <BloodType />
+
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "grey",
+                  width: width / 5,
+                  height: height / 22,
+                  borderRadius: 20,
+
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text>Unknown</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          {gender != "male" && (
+            <>
+              <View style={{ marginTop: 10 }}>
+                <Text>Pregnant Status</Text>
+                <RadioForm
+                  radio_props={item}
+                  initial={0}
+                  onPress={(value) => setValue(value)}
+                  formHorizontal={true}
+                  animation
+                  buttonColor={COLORS.paragraph}
+                  selectedButtonColor={COLORS.primary}
+                  buttonWrapStyle={{ margin: 40 }}
+                  // style={{ margin: 5, padding: 4 }}
+                  buttonStyle={{ margin: 50 }}
+                  labelStyle={{ marginRight: 40 }}
+                />
+                {value == 0 && (
+                  <Slider
+                    style={{ width: "100%", height: 60 }}
+                    minimumValue={0}
+                    maximumValue={0.092}
+                    minimumTrackTintColor={COLORS.primary}
+                    maximumTrackTintColor="grey"
+                    thumbTintColor={COLORS.primary}
+                    value={0.03}
+                    onValueChange={(value) =>
+                      setRange(parseInt(value * 100 + "%"))
+                    }
+                  />
+                )}
+              </View>
+              {value == 0 && (
+                <View
+                  style={{
+                    alignSelf: "flex-end",
+                    backgroundColor: "grey",
+                    padding: 10,
+                    height: height / 24,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 20,
+                  }}
+                >
+                  <Text>{range} months</Text>
+                </View>
+              )}
+            </>
+          )}
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-around" }}
+          >
+            <ReusableInput
+              title="Chronicle Disease "
+              placeholder="Find Disease"
+              rewidth={width / 2.5}
+            />
+            <ReusableInput
+              title="Allergies "
+              placeholder="Allergies"
+              rewidth={width / 2.5}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-around",
+              marginTop: height / 60,
+            }}
+          >
+            <ReusableInput
+              title="Current Medication "
+              placeholder="Find Medecine"
+              rewidth={width / 2.5}
+            />
+            <ReusableInput
+              title="Current Disease "
+              placeholder="Disease"
               rewidth={width / 2.5}
             />
           </View>
           <TouchableOpacity
             onPress={() => setAddPeople(!addPeople)}
             style={{
-              height: height / 20,
               width: width - 20,
-              backgroundColor: COLORS.white,
-              borderRadius: width / 30,
+              height: height / 20,
+              backgroundColor: COLORS.primary,
+              alignSelf: "center",
               alignItems: "center",
               justifyContent: "center",
-              marginTop: height / 40,
-              marginBottom: height / 20,
-              alignSelf: "center",
+              borderRadius: width / 20,
+              marginTop: height / 60,
+              marginBottom: height / 6,
             }}
           >
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "bold",
-                color: COLORS.text,
-              }}
-            >
-              Add People
+            <Text style={{ fontWeight: "bold", color: COLORS.white }}>
+              Add Other People
             </Text>
           </TouchableOpacity>
         </ScrollView>
-      )}
+        {addPeople && (
+          <ScrollView
+            style={{
+              backgroundColor: COLORS.primary,
+              position: "absolute",
+              bottom: 0,
+              borderTopLeftRadius: width / 20,
+              borderTopRightRadius: width / 20,
+              width: width,
+              paddingHorizontal: width / 30,
+              marginBottom: height / 10,
+              height: height / 2.8,
+              zIndex: 4,
+              paddingVertical: height / 30,
+            }}
+          >
+            <Text
+              style={{ alignSelf: "center", fontWeight: "bold", fontSize: 20 }}
+            >
+              Add Depedent
+            </Text>
+            <ReusableInput title="Name" placeholder="Dependent Name" />
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-around" }}
+            >
+              <ReusableInput
+                title="Gender "
+                placeholder="Gender"
+                rewidth={width / 2.5}
+              />
+              <ReusableInput
+                title="Relationship "
+                placeholder="Relationship"
+                rewidth={width / 2.5}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => setAddPeople(!addPeople)}
+              style={{
+                height: height / 20,
+                width: width - 20,
+                backgroundColor: COLORS.white,
+                borderRadius: width / 30,
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: height / 40,
+                marginBottom: height / 20,
+                alignSelf: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: COLORS.text,
+                }}
+              >
+                Add People
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
+        )}
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };

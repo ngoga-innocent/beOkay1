@@ -4,13 +4,24 @@ import Input from "../../components/Input";
 import { COLORS, height } from "../../components/Colors";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
+import Explanatory from "../../components/Explanatory";
 
 const Forgotpassword = () => {
   const navigation = useNavigation();
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ color: COLORS.primary, fontWeight: "bold" }}>
-        Forgotpassword
+      <Explanatory
+        title="Reset Password"
+        paragraph="Enter your email to reset password"
+      />
+      <Text
+        style={{
+          color: COLORS.primary,
+          fontWeight: "bold",
+          marginTop: height / 30,
+        }}
+      >
+        Forgot Password
       </Text>
       <Input placeholder="Enter Email" />
       <Button

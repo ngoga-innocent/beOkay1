@@ -77,23 +77,35 @@ const MedicalHr = () => {
     );
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <Header />
       <ScrollView
         style={{ paddingHorizontal: width / 15 }}
         showsVerticalScrollIndicator={false}
       >
-        <StatusBar backgroundColor={COLORS.primary} />
-        <View style={{ marginTop: height / 40 }}>
-          <Text
+        <StatusBar backgroundColor={COLORS.primary} hidden />
+        <View style={{ marginTop: height / 60 }}>
+          <View
             style={{
-              fontSize: height / 35,
-              fontWeight: "bold",
-              marginBottom: height / 20,
+              padding: height / 90,
+              backgroundColor: COLORS.primary,
+              width: "80%",
+              borderRadius: width / 20,
+              borderColor: COLORS.white,
+              borderWidth: 1,
+              alignItems: "center",
+              alignSelf: "center",
+              justifyContent: "center",
+              marginTop: height / 100,
+              marginBottom: height / 80,
             }}
           >
-            Latest Report
-          </Text>
+            <Text
+              style={{ fontWeight: "bold", color: COLORS.white, fontSize: 20 }}
+            >
+              Latest Report
+            </Text>
+          </View>
           <ReusableBtn
             background="#267C97"
             title="Prescription & medication"
@@ -127,7 +139,7 @@ const MedicalHr = () => {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 export default MedicalHr;

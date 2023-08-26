@@ -14,6 +14,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import * as DocumentPicker from "expo-document-picker";
 import { useNavigation } from "@react-navigation/native";
+import Explanatory from "../../components/Explanatory";
 
 const HomeCare = () => {
   const [document, setDocument] = useState(null);
@@ -58,6 +59,8 @@ const HomeCare = () => {
               borderRadius: width / 20,
               paddingHorizontal: width / 20,
               width: "90%",
+              alignItems: "center",
+              justifyContent: "center",
             },
           ]}
         />
@@ -72,6 +75,10 @@ const HomeCare = () => {
         keyboardVerticalOffset={60}
       >
         <View style={{ paddingHorizontal: width / 30, marginTop: height / 80 }}>
+          <Explanatory
+            title="Home care Health assistance"
+            paragraph="Delivering medical assistance at your door steps"
+          />
           <View style={{ alignSelf: "center", width: "90%" }}>
             <Text
               style={{
@@ -125,7 +132,10 @@ const HomeCare = () => {
           />
         </View> */}
 
-          <Inputs name="Other Comment" style1={{ maxHeight: 80, height: 80 }} />
+          <Inputs
+            name="Other Comment"
+            style1={{ maxHeight: height / 3.5, height: height / 3.5 }}
+          />
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("consultation", {

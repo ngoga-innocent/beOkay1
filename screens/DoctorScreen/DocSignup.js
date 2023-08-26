@@ -78,56 +78,52 @@ const DocSignup = ({ route, navigation }) => {
     }
   };
   const call_api = () => {
-    navigation.navigate("Docverification", {
-      email: Email,
-      number: number,
-    });
-    // setIsLoading(true);
-    // if (Signupbtn()) {
-    //   var myHeaders = new Headers();
-    //   myHeaders.append("Content-Type", "application/json");
+    setIsLoading(true);
+    if (Signupbtn()) {
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
 
-    //   var raw = JSON.stringify({
-    //     full_name: fullName,
-    //     username: username,
-    //     email: Email,
-    //     phone_number: number,
-    //     password: password,
-    //     user_type: "patient",
-    //   });
+      var raw = JSON.stringify({
+        full_name: fullName,
+        username: username,
+        email: Email,
+        phone_number: number,
+        password: password,
+        user_type: "patient",
+      });
 
-    //   var requestOptions = {
-    //     method: "POST",
-    //     headers: myHeaders,
-    //     body: raw,
-    //     redirect: "follow",
-    //   };
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
 
-    //   fetch(`${url}/users/`, requestOptions)
-    //     .then((response) => response.text())
-    //     .then((result) => {
-    //       console.log(result);
-    //       if (result.includes("message")) {
-    //         setIsLoading(false);
-    //         navigation.navigate("Userverification", {
-    //           email: Email,
-    //           number: number,
-    //         });
-    //       } else {
-    //         if (result.includes("email")) {
-    //           setIsLoading(false);
-    //           alert("user With this email already exists");
-    //         } else {
-    //           setIsLoading(false);
-    //           alert("User with this phone number already exists");
-    //         }
-    //       }
-    //     })
-    //     .catch((error) => console.log("error", error));
-    // } else {
-    //   setIsLoading(false);
-    //   alert("there is errors in your inputs");
-    // }
+      fetch(`${url}/users/`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => {
+          console.log(result);
+          if (result.includes("message")) {
+            setIsLoading(false);
+            navigation.navigate("Docverification", {
+              email: Email,
+              number: number,
+            });
+          } else {
+            if (result.includes("email")) {
+              setIsLoading(false);
+              alert("user With this email already exists");
+            } else {
+              setIsLoading(false);
+              alert("User with this phone number already exists");
+            }
+          }
+        })
+        .catch((error) => console.log("error", error));
+    } else {
+      setIsLoading(false);
+      alert("there is errors in your inputs");
+    }
   };
   return (
     <KeyboardWrapper>

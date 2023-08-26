@@ -127,7 +127,14 @@ const Emergency = () => {
               );
             })
           : null}
-        {emergecyty === "Other" && <ReusableInput title="Specify Type" />}
+        {emergecyty === "Other" && (
+          <ReusableInput
+            title="Specify Type"
+            multiline={true}
+            maxHeight={height / 4}
+            height1={height / 10}
+          />
+        )}
         <ReusableInput
           title="Emergency details"
           multiline={true}

@@ -18,6 +18,7 @@ const Mycalendar = ({ navigation }) => {
   const [selected, setSelected] = useState([0]);
   const days = ["Mo", "Tu", "We", "Th", "fr", "Sa", "Su"];
   const [showModal, setShowModal] = useState(true);
+  const [date, setDate] = useState(new Date());
   return (
     <ScrollView style={{ flex: 1 }}>
       <Header
@@ -85,6 +86,9 @@ const Mycalendar = ({ navigation }) => {
           height: "100%",
           paddingVertical: height / 20,
           borderRadius: width / 10,
+          marginHorizontal: width / 30,
+
+          alignSelf: "center",
         }}
       >
         <Text style={styles.headers}>My Availability</Text>
@@ -139,7 +143,11 @@ const Mycalendar = ({ navigation }) => {
             </View>
             <View>
               <Text style={{ fontWeight: "700", fontSize: 17 }}>To</Text>
-              <DateTime mode="time" />
+              <DateTime
+                mode="time"
+                style1={{ backgroundColor: COLORS.doctor }}
+                date={date}
+              />
             </View>
           </View>
         </View>

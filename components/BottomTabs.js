@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ConsultationStack from "../screens/ConsultationScreens/ConsultationStack";
 
 import Icon from "react-native-vector-icons/FontAwesome5";
-import { COLORS } from "./Colors";
+import { COLORS, height } from "./Colors";
 
 import UserLanding from "../screens/ConsultationScreens/UserLanding";
 
@@ -37,6 +37,11 @@ function MyTabs() {
         },
         tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: "gray",
+        tabBarLabelStyle: {
+          fontWeight: "bold",
+          color: COLORS.black,
+          fontSize: height / 90,
+        },
       })}
     >
       <Tab.Screen

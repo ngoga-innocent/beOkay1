@@ -3,7 +3,7 @@ import { View, Text, Button } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { width } from "./Colors";
 
-function DatePicker() {
+function DatePicker({ style1, date }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
@@ -32,17 +32,20 @@ function DatePicker() {
       {/* <Button title="Select Date" onPress={showDatePicker} /> */}
 
       <DateTimePicker
-        value={new Date()}
+        value={date}
         isVisible={isDatePickerVisible}
         mode="date"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
-        style={{
-          width: width,
-          justifyContent: "flex-end",
-          alignSelf: "flex-end",
-          alignItems: "center",
-        }}
+        style={[
+          {
+            width: width,
+            justifyContent: "flex-end",
+            alignSelf: "flex-end",
+            alignItems: "center",
+          },
+          style1,
+        ]}
       />
 
       {/* {selectedDate && (

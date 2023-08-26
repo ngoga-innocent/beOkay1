@@ -10,6 +10,7 @@ import DoctorProfile from "../screens/DoctorScreen/DoctorProfile";
 import ScheduleAppointment from "../screens/DoctorScreen/ScheduleAppointment";
 
 import MyCalendar from "../screens/Navigations/MycalendarStack";
+import { height } from "./Colors";
 const Tab = createBottomTabNavigator();
 
 function DoctorTab({ navigation }) {
@@ -37,6 +38,11 @@ function DoctorTab({ navigation }) {
         },
         tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: "gray",
+        tabBarLabelStyle: {
+          fontWeight: "bold",
+          color: COLORS.black,
+          fontSize: height / 90,
+        },
       })}
     >
       <Tab.Screen

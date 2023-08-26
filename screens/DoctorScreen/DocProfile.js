@@ -158,7 +158,11 @@ const Docprofile = ({ route }) => {
       keyboardVerticalOffset={Platform.OS === "ios" ? 70 : 0}
       style={{ flex: 1 }}
     >
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         <Spinner visible={isLoading} />
         {/* <View
           style={{
@@ -342,14 +346,15 @@ export default Docprofile;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     backgroundColor: COLORS.doctor,
   },
   SecondView: {
-    flex: 1,
+    flex: 2,
     backgroundColor: COLORS.white,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
+    paddingBottom: height / 15,
   },
   inner: {
     marginHorizontal: 32,

@@ -39,10 +39,9 @@ const Header = ({ style }) => {
             justifyContent: "center",
             borderWidth: 1,
             borderColor: COLORS.green,
-            marginLeft: 4,
-            height: 50,
-            width: 50,
-            borderRadius: 50,
+            marginLeft: width / 70,
+
+            borderRadius: width / 4,
           }}
         >
           <Avatar

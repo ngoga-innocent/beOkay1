@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { width } from "./Colors";
+import { COLORS, width } from "./Colors";
 
 const DateTime = ({ mode }) => {
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
 
   const showTimePicker = () => {
-    setTimePickerVisible(true);
+    setTimePickerVisible(!isTimePickerVisible);
   };
 
   const hideTimePicker = () => {
@@ -53,6 +53,7 @@ const styles = {
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 15,
+    backgroundColor: COLORS.backgrounds,
   },
 };
 export default DateTime;
