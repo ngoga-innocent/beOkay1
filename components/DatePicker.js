@@ -8,11 +8,11 @@ function DatePicker({ style1, date }) {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const showDatePicker = () => {
-    setDatePickerVisibility(true);
+    setDatePickerVisibility(!isDatePickerVisible);
   };
 
   const hideDatePicker = () => {
-    setDatePickerVisibility(false);
+    setDatePickerVisibility(!isDatePickerVisible);
   };
 
   const handleConfirm = (date) => {

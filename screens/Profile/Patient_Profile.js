@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,9 +9,9 @@ import {
   Platform,
 } from "react-native";
 
-import AntDesign from "react-native-vector-icons/AntDesign";
-import Material from "react-native-vector-icons/MaterialIcons";
-import CircularProgressBar from "../../components/CircularProgressBar";
+// import AntDesign from "react-native-vector-icons/AntDesign";
+// import Material from "react-native-vector-icons/MaterialIcons";
+// import CircularProgressBar from "../../components/CircularProgressBar";
 import Input from "../../components/Input";
 import Slider from "@react-native-community/slider";
 import RadioForm from "react-native-simple-radio-button";
@@ -20,7 +20,12 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import { Avatar } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import Spinner from "react-native-loading-spinner-overlay";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import DateInput from "../../components/TypeDate";
+import Url from "../../Url";
+import CustomCheckbox from "../../components/CheckBox";
+import CustomRadioButton from "../../components/CustomRadioButton";
 const Patient_Profile = () => {
   const [range, setRange] = useState("3");
   const [selectedDate, setSelectedDate] = useState("");
@@ -33,11 +38,28 @@ const Patient_Profile = () => {
   const [maritalstatus, setMaritalStatus] = useState(null);
   const [selectStatus, setSelectStatus] = useState(false);
   const [type, setType] = useState(null);
-  const handleDateChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShowPicker(Platform.OS === "ios");
-    setDate(currentDate);
-  };
+  const [name, setName] = useState("");
+  const [phone_number, setPhone] = useState("");
+
+  const [birth, setBirth] = useState("");
+
+  const [location, setLocation] = useState("");
+  const [contact, setContact] = useState("");
+  const [bloodGroup, setBloodGroup] = useState("");
+  const [disease, setDisease] = useState("");
+  const [pregnant, setPregnant] = useState(false);
+  const [allergies, setAllergies] = useState([]);
+  const [Chronical, setChronical] = useState([]);
+  const [habits, setHabits] = useState([]);
+
+  const [dependent, setDependent] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // const handleDateChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate;
+  //   setShowPicker(Platform.OS === "ios");
+  //   setDate(currentDate);
+  // };
   const togglePicker = () => {
     setShowPicker(true);
   };
@@ -79,7 +101,67 @@ const Patient_Profile = () => {
     }
   };
   //end Chose Image Profile
-  const ReusableInput = ({ title, placeholder, rewidth }) => {
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+  const handleDateChange = (day, month, year) => {
+    // setBirth(date)
+    setBirth(`${year}-${month}-${day}`);
+    // console.log(`${day1}-${month}-${year}`);
+  };
+  // ===========================Integration ==============================
+
+  const getProfile = async () => {
+    setIsLoading(true);
+    const token = await AsyncStorage.getItem("token");
+    if (token !== null) {
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "JWT " + `${token}`);
+
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+
+      await fetch(`${Url}/patients/profile/`, requestOptions)
+        .then((response) => {
+          if (response.status == 401) {
+            return navigation.navigate("Auth", { screen: "Login" });
+          } else {
+            return response.json();
+          }
+        })
+        .then((result) => {
+          // console.log(result)
+          setName(result.personal_information.full_name);
+          // setPhone(result.phone_number);
+          setGender(result.personal_information.gender);
+          setBirth(result.personal_information.date_of_birth);
+          setMaritalStatus(result.personal_information.marital_status);
+          setLocation(result.personal_information.address);
+          setPhone(result.personal_information.phone_number);
+          setBloodGroup(result.blood_group);
+          setDisease(result.chronic_diseases);
+          setPregnant(result.is_pregnant);
+          setAllergies(result.alergies);
+          setChronical(result.chronic_diseases);
+          setHabits(result.habits);
+          setProfile(result.personal_information.profile_image);
+          setDependent(result.dependents_profile);
+          setIsLoading(false);
+        })
+        .catch((error) => console.log("patient profile error", error));
+    } else {
+      setIsLoading(false);
+      return navigation.navigate("Auth", { screen: "Login" });
+    }
+  };
+
+  // ===========================End Integration ==============================
+
+  const ReusableInput = ({ title, placeholder, rewidth, value, onChange }) => {
     return (
       <View style={{ width: rewidth }}>
         <Text style={{ fontWeight: "bold", fontSize: 17 }}>{title}</Text>
@@ -90,6 +172,8 @@ const Patient_Profile = () => {
             borderColor: "#989c99",
             backgroundColor: COLORS.backgrounds,
           }}
+          value={value}
+          onChangeText={onChange}
         />
       </View>
     );
@@ -172,269 +256,262 @@ const Patient_Profile = () => {
     );
   };
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : null}
-      enabled
-      style={{ flex: 1, backgroundColor: COLORS.primary }}
-      keyboardVerticalOffset={height / 1.4}
-    >
-      <SafeAreaView>
-        <HeaderComponent />
-        <ScrollView
+    <KeyboardAvoidingView style={{ backgroundColor: COLORS.primary, flex: 1 }}>
+      <HeaderComponent />
+      <ScrollView
+        style={{
+          paddingHorizontal: width / 30,
+          marginTop: height / 100,
+          backgroundColor: "white",
+          borderTopLeftRadius: width / 10,
+          borderTopRightRadius: width / 10,
+          paddingTop: height / 30,
+        }}
+      >
+        <ReusableInput
+          title="Names"
+          placeholder="separate names by space"
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
+        <View
           style={{
-            paddingHorizontal: 20,
-            marginTop: 4,
-            backgroundColor: "white",
-            borderTopLeftRadius: width / 10,
-            borderTopRightRadius: width / 10,
-            paddingTop: height / 30,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            flex: 1,
+            paddingVertical: height / 90,
           }}
         >
-          <ReusableInput title="Names" placeholder="separate names by space" />
           <View
             style={{
-              flex: 1,
-              flexDirection: "row-reverse",
-              justifyContent: "space-between",
+              // width: "40%",
               alignItems: "center",
-              justifyContent: "space-between",
-              marginTop: height / 80,
-              paddingVertical: height / 80,
-              marginBottom: height / 80,
+              justifyContent: "center",
             }}
           >
-            <View style={{ marginLeft: width / 40 }}>
-              <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-                Date Of Birth
-              </Text>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: COLORS.backgrounds,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: height / 17,
-                  borderRadius: width / 30,
-
-                  width: "100%",
-                  marginTop: height / 70,
-                }}
-                onPress={() => togglePicker()}
-              >
-                <Text style={{ fontSize: 17 }}>{"Choose Date" || date}</Text>
-                {/* {Platform.OS === "android" && (
-                <Text style={{ fontWeight: "bold", color: COLORS.white }}>
-                  Choose Date || {date}
-                </Text>
-              )} */}
-                {showPicker && (
-                  <DateTimePicker
-                    value={date}
-                    mode="date"
-                    display="default"
-                    onChange={handleDateChange}
-                  />
-                )}
-              </TouchableOpacity>
-            </View>
-            <View
+            <Text style={{ fontWeight: "bold", fontSize: 17 }}>Gender</Text>
+            {/* <TouchableOpacity
+              onPress={() => setSelectGender(!selectGender)}
               style={{
-                width: "40%",
-                alignItems: "center",
+                height: height / 17,
+                backgroundColor: selectGender
+                  ? COLORS.white
+                  : COLORS.backgrounds,
+                alignSelf: "center",
                 justifyContent: "center",
+                borderRadius: width / 30,
+                marginTop: height / 60,
               }}
-            >
-              <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-                Marital Status
-              </Text>
-              <TouchableOpacity
-                onPress={() => setSelectStatus(!selectStatus)}
-                style={{
-                  height: height / 17,
-                  backgroundColor: selectStatus
-                    ? COLORS.white
-                    : COLORS.backgrounds,
-                  alignSelf: "center",
-                  justifyContent: "center",
-                  borderRadius: width / 30,
-                  marginTop: height / 60,
-                }}
-              >
-                {selectStatus == true ? (
-                  <View style={{ marginTop: height / 40 }}>
-                    {maritalStatus.map((item, index) => {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => {
-                            setMaritalStatus(item), setSelectStatus(false);
-                          }}
-                          style={{
-                            backgroundColor: COLORS.backgrounds,
-                            marginBottom: 5,
-                            borderRadius: width / 10,
-                            padding: 4,
-                            alignItems: "center",
-                            width: "100%",
-                          }}
-                        >
-                          <Text>{item}</Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                ) : (
-                  <Text style={{ paddingHorizontal: width / 45 }}>
-                    {maritalstatus == null ? "Choose Status" : maritalstatus}
-                  </Text>
-                )}
-              </TouchableOpacity>
-            </View>
-            {/* <ReusableInput title="Gender" placeholder="Male" rewidth="30%" /> */}
-
-            <View
-              style={{
-                width: "40%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text style={{ fontWeight: "bold", fontSize: 17 }}>Gender</Text>
+            > */}
+            {selectGender == true ? (
+              <View style={{ marginTop: height / 40 }}>
+                {genderOptions.map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        setGender(item), setSelectGender(!selectGender);
+                      }}
+                      style={{
+                        backgroundColor: COLORS.backgrounds,
+                        marginBottom: height / 90,
+                        borderRadius: width / 10,
+                        padding: 4,
+                        alignItems: "center",
+                        width: "100%",
+                      }}
+                    >
+                      <Text>{item}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            ) : (
               <TouchableOpacity
                 onPress={() => setSelectGender(!selectGender)}
                 style={{
-                  height: height / 17,
-                  backgroundColor: selectGender
-                    ? COLORS.white
-                    : COLORS.backgrounds,
-                  alignSelf: "center",
-                  justifyContent: "center",
-                  borderRadius: width / 30,
-                  marginTop: height / 60,
+                  backgroundColor: COLORS.backgrounds,
+                  marginBottom: height / 90,
+                  borderRadius: width / 10,
+                  padding: 4,
+                  alignItems: "center",
+                  width: "100%",
                 }}
               >
-                {selectGender == true ? (
-                  <View style={{ marginTop: height / 40 }}>
-                    {genderOptions.map((item, index) => {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => {
-                            setGender(item), setSelectGender(false);
-                          }}
-                          style={{
-                            backgroundColor: COLORS.backgrounds,
-                            marginBottom: 5,
-                            borderRadius: width / 10,
-                            padding: 4,
-                            alignItems: "center",
-                            width: "100%",
-                          }}
-                        >
-                          <Text>{item}</Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                ) : (
-                  <Text style={{ paddingHorizontal: width / 45 }}>
-                    {gender == null ? "Choose Gender" : gender}{" "}
-                  </Text>
-                )}
+                <Text style={{ paddingHorizontal: width / 45 }}>
+                  {gender == null ? "Choose Gender" : gender}
+                </Text>
               </TouchableOpacity>
-            </View>
-            {/* <ReusableInput title="Gender" placeholder="Male" rewidth="30%" /> */}
+            )}
+            {/* </TouchableOpacity> */}
           </View>
           <View
-            style={{ flexDirection: "row", justifyContent: "space-around" }}
+            style={{
+              // width: "40%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            <ReusableInput
-              title="Location"
-              placeholder="Location"
-              rewidth={width / 2.5}
-            />
-            <ReusableInput
-              title="Contact"
-              placeholder="Contact"
-              rewidth={width / 2.5}
-            />
-          </View>
-
-          <View style={{ marginTop: 10 }}>
-            <Text>Blood Type</Text>
-            <View
+            <Text style={{ fontWeight: "bold", fontSize: 17 }}>
+              Marital Status
+            </Text>
+            {/* <TouchableOpacity
+              onPress={() => setSelectStatus(!selectStatus)}
               style={{
-                flexDirection: "row",
+                height: height / 17,
+                backgroundColor: selectStatus
+                  ? COLORS.white
+                  : COLORS.backgrounds,
+                alignSelf: "center",
+                justifyContent: "center",
+                borderRadius: width / 30,
+                marginTop: height / 60,
+              }}
+            > */}
+            {selectStatus == true ? (
+              <View style={{ marginTop: height / 40 }}>
+                {maritalStatus.map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        setMaritalStatus(item), setSelectStatus(false);
+                      }}
+                      style={{
+                        backgroundColor: COLORS.backgrounds,
+                        marginBottom: 5,
+                        borderRadius: width / 10,
+                        padding: 4,
+                        alignItems: "center",
+                        width: "100%",
+                      }}
+                    >
+                      <Text>{item}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            ) : (
+              <TouchableOpacity
+                onPress={() => setSelectStatus(!selectStatus)}
+                style={{
+                  backgroundColor: COLORS.backgrounds,
+                  marginBottom: height / 90,
+                  borderRadius: width / 10,
+                  padding: 4,
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <Text style={{ paddingHorizontal: width / 45 }}>
+                  {maritalstatus == null ? "Choose Status" : maritalstatus}
+                </Text>
+              </TouchableOpacity>
+            )}
+            {/* </TouchableOpacity> */}
+          </View>
+        </View>
+        <View
+          style={{ alignItems: "flex-start", justifyContent: "flex-start" }}
+        >
+          <Text style={{ fontWeight: "bold", fontSize: 17 }}>
+            Date of Birth
+          </Text>
+          <DateInput onChangeDate={handleDateChange} />
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <ReusableInput
+            title="Location"
+            placeholder="Location"
+            rewidth={width / 2.5}
+          />
+          <ReusableInput
+            title="Contact"
+            placeholder="Contact"
+            rewidth={width / 2.5}
+          />
+        </View>
+
+        <View style={{ marginTop: 10 }}>
+          <Text>Blood Type</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 10,
+            }}
+          >
+            <BloodType />
+
+            <TouchableOpacity
+              style={{
+                backgroundColor: "grey",
+                width: width / 5,
+                height: height / 22,
+                borderRadius: 20,
+
+                justifyContent: "center",
                 alignItems: "center",
-                marginTop: 10,
               }}
             >
-              <BloodType />
-
-              <TouchableOpacity
-                style={{
-                  backgroundColor: "grey",
-                  width: width / 5,
-                  height: height / 22,
-                  borderRadius: 20,
-
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text>Unknown</Text>
-              </TouchableOpacity>
+              <Text>Unknown</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View>
+          {gender !== "male" && (
+            <View>
+              <Text>Pregnant Status</Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <CustomRadioButton
+                  label="yes"
+                  onSelect={() => setPregnant(true)}
+                  selected={pregnant ? true : false}
+                />
+                <CustomRadioButton
+                  label="no"
+                  onSelect={() => setPregnant(false)}
+                  selected={pregnant ? false : true}
+                />
+              </View>
+            </View>
+          )}
+        </View>
+        {pregnant && (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Slider
+              style={{ width: width / 1.7, height: 60 }}
+              minimumValue={0}
+              maximumValue={0.092}
+              minimumTrackTintColor={COLORS.primary}
+              maximumTrackTintColor="grey"
+              thumbTintColor={COLORS.primary}
+              value={0.03}
+              onValueChange={(value) => setRange(parseInt(value * 100 + "%"))}
+            />
+            <View
+              style={{
+                // alignSelf: "flex-end",
+                backgroundColor: "grey",
+                // padding: 10,
+                paddingHorizontal: width / 80,
+                
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 20,
+              }}
+            >
+              <Text>{range} months</Text>
             </View>
           </View>
-          {gender != "male" && (
-            <>
-              <View style={{ marginTop: 10 }}>
-                <Text>Pregnant Status</Text>
-                <RadioForm
-                  radio_props={item}
-                  initial={0}
-                  onPress={(value) => setValue(value)}
-                  formHorizontal={true}
-                  animation
-                  buttonColor={COLORS.paragraph}
-                  selectedButtonColor={COLORS.primary}
-                  buttonWrapStyle={{ margin: 40 }}
-                  // style={{ margin: 5, padding: 4 }}
-                  buttonStyle={{ margin: 50 }}
-                  labelStyle={{ marginRight: 40 }}
-                />
-                {value == 0 && (
-                  <Slider
-                    style={{ width: "100%", height: 60 }}
-                    minimumValue={0}
-                    maximumValue={0.092}
-                    minimumTrackTintColor={COLORS.primary}
-                    maximumTrackTintColor="grey"
-                    thumbTintColor={COLORS.primary}
-                    value={0.03}
-                    onValueChange={(value) =>
-                      setRange(parseInt(value * 100 + "%"))
-                    }
-                  />
-                )}
-              </View>
-              {value == 0 && (
-                <View
-                  style={{
-                    alignSelf: "flex-end",
-                    backgroundColor: "grey",
-                    padding: 10,
-                    height: height / 24,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: 20,
-                  }}
-                >
-                  <Text>{range} months</Text>
-                </View>
-              )}
-            </>
-          )}
-          <View
+        )}
+             <View
             style={{ flexDirection: "row", justifyContent: "space-around" }}
           >
             <ReusableInput
@@ -484,8 +561,7 @@ const Patient_Profile = () => {
               Add Other People
             </Text>
           </TouchableOpacity>
-        </ScrollView>
-        {addPeople && (
+          {addPeople && (
           <ScrollView
             style={{
               backgroundColor: COLORS.primary,
@@ -493,10 +569,10 @@ const Patient_Profile = () => {
               bottom: 0,
               borderTopLeftRadius: width / 20,
               borderTopRightRadius: width / 20,
-              width: width,
+              // 
               paddingHorizontal: width / 30,
               marginBottom: height / 10,
-              height: height / 2.8,
+              // height: height / 2.8,
               zIndex: 4,
               paddingVertical: height / 30,
             }}
@@ -527,7 +603,7 @@ const Patient_Profile = () => {
                 height: height / 20,
                 width: width - 20,
                 backgroundColor: COLORS.white,
-                borderRadius: width / 30,
+                borderRadius: width / 9,
                 alignItems: "center",
                 justifyContent: "center",
                 marginTop: height / 40,
@@ -547,8 +623,12 @@ const Patient_Profile = () => {
             </TouchableOpacity>
           </ScrollView>
         )}
-      </SafeAreaView>
+        </ScrollView>
+        
+      {/* </ScrollView> */}
     </KeyboardAvoidingView>
+
+
   );
 };
 export default Patient_Profile;

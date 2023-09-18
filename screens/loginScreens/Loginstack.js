@@ -11,6 +11,7 @@ import DocSignup from "../DoctorScreen/DocSignup";
 import Docverification from "../DoctorScreen/Docverify";
 import DocLogin from "../DoctorScreen/DocLogin";
 import Docprofile from "../DoctorScreen/DocProfile";
+import PasswordReset from "./PasswordReset";
 
 const LoginStack = () => {
   const stack = createStackNavigator();
@@ -29,6 +30,7 @@ const LoginStack = () => {
       <stack.Screen name="Signup1" component={Signup1} />
       <stack.Screen name="Userverification" component={Userverification} />
       <stack.Screen name="Forgotpassword" component={Forgotpassword} />
+      <stack.Screen name="passwordReset" component={PasswordReset}/>
     </stack.Navigator>
   );
 };

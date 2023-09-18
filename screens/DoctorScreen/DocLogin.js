@@ -9,7 +9,7 @@ import Input from "../../components/Input";
 import Icon from "react-native-vector-icons/Ionicons";
 import Spinner from "react-native-loading-spinner-overlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import Url from "../../Url";
 const DocLogin = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,7 +56,7 @@ const DocLogin = ({ navigation }) => {
         body: raw,
         redirect: "follow",
       };
-      fetch("https://beok.onrender.com/login/", requestOptions)
+      fetch(`${Url}/login/`, requestOptions)
         .then((response) => response.json())
 
         .catch((error) => console.log("error", error))

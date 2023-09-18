@@ -10,6 +10,7 @@ import UserLanding from "../screens/ConsultationScreens/UserLanding";
 import Hospitals from "../screens/OtherScreen/Hospitals";
 import EHR from "../screens/Navigations/EHR";
 import Emergency from "../screens/OtherScreen/Emergency";
+import HomeStack from "../screens/Navigations/Home";
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
@@ -46,7 +47,7 @@ function MyTabs() {
     >
       <Tab.Screen
         name="Home"
-        component={UserLanding}
+        component={HomeStack}
         options={{ headerShown: false }}
       />
       <Tab.Screen

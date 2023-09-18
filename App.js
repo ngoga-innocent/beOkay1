@@ -12,6 +12,7 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { UserProfileProvider } from "./components/UserProfileContect";
 
 SplashScreen.preventAutoHideAsync();
 SplashScreen.hideAsync();
@@ -53,9 +54,11 @@ export default function App() {
   }
   return (
     isAppFirstLaunched != null && (
+      <UserProfileProvider>
       <NavigationContainer>
         {authtoken ? <OveralStack /> : <Home />}
       </NavigationContainer>
+      </UserProfileProvider>
     )
   );
 }

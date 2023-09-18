@@ -18,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Url from "../../Url";
 import { Platform } from "react-native";
 
+
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,7 +50,7 @@ const Login = ({ navigation }) => {
   const onPress = () => {
     setSecureText(false);
   };
-  const loginCheck = () => {
+  const loginCheck = async() => {
     if (accept) {
       setIsLoading(true);
       var myHeaders = new Headers();
@@ -64,10 +65,11 @@ const Login = ({ navigation }) => {
         body: raw,
         redirect: "follow",
       };
-      fetch(`${Url}/login/`, requestOptions)
+      await fetch(`${Url}/login/`, requestOptions)
         .then((response) => response.json())
-        .catch((error) => console.log("error", error))
+        
         .then((response) => {
+          console.log(response)
           if (response.access) {
             setIsLoading(false);
             AsyncStorage.setItem("token", response.access);
@@ -76,7 +78,7 @@ const Login = ({ navigation }) => {
             setIsLoading(false);
             return alert(response.detail);
           }
-        });
+        }).catch((error) => console.log("login error", error))
     } else {
       alert("please accept the agreement");
     }

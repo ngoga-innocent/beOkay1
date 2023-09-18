@@ -10,8 +10,9 @@ import {
   KeyboardAvoidingView,
   FlatList,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { COLORS, width, height } from "../../components/Colors";
 import SignupHeader from "../loginScreens/SignupHeader";
 import Input from "../../components/Input";
@@ -29,13 +30,13 @@ import * as DocumentPicker from "expo-document-picker";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Icon from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CheckLogin } from "../../components/CheckLogin";
+import Url from "../../Url";
 const Docprofile = ({ route, navigation }) => {
   const width = Dimensions.get("screen").width,
     height = Dimensions.get("screen").height;
 
-  const [Email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
   const [visible, setVisible] = useState();
   const [visible1, setVisible1] = useState();
 
@@ -130,77 +131,39 @@ const Docprofile = ({ route, navigation }) => {
       email: Email,
       number: number,
     });
-
-    // setIsLoading(true);
-    // if (Signupbtn()) {
-    //   var myHeaders = new Headers();
-    //   myHeaders.append("Content-Type", "application/json");
-
-    //   var raw = JSON.stringify({
-    //     full_name: fullName,
-    //     username: username,
-    //     email: Email,
-    //     phone_number: number,
-    //     password: password,
-    //     user_type: "patient",
-    //   });
-
-    //   var requestOptions = {
-    //     method: "POST",
-    //     headers: myHeaders,
-    //     body: raw,
-    //     redirect: "follow",
-    //   };
-
-    //   fetch(`${url}/users/`, requestOptions)
-    //     .then((response) => response.text())
-    //     .then((result) => {
-    //       console.log(result);
-    //       if (result.includes("message")) {
-    //         setIsLoading(false);
-    //         navigation.navigate("Userverification", {
-    //           email: Email,
-    //           number: number,
-    //         });
-    //       } else {
-    //         if (result.includes("email")) {
-    //           setIsLoading(false);
-    //           alert("user With this email already exists");
-    //         } else {
-    //           setIsLoading(false);
-    //           alert("User with this phone number already exists");
-    //         }
-    //       }
-    //     })
-    //     .catch((error) => console.log("error", error));
-    // } else {
-    //   setIsLoading(false);
-    //   alert("there is errors in your inputs");
-    // }
   };
-  const handleFileSelect = async () => {
-    try {
-      const res = DocumentPicker.pick({
-        type: [DocumentPicker.types.pdf], // Specify the file types to be picked
-      });
+  useEffect(() => {
+    
+    getProfile()
+  }, []);
 
-      // Handle the selected file here, e.g., send it to the server or perform any necessary operations
-      console.log(res);
-    } catch (err) {
-      //   if (DocumentPicker.isCancel(err)) {
-      //     // User cancelled the file picker
-      //     console.log("User cancelled the file picker");
-      //   } else {
-      // Handle any other errors
-      console.log("Error:", err);
-    }
-  };
-  const Logout = () => {
+  async function getProfile() {
+    const token = (await CheckLogin()).token;
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `JWT ${token}`);
+
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`${Url}/doctor/profile`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {console.log(result),setIsLoading(true)})
+      .catch((error) => console.log("error", error));
+  }
+
+  const Logout = async () => {
+    await AsyncStorage.clear();
     navigation.navigate("Auth", { screen: "usertype" });
   };
   return (
     <ScrollView
       style={[styles.container, { backgroundColor: COLORS.doctor, flex: 1 }]}
+      // refreshControl={()=>{
+      //   <RefreshControl onRefresh={getProfile()} refreshing={isLoading} />
+      // }}
     >
       <Spinner visible={isLoading} />
       <View style={{ paddingHorizontal: width / 30, marginTop: height / 100 }}>

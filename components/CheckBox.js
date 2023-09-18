@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
-import { COLORS } from "./Colors";
+import { COLORS, width,height } from "./Colors";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 const CustomCheckbox = ({ label }) => {
@@ -20,7 +20,7 @@ const CustomCheckbox = ({ label }) => {
           // <View style={[styles.unchecked, styles.checkbox]} />
         )}
       </View>
-      <Text>{label}</Text>
+      <Text style={{marginLeft:width/60}}>{label}</Text>
     </TouchableOpacity>
   );
 };
@@ -32,11 +32,11 @@ const styles = StyleSheet.create({
     marginRight: 17,
   },
   checkbox: {
-    width: 30,
-    height: 30,
+    width: height/50,
+    height: height/50,
     borderWidth: 1,
     marginRight: 8,
-    borderRadius: 6,
+    borderRadius: height/50,
   },
   checked: {
     borderColor: "#000",

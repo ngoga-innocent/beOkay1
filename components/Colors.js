@@ -14,3 +14,5 @@ export const COLORS = {
 };
 export const width = Dimensions.get("screen").width;
 export const height = Dimensions.get("screen").height;
+export const BloodGroup=['A+','A-','B+','B-','AB+','AB-','0+','0-']
+

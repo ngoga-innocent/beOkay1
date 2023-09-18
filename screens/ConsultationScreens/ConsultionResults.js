@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect,useEffect } from "react";
 import { Text, View, ScrollView } from "react-native";
 import { COLORS } from "../../components/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -8,9 +8,10 @@ import Fonts from "../../components/Fonts";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import MapScreen from "../../components/map";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Results from "./AIScreen/Results";
 
-const ConsultationResults = () => {
-  useLayoutEffect(() => {
+const ConsultationResults = ({route}) => {
+  useEffect(() => {
     getDiseaseDetails();
   }, []);
   const [Font] = useFonts({
@@ -29,17 +30,14 @@ const ConsultationResults = () => {
   const [prescription, setPrescription] = useState("");
   const [recommended_test, setRecTest] = useState("");
   const [recommendation, setRecommendation] = useState("");
-
+  
   const getDiseaseDetails = async () => {
-    const results = await AsyncStorage.getItem("results");
-    const recommendation = await AsyncStorage.getItem("recommendation");
-    const recommended_test = await AsyncStorage.getItem("recommended_test");
-    const prescription = await AsyncStorage.getItem("prescription");
-    console.log(results);
-    setResults(results);
-    setPrescription(prescription);
-    setRecTest(recommended_test);
-    setRecommendation(recommendation);
+   const Results=route.params?.details
+  //  const prescription=Results.prescription
+  setPrescription(Results.prescription)
+  setRecommendation(Results.recommendation)
+  setResults(Results.result)
+   console.log(Results.result)
   };
   return (
     <ScrollView
@@ -118,7 +116,7 @@ const ConsultationResults = () => {
               Prescription
             </Text>
             <Text style={{ fontSize: 14, fontStyle: "italic" }}>
-              {prescription}
+              {prescription || 'no prescription available'}
             </Text>
           </View>
         </View>

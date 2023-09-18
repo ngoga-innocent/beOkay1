@@ -106,7 +106,7 @@ const Aiconsultation = ({ navigation }) => {
                 numberOfLines={6}
                 style={{
                   backgroundColor: COLORS.paragraph,
-                  border: 1,
+                  borderWidth: 1,
                   borderRadius: 12,
                   height: 100,
                   textAlignVertical: "top",

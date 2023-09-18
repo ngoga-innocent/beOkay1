@@ -8,6 +8,7 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import KeyboardWrapper from "../../components/keyboardWrapper";
 import Button from "../../components/Button";
 import Spinner from "react-native-loading-spinner-overlay/lib";
+import Url from "../../Url";
 
 const Docverification = ({ route, navigation }) => {
   const pin1Ref = useRef(null);
@@ -24,65 +25,65 @@ const Docverification = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const pin = pin1 + pin2 + pin3 + pin4;
   const email = route.params.email;
-  const checkcode = () => {
-    navigation.navigate("Doclogin");
-  };
   // const checkcode = () => {
-  //   setIsLoading(true);
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/json");
-
-  //   var raw = JSON.stringify({
-  //     code: pin,
-  //   });
-
-  //   var requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: raw,
-  //     redirect: "follow",
-  //   };
-
-  //   fetch("https://beok.onrender.com/users/account-activation/", requestOptions)
-  //     .then((response) => response.json())
-  //     .then((response) => {
-  //       const res = response;
-  //       if (res.access) {
-  //         setIsLoading(false);
-  //         navigation.navigate("Login");
-  //       } else {
-  //         setIsLoading(false);
-  //         alert(res.message);
-  //       }
-  //     })
-  //     .catch((error) => console.log("error", error));
+  //   navigation.navigate("Doclogin");
   // };
-  // const Resend = () => {
-  //   setIsLoading(true);
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/json");
-  //   var raw = JSON.stringify({
-  //     email: email1,
-  //   });
-  //   var requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: raw,
-  //     redirect: "follow",
-  //   };
-  //   fetch(
-  //     "https://beok.onrender.com/users/resend-verfication-code/",
-  //     requestOptions
-  //   )
-  //     .then((response) => response.json())
+  const checkcode = () => {
+    setIsLoading(true);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-  //     .catch((error) => console.log("error", error))
-  //     .then((response) => {
-  //       const res = response;
-  //       setIsLoading(false);
-  //       alert(res.message);
-  //     });
-  // };
+    var raw = JSON.stringify({
+      code: pin,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`${Url}/users/account-activation/`, requestOptions)
+      .then((response) => response.json())
+      .then((response) => {
+        const res = response;
+        if (res.access) {
+          setIsLoading(false);
+          navigation.navigate("Doclogin");
+        } else {
+          setIsLoading(false);
+          alert(res.message);
+        }
+      })
+      .catch((error) => console.log("error", error));
+  };
+  const Resend = () => {
+    setIsLoading(true);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({
+      email: email1,
+    });
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch(
+      `${Url}/users/resend-verfication-code/`,
+      requestOptions
+    )
+      .then((response) => response.json())
+
+      .catch((error) => console.log("error", error))
+      .then((response) => {
+        const res = response;
+        setIsLoading(false);
+        alert(res.message);
+      });
+  };
 
   return (
     <KeyboardWrapper>

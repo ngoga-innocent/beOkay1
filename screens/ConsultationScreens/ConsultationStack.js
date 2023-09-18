@@ -160,38 +160,8 @@ const ConsultationStack = ({ navigation }) => {
           },
         }}
       />
-      <stack.Screen
-        name="profile"
-        component={Profile}
-        options={{ headerShown: false }}
-      />
-      <stack.Screen
-        name="patient_profile"
-        component={Patient_Profile}
-        options={{
-          headerShown: false,
-          // headerTitle: "Pateint Profile",
-          // headerLeft: () => (
-          //   <View>
-          //     <TouchableOpacity onPress={() => navigation.navigate("profile")}>
-          //       <Icon name="arrowleft" size={30} color="black" />
-          //     </TouchableOpacity>
-          //   </View>
-          // ),
-          // headerStyle: {
-          //   height: 120,
-          //   backgroundColor: "#8BB85C",
-          //   elevation: 30,
-          //   shadowColor: "#000",
-          // },
-          // headerTitleAlign: "center",
-          // headerTitleStyle: {
-          //   color: COLORS.white,
-          //   justifyContent: "center",
-          //   alignItems: "center",
-          // },
-        }}
-      />
+     
+     
       <stack.Screen
         name="notification"
         component={Notification}

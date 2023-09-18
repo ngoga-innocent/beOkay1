@@ -15,24 +15,27 @@ import { useNavigation } from "@react-navigation/native";
 import Signup from "../screens/loginScreens/Signup";
 import Entypo from "react-native-vector-icons/Entypo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useUserProfile } from "./UserProfileContect";
 import { Avatar } from "react-native-elements";
 const Header = ({ style }) => {
   const navigation = useNavigation();
   const [name, setName] = useState("");
-  useEffect(() => {
-    async function Getname() {
-      const username = await AsyncStorage.getItem("name");
-      setName(username);
-    }
-    Getname();
-  });
+  const {userProfile}=useUserProfile()
+  // useEffect(() => {
+  //   async function Getname() {
+  //     const username = await AsyncStorage.getItem("name");
+  //     setName(username);
+  //   }
+  //   console.log('called in header')
+  //   Getname();
+  // });
   return (
     <SafeAreaView style={[styles.container, style]}>
       <StatusBar backgroundColor={COLORS.primary} />
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("consultation", { screen: "profile" })
+            navigation.navigate("Home", { screen: "profile" })
           }
           style={{
             alignItems: "center",
@@ -46,8 +49,8 @@ const Header = ({ style }) => {
         >
           <Avatar
             rounded
-            size="large"
-            source={require("../assets/Ellipse15.png")}
+            size="medium"
+            source={{uri:userProfile.profileImage}}
           />
           {/* <Image
             source={require("../assets/Ellipse15.png")}
@@ -73,7 +76,7 @@ const Header = ({ style }) => {
           <Text
             style={{ color: COLORS.white, fontSize: 20, fontWeight: "bold" }}
           >
-            {name}
+            {userProfile.username}
           </Text>
         </View>
         <View

@@ -26,6 +26,8 @@ import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Fontawasome from "react-native-vector-icons/FontAwesome5";
+import Spinner from "react-native-loading-spinner-overlay";
+import Url from "../../Url";
 const Profile = ({ navigation }) => {
   const width = Dimensions.get("screen").width;
   useLayoutEffect(() => {
@@ -33,6 +35,21 @@ const Profile = ({ navigation }) => {
   }, []);
   const [name, setName] = useState("");
   const [phone_number, setPhone] = useState("");
+  const [gender,setGender]=useState("")
+  const [birth,setBirth]=useState("")
+  const [marital_status,setMaritalStatus]=useState("")
+  const [location,setLocation]=useState("")
+  const [contact,setContact]=useState("")
+  const [bloodGroup,setBloodGroup]=useState("")
+  const [disease,setDisease]=useState("")
+  const [pregnant,setPregnant]=useState("")
+  const [allergies,setAllergies]=useState([])
+  const [Chronical,setChronical]=useState([])
+  const [habits,setHabits]=useState([])
+  const [profile,setProfile]=useState(null)
+  const [dependent,setDependent]=useState([])
+  const [isLoading,setIsLoading]=useState(false)
+  const []=useState("")
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "first", title: "Personal Info" },
@@ -49,66 +66,53 @@ const Profile = ({ navigation }) => {
         return null;
     }
   };
-  const patient = {
-    name: "Issa Gasigwa",
-    Gender: "Male",
-    birth: "12/07/1997",
-    status: "Single",
-    location: "Kigali-Nyarugenge",
-    contact: "0788258922",
-    pregnant: "No",
-    familyInfo: [
-      {
-        relationShip: "Spouse",
-        gender: "Female",
-        name: "Kellen",
-        age: "25",
-      },
-      {
-        relationShip: "Spouse",
-        gender: "Female",
-        name: "Kellen",
-        age: "25",
-      },
-      {
-        relationShip: "Spouse",
-        gender: "Female",
-        name: "Kellen",
-        age: "25",
-      },
-    ],
-    bloodGroup: "A",
-    Allergies: [{ name: "Cold Air" }, { name: "Meat" }],
-    illness: [
-      {
-        name: "heart",
-      },
-      {
-        name: "pancreas",
-      },
-    ],
-    disease: "Eye",
-    medication: "Prastamol",
-    habit: ["Alcohol", "Smoking", "injection", "sexually active"],
-  };
+  
   const getProfile = async () => {
+    setIsLoading(true)
     const token = await AsyncStorage.getItem("token");
-    var myHeaders = new Headers();
+    if(token !==null){
+      var myHeaders = new Headers();
     myHeaders.append("Authorization", "JWT " + `${token}`);
 
     var requestOptions = {
-      method: "POST",
+      method: "GET",
       headers: myHeaders,
       redirect: "follow",
     };
 
-    fetch(`${url}/users/edit-profile/`, requestOptions)
-      .then((response) => response.json())
+    await fetch(`${Url}/patients/profile/`, requestOptions)
+      .then((response) => {if (response.status == 401) {
+        return navigation.navigate("Auth", { screen: "Login" });
+        
+      } else {
+        return response.json();
+      }})
       .then((result) => {
-        setName(result.full_name);
-        setPhone(result.phone_number);
+        console.log(result)
+        setName(result.personal_information.full_name);
+        // setPhone(result.phone_number);
+        setGender(result.personal_information.gender)
+        setBirth(result.personal_information.date_of_birth)
+        setMaritalStatus(result.personal_information.marital_status)
+        setLocation(result.personal_information.address)
+        setPhone(result.personal_information.phone_number)
+        setBloodGroup(result.blood_group)
+        setDisease(result.chronic_diseases)
+        setPregnant(result.is_pregnant)
+        setAllergies(result.alergies)
+        setChronical(result.chronic_diseases)
+        setHabits(result.habits)
+        setProfile(result.personal_information.profile_image)
+        setDependent(result.dependents_profile)
+        setIsLoading(false)
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log("patient profile error", error));
+    }
+    else{
+      setIsLoading(false)
+      return navigation.navigate("Auth", { screen: "Login" });
+    }
+    
   };
   const Logout = async () => {
     try {
@@ -129,45 +133,59 @@ const Profile = ({ navigation }) => {
         <Entypo name="user" size={20} />
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>Name:</Text>
 
-        <Text style={styles.txt}>{patient.name}</Text>
+        <Text style={styles.txt}>{name}</Text>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <MaterialIcons name="gender-male-female" size={20} />
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>Gender:</Text>
-        <Text style={styles.txt}>{patient.Gender}</Text>
+        <Text style={styles.txt}>{gender}</Text>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Fontisto name="date" size={20} />
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>
           Date of Birth:
         </Text>
-        <Text style={styles.txt}>{patient.birth}</Text>
+        <Text style={styles.txt}>{birth || 'unspecified'}</Text>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <MaterialIcons name="ring" size={20} />
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>
           Marital Status:
         </Text>
-        <Text style={styles.txt}>{patient.status}</Text>
+        <Text style={styles.txt}>{marital_status}</Text>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Ionicons name="location-sharp" size={20} />
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>Location:</Text>
-        <Text style={styles.txt}>{patient.location}</Text>
+        <Text style={styles.txt}>{location || 'unspecified'}</Text>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <AntDesign name="phone" size={20} />
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>Contact:</Text>
-        <Text style={styles.txt}>{patient.contact}</Text>
+        <Text style={styles.txt}>{phone_number || 'unspecified'}</Text>
       </View>
-      <View
+      
+      {dependent.length!==0?dependent.map((item, index) => {
+        return (
+          <View
+            key={index}
+            style={{
+              backgroundColor: COLORS.backgrounds,
+              marginBottom: width / 40,
+              borderRadius: width / 20,
+              paddingVertical: width / 40,
+              paddingHorizontal: width / 50,
+              marginVertical:height/40
+            }}
+          >
+          <View
         style={{
           borderWidth: 1,
           borderColor: COLORS.primary,
           borderRadius: width / 50,
           paddingVertical: height / 100,
           paddingHorizontal: width / 60,
-          marginBottom: -height / 50,
+          marginTop: -height / 30,
           alignSelf: "center",
           backgroundColor: COLORS.white,
           zIndex: 1,
@@ -179,25 +197,13 @@ const Profile = ({ navigation }) => {
             fontSize: height / 45,
           }}
         >
-          Family & Dependents details
+         {item.dependent_relationship}
         </Text>
       </View>
-      {patient.familyInfo.map((item, index) => {
-        return (
-          <View
-            key={index}
-            style={{
-              backgroundColor: COLORS.backgrounds,
-              marginBottom: width / 40,
-              borderRadius: width / 20,
-              paddingVertical: width / 40,
-              paddingHorizontal: width / 50,
-            }}
-          >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Entypo name="user" size={20} />
               <Text style={{ fontSize: 16, marginLeft: width / 20 }}>
-                {item.relationShip}
+                {item.dependent_names}
               </Text>
               <Text style={styles.txt}> {item.name}</Text>
             </View>
@@ -220,7 +226,7 @@ const Profile = ({ navigation }) => {
             </View> */}
           </View>
         );
-      })}
+      }):<Text style={{marginVertical:height/20,alignSelf:'center',fontWeight:'bold',fontSize:height/30}}>No dependent</Text>}
     </ScrollView>
   );
 
@@ -231,20 +237,20 @@ const Profile = ({ navigation }) => {
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>
           Blood Group/Type:
         </Text>
-        <Text style={styles.txt}>{patient.bloodGroup}</Text>
+        <Text style={styles.txt}>{bloodGroup}</Text>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Fontawasome name="disease" size={20} />
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>
           Current Disease
         </Text>
-        <Text style={styles.txt}>{patient.disease}</Text>
+        <Text style={styles.txt}>{disease || 'no disease'}</Text>
       </View>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      {gender !=='male' && <View style={{ flexDirection: "row", alignItems: "center" }}>
         <MaterialIcons name="human-pregnant" size={20} />
         <Text style={{ fontSize: 16, marginLeft: width / 20 }}>Pregnant</Text>
-        <Text style={styles.txt}>{patient.pregnant}</Text>
-      </View>
+        <Text style={styles.txt}>{pregnant}</Text>
+      </View>}
       <View
         style={{
           borderWidth: 1,
@@ -281,13 +287,14 @@ const Profile = ({ navigation }) => {
           paddingHorizontal: width / 50,
         }}
       >
-        {patient.Allergies.map((item, index) => {
+      <Text>{allergies || 'No Allergies'}</Text>
+        {/* {patient.Allergies.map((item, index) => {
           return (
             <View key={index} style={{ marginBottom: 10 }}>
               <Text>{item.name}</Text>
             </View>
           );
-        })}
+        })} */}
       </View>
       <View
         style={{
@@ -324,13 +331,14 @@ const Profile = ({ navigation }) => {
           paddingHorizontal: width / 50,
         }}
       >
-        {patient.illness.map((item, index) => {
+      <Text>{Chronical || 'no chronic Disease'}</Text>
+        {/* {patient.illness.map((item, index) => {
           return (
             <View key={index} style={{ marginBottom: 10 }}>
               <Text>{item.name}</Text>
             </View>
           );
-        })}
+        })} */}
       </View>
       <View
         style={{
@@ -367,13 +375,14 @@ const Profile = ({ navigation }) => {
           paddingHorizontal: width / 50,
         }}
       >
-        {patient.habit.map((item, index) => {
+        {/* {patient.habit.map((item, index) => {
           return (
             <View key={index} style={{ marginBottom: 10 }}>
               <Text>{item}</Text>
             </View>
           );
-        })}
+        })} */}
+        <Text>{habits || 'no habits'}</Text>
       </View>
     </ScrollView>
   );
@@ -392,12 +401,12 @@ const Profile = ({ navigation }) => {
           >
             <Avatar
               rounded
-              source={require("../../assets/profile.jpeg")}
-              size="large"
+              source={{uri:profile}}
+              size="medium"
             />
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("consultation", {
+                navigation.navigate("Home", {
                   screen: "patient_profile",
                 })
               }
@@ -462,6 +471,7 @@ const Profile = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
+    <Spinner visible={isLoading} color={COLORS.primary} />
       <Head />
       <View style={{ flex: 1, height: "100%" }}>
         <TabView

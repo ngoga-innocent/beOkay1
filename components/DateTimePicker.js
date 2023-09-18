@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { COLORS, width } from "./Colors";
 
-const DateTime = ({ mode }) => {
+const DateTime = ({ mode,date }) => {
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
 
@@ -18,6 +18,7 @@ const DateTime = ({ mode }) => {
   const handleTimeChange = (event, time) => {
     if (time) {
       setSelectedTime(time.toLocaleTimeString());
+      // console.log(time.toISOstring())
     }
     hideTimePicker();
   };
@@ -29,7 +30,7 @@ const DateTime = ({ mode }) => {
       </TouchableOpacity>
       {isTimePickerVisible && (
         <DateTimePicker
-          value={new Date()}
+          value={date}
           mode={mode}
           display="spinner"
           onChange={handleTimeChange}

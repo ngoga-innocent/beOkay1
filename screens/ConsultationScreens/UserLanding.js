@@ -19,11 +19,15 @@ import HeaderTab from "../../components/HeaderTab";
 import Button from "../../components/Button";
 import { TabBar, TabView } from "react-native-tab-view";
 import CalendarScreen from "../DoctorScreen/Calendar";
+import { useUserProfile } from "../../components/UserProfileContect";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const UserLanding = ({ navigation }) => {
   const [index, setIndex] = useState(0);
   const [currentDate, setCurrentDate] = useState("");
   const [currentDay, setCurrentDay] = useState("");
+  const {setUserProfile} =useUserProfile()
+  const [isLoading,setIsLoading]=useState(false)
   const [routes] = useState([
     { key: "first", title: "Appointments" },
     { key: "second", title: "My Calendar" },
@@ -130,31 +134,42 @@ const UserLanding = ({ navigation }) => {
   const [name, setName] = useState("");
 
   const getProfile = async () => {
+    setIsLoading(true)
     const token = await AsyncStorage.getItem("token");
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "JWT " + `${token}`);
 
     var requestOptions = {
-      method: "POST",
+      method: "GET",
       headers: myHeaders,
       redirect: "follow",
     };
 
-    fetch(`${Url}/users/edit-profile/`, requestOptions)
-      .then((response) => {
+    await fetch(`${Url}/patients/profile`, requestOptions)
+      .then(response => {
         if (response.status == 401) {
-          navigation.navigate("Auth", { screen: "Login" });
-          return response.json();
+          setIsLoading(false)
+          return navigation.navigate("Auth", { screen: "Login" });
+          
         } else {
           return response.json();
         }
       })
-      .then((result) => {
-        AsyncStorage.setItem("name", result.username);
-        setName(result.username);
+      .then(result => {
+        // console.log(result)
+        AsyncStorage.setItem("name", result.personal_information.username);
+        AsyncStorage.setItem("id",result.personal_information.id)
+       
+        setUserProfile({
+          profileImage:result.personal_information.profile_image,
+          username:result.personal_information.username
+          
+        })
+        setIsLoading(false)
+        // setName(result.username);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log("profile error", error));
   };
   const status = {
     pressue: 150,
@@ -206,6 +221,7 @@ const UserLanding = ({ navigation }) => {
 
   return (
     <View style={[styles.container, { flex: 1 }]}>
+    <Spinner visible={isLoading} />
       <Header style={{ paddingHorizontal: width / 17 }} />
       <View style={styles.modal}>
         <View style={styles.modalheader}>
